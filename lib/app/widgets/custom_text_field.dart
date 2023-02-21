@@ -11,6 +11,8 @@ class CustomTextFormField extends StatelessWidget {
   final dynamic onChanged;
   final dynamic suffixIcon;
   final dynamic icon;
+  final TextInputType textInputType;
+  final int? maxleng;
   // final Color? color;
   final dynamic onTap;
   final dynamic focusNode;
@@ -30,6 +32,8 @@ class CustomTextFormField extends StatelessWidget {
     this.errorBorder = false,
     this.obscureText = false,
     this.icon,
+    required this.textInputType,
+    this.maxleng,
   }) : super(key: key);
 
   @override
@@ -73,7 +77,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
         style:
             TextStyle(color: AppColors.black, decoration: TextDecoration.none),
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: textInputType, maxLength: maxleng,
       ),
     );
   }

@@ -55,6 +55,7 @@ class LoginPageView extends GetView<LoginPageController> {
                     color: AppColors.black,
                   ),
                   hintText: "Email",
+                  textInputType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: 10.h,
@@ -79,6 +80,7 @@ class LoginPageView extends GetView<LoginPageController> {
                         controller.obsecureText = !controller.obsecureText;
                       },
                     ),
+                    textInputType: TextInputType.number,
                   ),
                 ),
                 SizedBox(
@@ -100,7 +102,7 @@ class LoginPageView extends GetView<LoginPageController> {
                       TextSpan(
                         text: "Ragister",
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(Routes.HOME_PAGE),
+                          ..onTap = () => Get.toNamed(Routes.RAGISTER_PAGE),
                         style: TextStyle(
                           color: AppColors.blue,
                           fontWeight: FontWeight.bold,

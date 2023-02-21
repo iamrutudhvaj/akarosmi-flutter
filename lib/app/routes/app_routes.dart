@@ -7,10 +7,12 @@ abstract class Routes {
   Routes._();
   static const LOGIN_PAGE = _Paths.LOGIN_PAGE;
   static const HOME_PAGE = _Paths.HOME_PAGE;
+  static const RAGISTER_PAGE = _Paths.RAGISTER_PAGE;
 }
 
 abstract class _Paths {
   _Paths._();
   static const LOGIN_PAGE = '/login-page';
   static const HOME_PAGE = '/home-page';
+  static const RAGISTER_PAGE = '/ragister-page';
 }
