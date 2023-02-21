@@ -1,23 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddBookPageController extends GetxController {
-  //TODO: Implement AddBookPageController
+  TextEditingController nameController = TextEditingController();
+  TextEditingController authoreNameController = TextEditingController();
+  TextEditingController publisherNameController = TextEditingController();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  final _imagePath = Rx<XFile?>(null);
+  XFile? get imagePath => _imagePath.value;
+  set imagePath(XFile? value) => _imagePath.value = value;
+
+  Future<void> getImage({required ImageSource source}) async {
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) return;
+
+    final imageTemporary = image;
+    imagePath = imageTemporary;
+    Get.back();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
