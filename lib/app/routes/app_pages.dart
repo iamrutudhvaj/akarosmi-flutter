@@ -6,6 +6,8 @@ import '../modules/login_page/bindings/login_page_binding.dart';
 import '../modules/login_page/views/login_page_view.dart';
 import '../modules/ragister_page/bindings/ragister_page_binding.dart';
 import '../modules/ragister_page/views/ragister_page_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -31,6 +33,11 @@ class AppPages {
       name: _Paths.RAGISTER_PAGE,
       page: () => const RagisterPageView(),
       binding: RagisterPageBinding(),
+         ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => const ResetPasswordView(),
+      binding: ResetPasswordBinding(),
     ),
   ];
 }
