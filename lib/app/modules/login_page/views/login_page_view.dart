@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
 import '../../../widgets/custom_text_field.dart';
-import '../../../widgets/primaryButton.dart';
+import '../../../widgets/primary_button.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/login_page_controller.dart';
 
@@ -21,7 +21,7 @@ class LoginPageView extends GetView<LoginPageController> {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 150.h,
@@ -79,6 +79,15 @@ class LoginPageView extends GetView<LoginPageController> {
                         controller.obsecureText = !controller.obsecureText;
                       },
                     ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 195.w),
+                  child: TextButton(
+                    onPressed: () {
+                      Get.toNamed(Routes.RESET_PASSWORD);
+                    },
+                    child: const Text('Forget Password?'),
                   ),
                 ),
                 SizedBox(
