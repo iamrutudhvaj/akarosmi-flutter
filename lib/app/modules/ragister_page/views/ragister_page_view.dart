@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
 import '../../../widgets/custom_text_field.dart';
-import '../../../widgets/primaryButton.dart';
+import '../../../widgets/primary_button.dart';
 import '../controllers/ragister_page_controller.dart';
 
 class RagisterPageView extends GetView<RagisterPageController> {

@@ -11,7 +11,7 @@ class CustomTextFormField extends StatelessWidget {
   final dynamic onChanged;
   final dynamic suffixIcon;
   final dynamic icon;
-  final TextInputType textInputType;
+  final TextInputType? textInputType;
   final int? maxleng;
   // final Color? color;
   final dynamic onTap;
@@ -32,7 +32,7 @@ class CustomTextFormField extends StatelessWidget {
     this.errorBorder = false,
     this.obscureText = false,
     this.icon,
-    required this.textInputType,
+    this.textInputType,
     this.maxleng,
   }) : super(key: key);
 
