@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/theme/color.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  // final TextEditingController controller;
+  final TextEditingController controller;
   final String? hintText;
   final dynamic validator;
   final bool? hasPadding;
@@ -18,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
 
   const CustomTextFormField({
     Key? key,
-    // required this.controller,
+    required this.controller,
     this.hintText,
     this.validator,
     // this.color,
@@ -38,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
       padding: hasPadding! ? EdgeInsets.symmetric(horizontal: 10.sp) : null,
       child: TextFormField(
         obscureText: obscureText!,
-        // controller: controller,
+        controller: controller,
         focusNode: focusNode,
         validator: validator,
         onChanged: onChanged,

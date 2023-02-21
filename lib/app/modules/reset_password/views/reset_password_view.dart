@@ -30,6 +30,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
             ),
             Obx(
               () => CustomTextFormField(
+                controller: controller.oldPasswordCotroller,
                 obscureText: controller.obsecureText,
                 icon: Icon(
                   Icons.lock,
@@ -55,6 +56,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
             ),
             Obx(
               () => CustomTextFormField(
+                controller: controller.newPasswordCotroller,
                 obscureText: controller.obsecureTextNewPass,
                 icon: Icon(
                   Icons.lock,
@@ -81,6 +83,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
             ),
             Obx(
               () => CustomTextFormField(
+                controller: controller.confirmPasswordCotroller,
                 obscureText: controller.obsecureTextConfirmPass,
                 icon: Icon(
                   Icons.lock,

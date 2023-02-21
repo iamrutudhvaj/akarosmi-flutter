@@ -50,6 +50,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   height: 20.h,
                 ),
                 CustomTextFormField(
+                  controller: controller.emailCotroller,
                   icon: Icon(
                     Icons.email,
                     color: AppColors.black,
@@ -61,6 +62,7 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 Obx(
                   () => CustomTextFormField(
+                    controller: controller.passwordCotroller,
                     obscureText: controller.obsecureText,
                     icon: Icon(
                       Icons.lock,
@@ -109,7 +111,7 @@ class LoginPageView extends GetView<LoginPageController> {
                       TextSpan(
                         text: "Ragister",
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(Routes.HOME_PAGE),
+                          ..onTap = () => Get.offAllNamed(Routes.HOME_PAGE),
                         style: TextStyle(
                           color: AppColors.blue,
                           fontWeight: FontWeight.bold,

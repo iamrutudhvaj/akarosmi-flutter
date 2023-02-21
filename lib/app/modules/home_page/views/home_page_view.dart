@@ -1,3 +1,4 @@
+import 'package:akarosmi/app/core/theme/color.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,15 +10,42 @@ class HomePageView extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomePageView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'HomePageView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      bottomNavigationBar: const DashboardBottomNavigationBar(),
+      body: Obx(() => controller.bodyPageViewList[controller.selectedTab]),
+    );
+  }
+}
+
+class DashboardBottomNavigationBar extends StatelessWidget {
+  const DashboardBottomNavigationBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<HomePageController>();
+    return Obx(
+      () => BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        onTap: controller.changeTabIndex,
+        currentIndex: controller.selectedTab,
+        backgroundColor: AppColors.white,
+        unselectedItemColor: AppColors.black,
+        selectedItemColor: AppColors.blue,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book_sharp),
+            label: 'Explore',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Places',
+          ),
+        ],
       ),
     );
   }
