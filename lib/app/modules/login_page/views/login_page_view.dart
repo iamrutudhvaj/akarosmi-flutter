@@ -50,17 +50,20 @@ class LoginPageView extends GetView<LoginPageController> {
                   height: 20.h,
                 ),
                 CustomTextFormField(
+                  controller: controller.emailCotroller,
                   icon: Icon(
                     Icons.email,
                     color: AppColors.black,
                   ),
                   hintText: "Email",
+                  textInputType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: 10.h,
                 ),
                 Obx(
                   () => CustomTextFormField(
+                    controller: controller.passwordCotroller,
                     obscureText: controller.obsecureText,
                     icon: Icon(
                       Icons.lock,
@@ -79,10 +82,11 @@ class LoginPageView extends GetView<LoginPageController> {
                         controller.obsecureText = !controller.obsecureText;
                       },
                     ),
+                    textInputType: TextInputType.visiblePassword,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 195.w),
+                Align(
+                  alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
                       Get.toNamed(Routes.RESET_PASSWORD);
@@ -95,8 +99,10 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 PrimaryButton(
                   width: 150.w,
-                  onPressed: () {},
-                  child: const Text("login"),
+                  onPressed: () {
+                    Get.offAllNamed(Routes.HOME_PAGE);
+                  },
+                  child: const Text("Login"),
                 ),
                 SizedBox(
                   height: 20.h,
@@ -107,9 +113,9 @@ class LoginPageView extends GetView<LoginPageController> {
                     text: "Don't have an account? ",
                     children: [
                       TextSpan(
-                        text: "Ragister",
+                        text: "Register",
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(Routes.HOME_PAGE),
+                          ..onTap = () => Get.toNamed(Routes.REGISTER_PAGE),
                         style: TextStyle(
                           color: AppColors.blue,
                           fontWeight: FontWeight.bold,

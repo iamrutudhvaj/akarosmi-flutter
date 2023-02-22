@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordController extends GetxController {
+  TextEditingController newPasswordCotroller = TextEditingController();
+  TextEditingController oldPasswordCotroller = TextEditingController();
+  TextEditingController confirmPasswordCotroller = TextEditingController();
+
   final _obsecureText = true.obs;
   bool get obsecureText => _obsecureText.value;
   set obsecureText(bool value) => _obsecureText.value = value;
