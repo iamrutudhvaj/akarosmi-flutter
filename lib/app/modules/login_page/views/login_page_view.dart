@@ -50,6 +50,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   height: 20.h,
                 ),
                 CustomTextFormField(
+                  controller: controller.emailCotroller,
                   icon: Icon(
                     Icons.email,
                     color: AppColors.black,
@@ -62,6 +63,7 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 Obx(
                   () => CustomTextFormField(
+                    controller: controller.passwordCotroller,
                     obscureText: controller.obsecureText,
                     icon: Icon(
                       Icons.lock,

@@ -19,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
 
   const CustomTextFormField({
     Key? key,
+    required this.controller,
     this.hintText,
     this.validator,
     this.hasPadding = true,
@@ -31,7 +32,6 @@ class CustomTextFormField extends StatelessWidget {
     this.icon,
     this.textInputType,
     this.maxleng,
-    this.controller,
     this.readonly = false,
   }) : super(key: key);
 
