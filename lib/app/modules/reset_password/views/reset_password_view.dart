@@ -35,7 +35,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   Icons.lock,
                   color: AppColors.black,
                 ),
-                hintText: "old password",
+                hintText: "Old password",
                 suffixIcon: InkWell(
                   child: Icon(
                     controller.obsecureText
@@ -60,7 +60,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   Icons.lock,
                   color: AppColors.black,
                 ),
-                hintText: "new password",
+                hintText: "New password",
                 suffixIcon: InkWell(
                   child: Icon(
                     controller.obsecureTextNewPass
@@ -86,7 +86,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   Icons.lock,
                   color: AppColors.black,
                 ),
-                hintText: "confirm password",
+                hintText: "Confirm password",
                 suffixIcon: InkWell(
                   child: Icon(
                     controller.obsecureTextConfirmPass
