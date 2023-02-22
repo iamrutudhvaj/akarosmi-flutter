@@ -5,6 +5,7 @@ import '../core/theme/color.dart';
 class CustomTextFormField extends StatelessWidget {
   // final TextEditingController controller;
   final String? hintText;
+  final TextEditingController? controller;
   final dynamic validator;
   final bool? hasPadding;
   final bool? obscureText;
@@ -16,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
   // final Color? color;
   final dynamic onTap;
   final dynamic focusNode;
+  final bool? readonly;
   final bool? errorBorder;
 
   const CustomTextFormField({
@@ -34,6 +36,8 @@ class CustomTextFormField extends StatelessWidget {
     this.icon,
     this.textInputType,
     this.maxleng,
+    this.controller,
+    this.readonly = false,
   }) : super(key: key);
 
   @override
@@ -41,6 +45,8 @@ class CustomTextFormField extends StatelessWidget {
     return Container(
       padding: hasPadding! ? EdgeInsets.symmetric(horizontal: 10.sp) : null,
       child: TextFormField(
+        controller: controller,
+        readOnly: readonly!,
         obscureText: obscureText!,
         // controller: controller,
         focusNode: focusNode,
@@ -53,8 +59,9 @@ class CustomTextFormField extends StatelessWidget {
           fillColor: AppColors.fillColor,
           filled: true,
           prefixIcon: icon,
-          focusColor: AppColors.blue,
+          focusColor: AppColors.black,
           suffixIcon: suffixIcon,
+          suffixIconColor: AppColors.black,
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: AppColors.transparent),

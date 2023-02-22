@@ -1,8 +1,8 @@
-import 'package:date_time_field/date_time_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
@@ -63,39 +63,50 @@ class RagisterPageView extends GetView<RagisterPageController> {
             SizedBox(
               height: 15.h,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.sp),
-              child: DateTimeField(
-                controller: controller.dobController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: AppColors.fillColor,
-
-                  hintText: "Date of Birth",
-                  hintStyle: TextStyle(color: AppColors.black),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: AppColors.black),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: const BorderSide(),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(width: 1, color: AppColors.transparent),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // labelText: 'My birthday',
-                  suffixIcon: IconButton(
-                    onPressed: controller.dobController.clear,
-                    icon: Icon(
-                      Icons.calendar_month_sharp,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ),
-              ),
+            CustomTextFormField(
+              readonly: true,
+              controller: controller.dobController,
+              hintText: "Date of Birth",
+              suffixIcon: const Icon(Icons.calendar_today_outlined),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1950),
+                  lastDate: DateTime(2100),
+                  builder: (context, child) {
+                    return Theme(
+                      data: Theme.of(context).copyWith(
+                        dialogTheme: const DialogTheme(
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide.none,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16)))),
+                        colorScheme: ColorScheme.light(
+                          primary: AppColors.black, // header background color
+                          onPrimary: AppColors.white, // header text color
+                          onSurface: AppColors.black, // body text color
+                        ),
+                        textButtonTheme: TextButtonThemeData(
+                          style: TextButton.styleFrom(
+                            foregroundColor:
+                                AppColors.black, // button text color
+                          ),
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
+                );
+                if (pickedDate != null) {
+                  String formattedDate =
+                      DateFormat('dd-MM-yyyy').format(pickedDate);
+                  controller.dobController.text = formattedDate;
+                } else {}
+              },
+            ),
+            SizedBox(
+              height: 15.h,
             ),
             SizedBox(
               height: 15.h,
@@ -123,7 +134,7 @@ class RagisterPageView extends GetView<RagisterPageController> {
                             value: controller.genderItem[index],
                             groupValue: controller.selectedGender.value,
                             onChanged: (value) {
-                              controller.isselectedCategory = true;
+                              controller.isSelectedCategory = true;
                               controller.selectedGender.value = value;
                             },
                             activeColor: Colors.black,

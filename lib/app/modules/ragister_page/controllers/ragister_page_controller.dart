@@ -1,24 +1,24 @@
-import 'package:date_time_field/date_time_field.dart';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RagisterPageController extends GetxController {
-  DateEditingController dobController = DateEditingController();
-
+  TextEditingController dobController = TextEditingController();
   var selectedGender = "".obs;
+  var selectedDate = DateTime.now().obs;
 
   onChnageGender(var gender) {
     selectedGender.value = gender;
   }
 
-  final _isselectedCategory = true.obs;
-  bool get isselectedCategory => _isselectedCategory.value;
-  set isselectedCategory(bool value) => _isselectedCategory.value = value;
+  final _isSelectedCategory = true.obs;
+  bool get isSelectedCategory => _isSelectedCategory.value;
+  set isSelectedCategory(bool value) => _isSelectedCategory.value = value;
 
   final _selectedIndex = 0.obs;
   int get selectedIndex => _selectedIndex.value;
   set selectedIndex(int value) => _selectedIndex.value = value;
- 
- 
+
   final List genderItem = [
     'Male',
     'Female',
