@@ -13,7 +13,7 @@ class PersonsPageView extends GetView<PersonsPageController> {
         title: const Text('PersonsPageView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'PersonsPageView is working',
           style: TextStyle(fontSize: 20),

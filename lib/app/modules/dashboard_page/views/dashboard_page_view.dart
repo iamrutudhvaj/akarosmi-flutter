@@ -13,7 +13,7 @@ class DashboardPageView extends GetView<DashboardPageController> {
         title: const Text('DashboardPageView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'DashboardPageView is working',
           style: TextStyle(fontSize: 20),

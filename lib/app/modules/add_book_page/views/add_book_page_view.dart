@@ -33,7 +33,6 @@ class AddBookPageView extends GetView<AddBookPageController> {
               height: 10.h,
             ),
             CustomTextFormField(
-              hasPadding: false,
               controller: controller.nameController,
               hintText: 'Enter Name',
             ),
@@ -49,7 +48,6 @@ class AddBookPageView extends GetView<AddBookPageController> {
             ),
             CustomTextFormField(
               controller: controller.authoreNameController,
-              hasPadding: false,
               hintText: 'Enter Author Name',
             ),
             SizedBox(
@@ -64,7 +62,6 @@ class AddBookPageView extends GetView<AddBookPageController> {
             ),
             CustomTextFormField(
               controller: controller.publisherNameController,
-              hasPadding: false,
               hintText: 'Enter Publisher Name',
             ),
             SizedBox(
@@ -154,13 +151,17 @@ class AddBookPageView extends GetView<AddBookPageController> {
                     width: Get.width,
                     decoration: BoxDecoration(
                       color: AppColors.fillColor,
-                      borderRadius: BorderRadius.circular(23.sp),
+                      borderRadius: BorderRadius.circular(15.sp),
+                      image: controller.imagePath != null
+                          ? DecorationImage(
+                              image: FileImage(
+                                File(controller.imagePath?.path ?? ''),
+                              ),
+                              fit: BoxFit.cover)
+                          : null,
                     ),
                     child: controller.imagePath != null
-                        ? Image.file(
-                            File(controller.imagePath?.path ?? ''),
-                            fit: BoxFit.cover,
-                          )
+                        ? null
                         : const Icon(
                             Icons.add_a_photo_outlined,
                             size: 50,
