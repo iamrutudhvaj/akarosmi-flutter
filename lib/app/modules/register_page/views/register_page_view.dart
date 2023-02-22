@@ -15,15 +15,11 @@ class RegisterPageView extends GetView<RegisterPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+        body: SafeArea(
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 100.h,
-            ),
             Center(
               child: Container(
                 height: 100.h,
@@ -42,7 +38,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
             ),
             Center(
               child: Text(
-                "Register Your Account",
+                "Register at Akarosmi",
                 style: Styles.normal(25, fontWeight: FontWeight.w600),
               ),
             ),
@@ -50,23 +46,26 @@ class RegisterPageView extends GetView<RegisterPageController> {
               height: 20.h,
             ),
             const CustomTextFormField(
-              hintText: "Frist Name",
+              hintText: "First name",
               textInputType: TextInputType.name,
+              label: "First name",
             ),
             SizedBox(
-              height: 15.h,
+              height: 10.h,
             ),
             const CustomTextFormField(
-              hintText: "Last Name",
+              hintText: "Last name",
               textInputType: TextInputType.name,
+              label: "Last name",
             ),
             SizedBox(
-              height: 15.h,
+              height: 10.h,
             ),
             CustomTextFormField(
               readonly: true,
+              label: "Date of birth",
               controller: controller.dobController,
-              hintText: "Date of Birth",
+              hintText: "Date of birth",
               suffixIcon: const Icon(Icons.calendar_today_outlined),
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
@@ -106,70 +105,62 @@ class RegisterPageView extends GetView<RegisterPageController> {
               },
             ),
             SizedBox(
-              height: 15.h,
+              height: 10.h,
             ),
-            SizedBox(
-              height: 15.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 16.w),
-              child: Text(
-                "Gender",
-                style: Styles.normal(20, fontWeight: FontWeight.w600),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  "Gender",
+                  style: Styles.normal(20, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: controller.genderItem
+                  .map((e) => Row(
+                        children: [
+                          Obx(
+                            () => Radio(
+                              value: e,
+                              groupValue: controller.selectedGender.value,
+                              onChanged: (value) {
+                                controller.isSelectedCategory = true;
+                                controller.selectedGender.value = value;
+                              },
+                              activeColor: Colors.black,
+                              fillColor:
+                                  MaterialStateProperty.all(AppColors.black),
+                            ),
+                          ),
+                          Text(
+                            e,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.black,
+                            ),
+                          ),
+                        ],
+                      ))
+                  .toList(),
+            ),
             SizedBox(
               height: 15.h,
             ),
-            SizedBox(
-              height: 25.h,
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        Obx(
-                          () => Radio(
-                            value: controller.genderItem[index],
-                            groupValue: controller.selectedGender.value,
-                            onChanged: (value) {
-                              controller.isSelectedCategory = true;
-                              controller.selectedGender.value = value;
-                            },
-                            activeColor: Colors.black,
-                            fillColor:
-                                MaterialStateProperty.all(AppColors.black),
-                          ),
-                        ),
-                        Text(
-                          controller.genderItem[index],
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.black,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(
-                        width: 10.w,
-                      ),
-                  itemCount: controller.genderItem.length),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
             const CustomTextFormField(
-              hintText: "Mobile No.",
+              label: "Mobile number",
+              hintText: "Mobile number",
               textInputType: TextInputType.number,
-              maxleng: 10,
+              maxLength: 10,
             ),
             SizedBox(
-              height: 15.h,
+              height: 10.h,
             ),
             const CustomTextFormField(
+              label: "Email",
               hintText: "Email",
               textInputType: TextInputType.emailAddress,
             ),
