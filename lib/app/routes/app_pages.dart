@@ -4,8 +4,8 @@ import '../modules/home_page/bindings/home_page_binding.dart';
 import '../modules/home_page/views/home_page_view.dart';
 import '../modules/login_page/bindings/login_page_binding.dart';
 import '../modules/login_page/views/login_page_view.dart';
-import '../modules/ragister_page/bindings/ragister_page_binding.dart';
-import '../modules/ragister_page/views/ragister_page_view.dart';
+import '../modules/register_page/bindings/register_page_binding.dart';
+import '../modules/register_page/views/register_page_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
 
@@ -30,10 +30,10 @@ class AppPages {
       binding: HomePageBinding(),
     ),
     GetPage(
-      name: _Paths.RAGISTER_PAGE,
-      page: () => const RagisterPageView(),
-      binding: RagisterPageBinding(),
-         ),
+      name: _Paths.REGISTER_PAGE,
+      page: () => const RegisterPageView(),
+      binding: RegisterPageBinding(),
+    ),
     GetPage(
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),

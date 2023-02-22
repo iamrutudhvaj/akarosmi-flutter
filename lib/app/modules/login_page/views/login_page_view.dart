@@ -109,9 +109,9 @@ class LoginPageView extends GetView<LoginPageController> {
                     text: "Don't have an account? ",
                     children: [
                       TextSpan(
-                        text: "Ragister",
+                        text: "Register",
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(Routes.RAGISTER_PAGE),
+                          ..onTap = () => Get.toNamed(Routes.REGISTER_PAGE),
                         style: TextStyle(
                           color: AppColors.blue,
                           fontWeight: FontWeight.bold,

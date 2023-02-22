@@ -8,10 +8,10 @@ import '../../../core/theme/style.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
-import '../controllers/ragister_page_controller.dart';
+import '../controllers/register_page_controller.dart';
 
-class RagisterPageView extends GetView<RagisterPageController> {
-  const RagisterPageView({Key? key}) : super(key: key);
+class RegisterPageView extends GetView<RegisterPageController> {
+  const RegisterPageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class RagisterPageView extends GetView<RagisterPageController> {
             ),
             Center(
               child: Text(
-                "Ragister Your Account",
+                "Register Your Account",
                 style: Styles.normal(25, fontWeight: FontWeight.w600),
               ),
             ),
@@ -180,7 +180,7 @@ class RagisterPageView extends GetView<RagisterPageController> {
               child: PrimaryButton(
                 width: 150.w,
                 onPressed: () {},
-                child: const Text("Ragister"),
+                child: const Text("Register"),
               ),
             ),
             SizedBox(

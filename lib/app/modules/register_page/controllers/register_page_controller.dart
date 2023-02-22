@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RagisterPageController extends GetxController {
+class RegisterPageController extends GetxController {
   TextEditingController dobController = TextEditingController();
 
   var selectedGender = "".obs;
