@@ -3,18 +3,23 @@ import 'package:get/get.dart';
 
 class BooksPageController extends GetxController
     with GetTickerProviderStateMixin {
-  late AnimationController _controller;
+  late AnimationController animationController;
+
+  // RxList<String> bookList = ['abc', 'abcjh', 'bmbnj', 'hghjv'].obs;
+
+  RxList<String> bookList = RxList<String>.empty(growable: true);
 
   @override
   void onInit() {
-    _controller = AnimationController(
+    bookList.addAll(['abc', 'abcjh', 'bmbnj', 'hghjv']);
+    animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
     super.onInit();
   }
 
   @override
   dispose() {
-    _controller.dispose();
+    animationController.dispose();
     super.dispose();
   }
 }

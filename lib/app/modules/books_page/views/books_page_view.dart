@@ -36,33 +36,71 @@ class BooksPageView extends GetView<BooksPageController> {
         ],
       ),
       body: ListView(
-        children: ListTile.divideTiles(
-          context: context,
-          tiles: List.generate(2, (index) {
-            return SlideMenu(
-              menuItems: <Widget>[
-                Container(
-                  color: Colors.black12,
-                  child: IconButton(
-                    icon: const Icon(Icons.more_horiz),
-                    onPressed: () {},
-                  ),
-                ),
-                Container(
-                  color: Colors.red,
-                  child: IconButton(
-                    color: Colors.white,
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {},
-                  ),
-                ),
-              ],
-              child: const ListTile(
-                title: Text("Edit Book"),
-              ),
-            );
-          }),
-        ).toList(),
+        children: [
+          Obx(() => ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.bookList.length,
+                itemBuilder: (context, index) {
+                  return SlideMenu(
+                    menuItems: <Widget>[
+                      Container(
+                        color: Colors.black12,
+                        child: IconButton(
+                          icon: const Icon(Icons.edit_document),
+                          onPressed: () {
+                            Get.toNamed(Routes.ADD_BOOK_PAGE,
+                                arguments: "Edit Page");
+                          },
+                        ),
+                      ),
+                      Container(
+                        color: Colors.red,
+                        child: IconButton(
+                          color: Colors.white,
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  content: Text(
+                                      "Are you sure you want to delete ${controller.bookList[index]}?"),
+                                  actions: <Widget>[
+                                    MaterialButton(
+                                      child: const Text(
+                                        "Cancel",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                    ),
+                                    MaterialButton(
+                                      child: const Text(
+                                        "Delete",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      onPressed: () {
+                                        controller.bookList.removeAt(index);
+                                        Get.back();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                    child: ListTile(
+                      title: Text(controller.bookList[index]),
+                    ),
+                    
+                  );
+                },
+              ))
+        ],
       ),
     );
   }
