@@ -82,11 +82,11 @@ class LoginPageView extends GetView<LoginPageController> {
                         controller.obsecureText = !controller.obsecureText;
                       },
                     ),
-                    textInputType: TextInputType.number,
+                    textInputType: TextInputType.visiblePassword,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 195.w),
+                Align(
+                  alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
                       Get.toNamed(Routes.RESET_PASSWORD);
@@ -99,8 +99,10 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 PrimaryButton(
                   width: 150.w,
-                  onPressed: () {},
-                  child: const Text("login"),
+                  onPressed: () {
+                    Get.offAllNamed(Routes.HOME_PAGE);
+                  },
+                  child: const Text("Login"),
                 ),
                 SizedBox(
                   height: 20.h,
