@@ -13,7 +13,7 @@ class BooksPageView extends GetView<BooksPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.transparent,
+        backgroundColor: AppColors.white,
         elevation: 0,
         title: Text(
           "Books",
