@@ -6,16 +6,18 @@ import '../modules/books_page/bindings/books_page_binding.dart';
 import '../modules/books_page/views/books_page_view.dart';
 import '../modules/dashboard_page/bindings/dashboard_page_binding.dart';
 import '../modules/dashboard_page/views/dashboard_page_view.dart';
+import '../modules/forget_password_page/bindings/forget_password_page_binding.dart';
+import '../modules/forget_password_page/views/forget_password_page_view.dart';
 import '../modules/home_page/bindings/home_page_binding.dart';
 import '../modules/home_page/views/home_page_view.dart';
 import '../modules/login_page/bindings/login_page_binding.dart';
 import '../modules/login_page/views/login_page_view.dart';
-import '../modules/register_page/bindings/register_page_binding.dart';
-import '../modules/register_page/views/register_page_view.dart';
 import '../modules/persons_page/bindings/persons_page_binding.dart';
 import '../modules/persons_page/views/persons_page_view.dart';
-import '../modules/reset_password/bindings/reset_password_binding.dart';
-import '../modules/reset_password/views/reset_password_view.dart';
+import '../modules/register_page/bindings/register_page_binding.dart';
+import '../modules/register_page/views/register_page_view.dart';
+import '../modules/reset_password_page/bindings/reset_password_page_binding.dart';
+import '../modules/reset_password_page/views/reset_password_page_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -43,9 +45,9 @@ class AppPages {
       binding: RegisterPageBinding(),
     ),
     GetPage(
-      name: _Paths.RESET_PASSWORD,
-      page: () => const ResetPasswordView(),
-      binding: ResetPasswordBinding(),
+      name: _Paths.RESET_PASSWORD_PAGE,
+      page: () => const ResetPasswordPageView(),
+      binding: ResetPasswordPageBinding(),
     ),
     GetPage(
       name: _Paths.ADD_BOOK_PAGE,
@@ -66,6 +68,11 @@ class AppPages {
       name: _Paths.PERSONS_PAGE,
       page: () => const PersonsPageView(),
       binding: PersonsPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGET_PASSWORD_PAGE,
+      page: () => const ForgetPasswordPageView(),
+      binding: ForgetPasswordPageBinding(),
     ),
   ];
 }

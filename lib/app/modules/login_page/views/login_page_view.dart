@@ -34,8 +34,8 @@ class LoginPageView extends GetView<LoginPageController> {
                       color: AppColors.greyWhite,
                       shape: BoxShape.circle,
                       image: const DecorationImage(
-                        image: AssetImage("assets/images/login.png"),
-                      ),
+                          image: AssetImage("assets/images/login.png"),
+                          fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -89,7 +89,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
-                      Get.toNamed(Routes.RESET_PASSWORD);
+                      Get.toNamed(Routes.FORGET_PASSWORD_PAGE);
                     },
                     child: const Text('Forget Password?'),
                   ),
