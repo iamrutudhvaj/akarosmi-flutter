@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
 
   const CustomTextFormField({
     Key? key,
-    required this.controller,
+    this.controller,
     this.hintText,
     this.validator,
     this.hasPadding = true,
