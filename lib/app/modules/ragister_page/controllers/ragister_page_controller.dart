@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RagisterPageController extends GetxController {
   TextEditingController dobController = TextEditingController();
+
   var selectedGender = "".obs;
-  var selectedDate = DateTime.now().obs;
 
   onChnageGender(var gender) {
     selectedGender.value = gender;

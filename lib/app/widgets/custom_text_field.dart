@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/theme/color.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  // final TextEditingController controller;
   final String? hintText;
   final TextEditingController? controller;
   final dynamic validator;
@@ -14,7 +12,6 @@ class CustomTextFormField extends StatelessWidget {
   final dynamic icon;
   final TextInputType? textInputType;
   final int? maxleng;
-  // final Color? color;
   final dynamic onTap;
   final dynamic focusNode;
   final bool? readonly;
@@ -22,10 +19,8 @@ class CustomTextFormField extends StatelessWidget {
 
   const CustomTextFormField({
     Key? key,
-    // required this.controller,
     this.hintText,
     this.validator,
-    // this.color,
     this.hasPadding = true,
     this.onChanged,
     this.suffixIcon,
@@ -42,50 +37,47 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: hasPadding! ? EdgeInsets.symmetric(horizontal: 10.sp) : null,
-      child: TextFormField(
-        controller: controller,
-        readOnly: readonly!,
-        obscureText: obscureText!,
-        // controller: controller,
-        focusNode: focusNode,
-        validator: validator,
-        onChanged: onChanged,
-        onTap: onTap,
-
-        cursorColor: AppColors.black,
-        decoration: InputDecoration(
-          fillColor: AppColors.fillColor,
-          filled: true,
-          prefixIcon: icon,
-          focusColor: AppColors.black,
-          suffixIcon: suffixIcon,
-          suffixIconColor: AppColors.black,
-          border: InputBorder.none,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.transparent),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.black),
-            borderRadius: BorderRadius.circular(15),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.black),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.black),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          hintText: hintText,
-          hintStyle: TextStyle(color: AppColors.black),
+    return TextFormField(
+      controller: controller,
+      textInputAction: TextInputAction.next,
+      readOnly: readonly!,
+      obscureText: obscureText!,
+      focusNode: focusNode,
+      validator: validator,
+      onChanged: onChanged,
+      onTap: onTap,
+      cursorColor: AppColors.black,
+      decoration: InputDecoration(
+        counterText: "",
+        fillColor: AppColors.fillColor,
+        filled: true,
+        prefixIcon: icon,
+        focusColor: AppColors.black,
+        suffixIcon: suffixIcon,
+        suffixIconColor: AppColors.black,
+        border: InputBorder.none,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.transparent),
+          borderRadius: BorderRadius.circular(15),
         ),
-        style:
-            TextStyle(color: AppColors.black, decoration: TextDecoration.none),
-        keyboardType: textInputType, maxLength: maxleng,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.black),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.black),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: AppColors.black),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        hintText: hintText,
+        hintStyle: TextStyle(color: AppColors.black),
       ),
+      style: TextStyle(color: AppColors.black, decoration: TextDecoration.none),
+      keyboardType: textInputType,
+      maxLength: maxleng,
     );
   }
 }

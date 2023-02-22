@@ -1,11 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
 import '../controllers/ragister_page_controller.dart';
@@ -181,6 +181,29 @@ class RagisterPageView extends GetView<RagisterPageController> {
                 width: 150.w,
                 onPressed: () {},
                 child: const Text("Ragister"),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Center(
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(color: AppColors.grey),
+                  text: "Already have account? ",
+                  children: [
+                    TextSpan(
+                      text: "Login",
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => Get.toNamed(Routes.LOGIN_PAGE),
+                      style: TextStyle(
+                        color: AppColors.blue,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
             SizedBox(
