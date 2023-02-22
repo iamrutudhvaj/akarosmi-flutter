@@ -34,8 +34,8 @@ class LoginPageView extends GetView<LoginPageController> {
                       color: AppColors.greyWhite,
                       shape: BoxShape.circle,
                       image: const DecorationImage(
-                        image: AssetImage("assets/images/login.png"),
-                      ),
+                          image: AssetImage("assets/images/login.png"),
+                          fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -56,6 +56,7 @@ class LoginPageView extends GetView<LoginPageController> {
                     color: AppColors.black,
                   ),
                   hintText: "Email",
+                  textInputType: TextInputType.emailAddress,
                 ),
                 SizedBox(
                   height: 10.h,
@@ -81,13 +82,14 @@ class LoginPageView extends GetView<LoginPageController> {
                         controller.obsecureText = !controller.obsecureText;
                       },
                     ),
+                    textInputType: TextInputType.visiblePassword,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 195.w),
+                Align(
+                  alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
-                      Get.toNamed(Routes.RESET_PASSWORD);
+                      Get.toNamed(Routes.FORGET_PASSWORD_PAGE);
                     },
                     child: const Text('Forget Password?'),
                   ),
@@ -97,8 +99,10 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 PrimaryButton(
                   width: 150.w,
-                  onPressed: () {},
-                  child: const Text("login"),
+                  onPressed: () {
+                    Get.offAllNamed(Routes.HOME_PAGE);
+                  },
+                  child: const Text("Login"),
                 ),
                 SizedBox(
                   height: 20.h,
@@ -109,9 +113,9 @@ class LoginPageView extends GetView<LoginPageController> {
                     text: "Don't have an account? ",
                     children: [
                       TextSpan(
-                        text: "Ragister",
+                        text: "Register",
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.offAllNamed(Routes.HOME_PAGE),
+                          ..onTap = () => Get.toNamed(Routes.REGISTER_PAGE),
                         style: TextStyle(
                           color: AppColors.blue,
                           fontWeight: FontWeight.bold,

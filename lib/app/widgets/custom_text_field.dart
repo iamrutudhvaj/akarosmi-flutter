@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/theme/color.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  final TextEditingController controller;
   final String? hintText;
+  final TextEditingController? controller;
   final dynamic validator;
   final bool? hasPadding;
   final bool? obscureText;
   final dynamic onChanged;
   final dynamic suffixIcon;
   final dynamic icon;
-  // final Color? color;
+  final TextInputType? textInputType;
+  final int? maxLength;
   final dynamic onTap;
   final dynamic focusNode;
+  final bool? readonly;
   final bool? errorBorder;
+  final String? label;
 
   const CustomTextFormField({
     Key? key,
-    required this.controller,
+    this.controller,
     this.hintText,
     this.validator,
-    // this.color,
     this.hasPadding = true,
     this.onChanged,
     this.suffixIcon,
@@ -30,27 +31,38 @@ class CustomTextFormField extends StatelessWidget {
     this.errorBorder = false,
     this.obscureText = false,
     this.icon,
+    this.textInputType,
+    this.maxLength,
+    this.readonly = false,
+    this.label,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: hasPadding! ? EdgeInsets.symmetric(horizontal: 10.sp) : null,
+    return Padding(
+      padding: hasPadding == true
+          ? const EdgeInsets.symmetric(horizontal: 16)
+          : EdgeInsets.zero,
       child: TextFormField(
-        obscureText: obscureText!,
         controller: controller,
+        textInputAction: TextInputAction.next,
+        readOnly: readonly!,
+        obscureText: obscureText!,
         focusNode: focusNode,
         validator: validator,
         onChanged: onChanged,
         onTap: onTap,
-
         cursorColor: AppColors.black,
         decoration: InputDecoration(
+          counterText: "",
           fillColor: AppColors.fillColor,
+          labelText: label,
+          labelStyle: TextStyle(color: AppColors.black),
           filled: true,
           prefixIcon: icon,
-          focusColor: AppColors.blue,
+          focusColor: AppColors.black,
           suffixIcon: suffixIcon,
+          suffixIconColor: AppColors.black,
           border: InputBorder.none,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: AppColors.transparent),
@@ -73,7 +85,8 @@ class CustomTextFormField extends StatelessWidget {
         ),
         style:
             TextStyle(color: AppColors.black, decoration: TextDecoration.none),
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: textInputType,
+        maxLength: maxLength,
       ),
     );
   }

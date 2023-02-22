@@ -7,10 +7,10 @@ import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
-import '../controllers/reset_password_controller.dart';
+import '../controllers/reset_password_page_controller.dart';
 
-class ResetPasswordView extends GetView<ResetPasswordController> {
-  const ResetPasswordView({Key? key}) : super(key: key);
+class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
+  const ResetPasswordPageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,9 +21,33 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Center(
+              child: Container(
+                height: 100.h,
+                width: 100.w,
+                decoration: BoxDecoration(
+                  color: AppColors.greyWhite,
+                  shape: BoxShape.circle,
+                  image: const DecorationImage(
+                      image: AssetImage("assets/images/login.png"),
+                      fit: BoxFit.cover),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5.h,
+            ),
             Text(
-              "Reset Password",
+              "Set New Password",
               style: Styles.normal(25, fontWeight: FontWeight.w600),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Text(
+              "Your new password must be different to previously used passwords.",
+              textAlign: TextAlign.center,
+              style: Styles.normal(16, fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: 20.h,
@@ -36,7 +60,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   Icons.lock,
                   color: AppColors.black,
                 ),
-                hintText: "old password",
+                hintText: "Old password",
                 suffixIcon: InkWell(
                   child: Icon(
                     controller.obsecureText
@@ -62,7 +86,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   Icons.lock,
                   color: AppColors.black,
                 ),
-                hintText: "new password",
+                hintText: "New password",
                 suffixIcon: InkWell(
                   child: Icon(
                     controller.obsecureTextNewPass
@@ -89,7 +113,7 @@ class ResetPasswordView extends GetView<ResetPasswordController> {
                   Icons.lock,
                   color: AppColors.black,
                 ),
-                hintText: "confirm password",
+                hintText: "Confirm password",
                 suffixIcon: InkWell(
                   child: Icon(
                     controller.obsecureTextConfirmPass
