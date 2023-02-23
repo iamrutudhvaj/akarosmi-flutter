@@ -18,8 +18,8 @@ class AddBookPageView extends GetView<AddBookPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColors.transparent,
+        elevation: 5,
+        backgroundColor: AppColors.white,
         iconTheme: IconThemeData(color: AppColors.black),
         title: Text(
           'Add Book',
@@ -34,7 +34,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              controller.name == "Edit Page" ? "Edit Book" : 'Name',
+              controller.name == "Edit Page" ? "Edit Book" : "",
               style: Styles.normal(16, fontWeight: FontWeight.w600),
             ),
             SizedBox(

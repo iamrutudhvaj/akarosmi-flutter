@@ -21,7 +21,7 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
           style: Styles.normal(20, color: AppColors.black),
         ),
         backgroundColor: AppColors.white,
-        elevation: 0,
+        elevation: 5,
       ),
       body: SafeArea(
         child: SingleChildScrollView(

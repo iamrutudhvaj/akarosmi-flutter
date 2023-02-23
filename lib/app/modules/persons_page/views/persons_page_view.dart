@@ -33,7 +33,7 @@ class PersonsPageView extends GetView<PersonsPageController> {
               width: 10.w,
             )
           ],
-          elevation: 0,
+          elevation: 5,
         ),
         body: Column(
           children: const [],
