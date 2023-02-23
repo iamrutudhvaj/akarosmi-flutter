@@ -21,6 +21,7 @@ class LoginPageController extends GetxController {
   @override
   void onInit() {
     emailController.text = (Get.arguments as String?) ?? '';
+
     super.onInit();
   }
 
@@ -38,20 +39,13 @@ class LoginPageController extends GetxController {
       });
       appController.userData = response.data;
       StorageService.setToken(response.data?.token ?? '');
-
-      Get.offAllNamed(Routes.HOME_PAGE);
       Get.back();
+      Get.offAllNamed(Routes.HOME_PAGE);
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
     } catch (e) {
       Get.back();
     }
-  }
-
-  @override
-  void onInit() {
-    appController.checkAuthStatus();
-    super.onInit();
   }
 }

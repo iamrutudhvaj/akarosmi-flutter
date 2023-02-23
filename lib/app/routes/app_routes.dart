@@ -15,6 +15,7 @@ abstract class Routes {
   static const PERSONS_PAGE = _Paths.PERSONS_PAGE;
   static const FORGET_PASSWORD_PAGE = _Paths.FORGET_PASSWORD_PAGE;
   static const ADD_PERSON_DETAILS_PAGE = _Paths.ADD_PERSON_DETAILS_PAGE;
+  static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const PERSONS_PAGE = '/persons-page';
   static const FORGET_PASSWORD_PAGE = '/forget-password-page';
   static const ADD_PERSON_DETAILS_PAGE = '/add-person-details-page';
+  static const SPLASH_SCREEN = '/splash-screen';
 }

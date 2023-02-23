@@ -70,7 +70,7 @@ class ForgetPasswordPageView extends GetView<ForgetPasswordPageController> {
             PrimaryButton(
               width: 150.w,
               onPressed: () {
-                Get.toNamed(Routes.RESET_PASSWORD_PAGE);
+                Get.toNamed(Routes.LOGIN_PAGE);
               },
               child: const Text("Reset Password"),
             ),

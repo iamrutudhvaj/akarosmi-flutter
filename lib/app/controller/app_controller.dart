@@ -9,12 +9,14 @@ class AppController extends GetxController {
   UserData? get userData => _userData.value;
   set userData(UserData? value) => _userData.value = value;
 
-  void checkAuthStatus() async {
-    final token = await StorageService.getToken();
+  bool firstTimeCheckForNavigation = true;
+  void checkAuthStatus() {
+    final token = StorageService.getToken();
+
     if (token != null) {
-      Get.offAllNamed(Routes.LOGIN_PAGE);
-    } else {
       Get.offAllNamed(Routes.HOME_PAGE);
+    } else {
+      Get.offAllNamed(Routes.LOGIN_PAGE);
     }
   }
 }

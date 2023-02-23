@@ -11,12 +11,12 @@ class StorageService {
     await _pre.write(StorageKeys.token, token);
   }
 
-  static Future<String?> getToken() async {
+  static String? getToken() {
     return _pre.read(StorageKeys.token);
   }
 
   static Future<void> clearToken() async {
-    return _pre.erase();
+    return _pre.remove(StorageKeys.token);
   }
 }
 
