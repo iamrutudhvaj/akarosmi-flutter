@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../widgets/primary_button.dart';
 import '../controllers/add_book_page_controller.dart';
 
 class AddBookPageView extends GetView<AddBookPageController> {
@@ -16,56 +17,52 @@ class AddBookPageView extends GetView<AddBookPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppColors.transparent,
+        iconTheme: IconThemeData(color: AppColors.black),
+        title: Text(
+          'Add Book',
+          style: Styles.normal(
+            20,
+            color: AppColors.black,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text(
+              controller.name == "Edit Page" ? "Edit Book" : 'Name',
+              style: Styles.normal(16, fontWeight: FontWeight.w600),
+            ),
             SizedBox(
               height: 20.h,
             ),
-            Text(
-              'Name',
-              style: Styles.normal(16, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
             CustomTextFormField(
               controller: controller.nameController,
-              hintText: 'Enter Name',
+              hintText: 'Enter name',
+              label: 'Enter Name',
             ),
             SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'Authore Name',
-              style: Styles.normal(16, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              height: 10.h,
+              height: 16.h,
             ),
             CustomTextFormField(
               controller: controller.authoreNameController,
-              hintText: 'Enter Author Name',
+              hintText: 'Enter author name',
+              label: 'Enter Author Name',
             ),
             SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              'Publisher Name',
-              style: Styles.normal(16, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              height: 10.h,
+              height: 16.h,
             ),
             CustomTextFormField(
               controller: controller.publisherNameController,
-              hintText: 'Enter Publisher Name',
+              hintText: 'Enter publisher name',
+              label: 'Enter Publisher Name',
             ),
             SizedBox(
-              height: 10.h,
+              height: 16.h,
             ),
             GestureDetector(
               onTap: () {
@@ -140,34 +137,47 @@ class AddBookPageView extends GetView<AddBookPageController> {
                               ),
                             )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
                 );
               },
-              child: Obx(() => Container(
-                    height: 200.h,
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      color: AppColors.fillColor,
-                      borderRadius: BorderRadius.circular(15.sp),
-                      image: controller.imagePath != null
-                          ? DecorationImage(
-                              image: FileImage(
-                                File(controller.imagePath?.path ?? ''),
-                              ),
-                              fit: BoxFit.cover)
-                          : null,
+              child: Obx(() => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Container(
+                      height: 200.h,
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.fillColor,
+                        borderRadius: BorderRadius.circular(15.sp),
+                        image: controller.imagePath != null
+                            ? DecorationImage(
+                                image: FileImage(
+                                  File(controller.imagePath?.path ?? ''),
+                                ),
+                                fit: BoxFit.cover)
+                            : null,
+                      ),
+                      child: controller.imagePath != null
+                          ? null
+                          : const Icon(
+                              Icons.add_a_photo_outlined,
+                              size: 50,
+                            ),
                     ),
-                    child: controller.imagePath != null
-                        ? null
-                        : const Icon(
-                            Icons.add_a_photo_outlined,
-                            size: 50,
-                          ),
                   )),
-            )
+            ),
+            SizedBox(
+              height: 60.h,
+            ),
+            PrimaryButton(
+              width: 150.w,
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Add Book"),
+            ),
           ],
         ),
       ),
