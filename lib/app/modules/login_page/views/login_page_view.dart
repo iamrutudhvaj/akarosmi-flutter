@@ -99,9 +99,7 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 PrimaryButton(
                   width: 150.w,
-                  onPressed: () {
-                    Get.offAllNamed(Routes.HOME_PAGE);
-                  },
+                  onPressed:controller.userLogin,
                   child: const Text("Login"),
                 ),
                 SizedBox(

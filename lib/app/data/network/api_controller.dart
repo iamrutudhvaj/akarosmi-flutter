@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiController {
   static late Dio _dio;
@@ -8,7 +9,7 @@ class ApiController {
     BaseOptions dioOptions = BaseOptions(
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
-      baseUrl: 'http://192.168.29.184:5000',
+      baseUrl: dotenv.env['BASE_URL']!,
       contentType: Headers.jsonContentType,
       responseType: ResponseType.json,
       headers: {
