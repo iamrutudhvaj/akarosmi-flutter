@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/add_book_page/bindings/add_book_page_binding.dart';
 import '../modules/add_book_page/views/add_book_page_view.dart';
+import '../modules/add_person_details_page/bindings/add_person_details_page_binding.dart';
+import '../modules/add_person_details_page/views/add_person_details_page_view.dart';
 import '../modules/books_page/bindings/books_page_binding.dart';
 import '../modules/books_page/views/books_page_view.dart';
 import '../modules/dashboard_page/bindings/dashboard_page_binding.dart';
@@ -73,6 +75,11 @@ class AppPages {
       name: _Paths.FORGET_PASSWORD_PAGE,
       page: () => const ForgetPasswordPageView(),
       binding: ForgetPasswordPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_PERSON_DETAILS_PAGE,
+      page: () => const AddPersonDetailsPageView(),
+      binding: AddPersonDetailsPageBinding(),
     ),
   ];
 }
