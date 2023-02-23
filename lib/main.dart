@@ -5,9 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'app/core/theme/color.dart';
+import 'app/data/network/api_controller.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
+  ApiController.init();
   runApp(const MyApp());
 }
 

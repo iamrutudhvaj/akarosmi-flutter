@@ -50,7 +50,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   height: 20.h,
                 ),
                 CustomTextFormField(
-                  controller: controller.emailCotroller,
+                  controller: controller.emailController,
                   icon: Icon(
                     Icons.email,
                     color: AppColors.black,
@@ -63,8 +63,8 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 Obx(
                   () => CustomTextFormField(
-                    controller: controller.passwordCotroller,
-                    obscureText: controller.obsecureText,
+                    controller: controller.passwordController,
+                    obscureText: controller.obscureText,
                     icon: Icon(
                       Icons.lock,
                       color: AppColors.black,
@@ -72,14 +72,14 @@ class LoginPageView extends GetView<LoginPageController> {
                     hintText: "Password",
                     suffixIcon: InkWell(
                       child: Icon(
-                        controller.obsecureText
+                        controller.obscureText
                             ? Icons.visibility_off
                             : Icons.visibility,
                         color: AppColors.black,
                         size: 20.sp,
                       ),
                       onTap: () {
-                        controller.obsecureText = !controller.obsecureText;
+                        controller.obscureText = !controller.obscureText;
                       },
                     ),
                     textInputType: TextInputType.visiblePassword,
