@@ -1,4 +1,5 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
+import 'package:akarosmi/app/core/service/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import '../../../routes/app_pages.dart';
 class LoginPageController extends GetxController {
   TextEditingController passwordCotroller = TextEditingController();
   TextEditingController emailCotroller = TextEditingController();
-
   final appController = Get.find<AppController>();
 
   final _obsecureText = true.obs;
@@ -30,6 +30,8 @@ class LoginPageController extends GetxController {
         "password": passwordCotroller.text,
       });
       appController.userData = response.data;
+      StorageService.setToken(response.data?.token ?? '');
+
       Get.offAllNamed(Routes.HOME_PAGE);
       Get.back();
     } on DioError catch (e) {
@@ -37,5 +39,11 @@ class LoginPageController extends GetxController {
       ScaffoldMessenger.of(Get.context!).showSnackBar(
           SnackBar(content: Text("${(e.response?.data as Map)["message"]}")));
     }
+  }
+
+  @override
+  void onInit() {
+    appController.checkAuthStatus();
+    super.onInit();
   }
 }

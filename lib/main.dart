@@ -1,4 +1,5 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
+import 'package:akarosmi/app/core/service/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,7 @@ import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
+  StorageService.init();
   ApiController.init();
   runApp(const MyApp());
 }
