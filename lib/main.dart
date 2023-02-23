@@ -1,13 +1,18 @@
+import 'package:akarosmi/app/controller/app_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
 import 'app/core/theme/color.dart';
+import 'app/data/network/api_controller.dart';
 import 'app/routes/app_pages.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+  ApiController.init();
   runApp(const MyApp());
 }
 
@@ -32,10 +37,18 @@ class MyApp extends StatelessWidget {
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
           home: child,
+          onInit: () {
+            Get.put(AppController());
+          },
           builder: (context, child) {
-            return MediaQuery(
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                child: child!);
+            return GestureDetector(
+              onTap: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: MediaQuery(
+                  data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                  child: child!),
+            );
           },
           theme: ThemeData(
               scaffoldBackgroundColor: AppColors.white,
