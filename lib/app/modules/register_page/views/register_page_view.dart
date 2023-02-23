@@ -45,7 +45,8 @@ class RegisterPageView extends GetView<RegisterPageController> {
             SizedBox(
               height: 20.h,
             ),
-            const CustomTextFormField(
+            CustomTextFormField(
+              controller: controller.firstNameController,
               hintText: "First name",
               textInputType: TextInputType.name,
               label: "First name",
@@ -53,7 +54,8 @@ class RegisterPageView extends GetView<RegisterPageController> {
             SizedBox(
               height: 10.h,
             ),
-            const CustomTextFormField(
+            CustomTextFormField(
+              controller: controller.lastNameController,
               hintText: "Last name",
               textInputType: TextInputType.name,
               label: "Last name",
@@ -127,7 +129,6 @@ class RegisterPageView extends GetView<RegisterPageController> {
                               value: e,
                               groupValue: controller.selectedGender.value,
                               onChanged: (value) {
-                                controller.isSelectedCategory = true;
                                 controller.selectedGender.value = value;
                               },
                               activeColor: Colors.black,
@@ -150,7 +151,8 @@ class RegisterPageView extends GetView<RegisterPageController> {
             SizedBox(
               height: 15.h,
             ),
-            const CustomTextFormField(
+            CustomTextFormField(
+              controller: controller.phoneNumberController,
               label: "Mobile number",
               hintText: "Mobile number",
               textInputType: TextInputType.number,
@@ -159,7 +161,8 @@ class RegisterPageView extends GetView<RegisterPageController> {
             SizedBox(
               height: 10.h,
             ),
-            const CustomTextFormField(
+            CustomTextFormField(
+              controller: controller.emailController,
               label: "Email",
               hintText: "Email",
               textInputType: TextInputType.emailAddress,
@@ -170,7 +173,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
             Center(
               child: PrimaryButton(
                 width: 150.w,
-                onPressed: () {},
+                onPressed: controller.userRegistration,
                 child: const Text("Register"),
               ),
             ),

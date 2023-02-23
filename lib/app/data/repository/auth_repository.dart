@@ -1,14 +1,21 @@
+import 'package:akarosmi/app/core/constant/uri.dart';
+import 'package:akarosmi/app/data/model/response_model/registration_response.dart';
+import 'package:akarosmi/app/data/network/api_controller.dart';
 import 'package:akarosmi/app/data/model/response_model/login_response.dart';
 
-import '../../core/constant/uri.dart';
-import '../network/api_controller.dart';
-
 class AuthRepository {
+  static Future<RegistrationResponse> registration(
+      {required Map<String, dynamic> requestData}) async {
+    final response =
+        await ApiController.post(path: UriPath.registration, data: requestData);
+    return RegistrationResponse.fromJson(response);
+  }
+
   static Future<LoginResponse> login(
-      {required Map<String, dynamic> reqestData}) async {
+      {required Map<String, dynamic> requestData}) async {
     final response = await ApiController.post(
       path: UriPath.login,
-      data: reqestData,
+      data: requestData,
     );
     return LoginResponse.fromJson(response);
   }
