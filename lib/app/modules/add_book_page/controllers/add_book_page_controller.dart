@@ -19,4 +19,13 @@ class AddBookPageController extends GetxController {
     imagePath = imageTemporary;
     Get.back();
   }
+
+  String? name;
+
+  @override
+  void onInit() {
+    name = Get.arguments;
+    print(name);
+    super.onInit();
+  }
 }

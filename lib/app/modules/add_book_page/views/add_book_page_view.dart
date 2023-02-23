@@ -33,6 +33,10 @@ class AddBookPageView extends GetView<AddBookPageController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Text(
+              controller.name == "Edit Page" ? "Edit Book" : 'Name',
+              style: Styles.normal(16, fontWeight: FontWeight.w600),
+            ),
             SizedBox(
               height: 20.h,
             ),
