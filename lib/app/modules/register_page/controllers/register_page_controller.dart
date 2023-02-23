@@ -1,9 +1,9 @@
 import 'package:akarosmi/app/data/repository/auth_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/toast.dart';
 import '../../../routes/app_pages.dart';
 
 class RegisterPageController extends GetxController {
@@ -41,13 +41,11 @@ class RegisterPageController extends GetxController {
         },
       );
       Get.offAllNamed(Routes.LOGIN_PAGE, arguments: emailController.text);
-      ScaffoldMessenger.of(Get.context!)
-          .showSnackBar(SnackBar(content: Text("${response.message}")));
+      ToastUtils.showBottomSnackbar("${response.message}");
       Get.back();
     } on DioError catch (e) {
       Get.back();
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(content: Text("${(e.response?.data as Map)["message"]}")));
+      ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
     } catch (e) {
       Get.back();
     }

@@ -1,9 +1,9 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/toast.dart';
 import '../../../data/repository/auth_repository.dart';
 import '../../../routes/app_pages.dart';
 
@@ -40,8 +40,7 @@ class LoginPageController extends GetxController {
       Get.back();
     } on DioError catch (e) {
       Get.back();
-      ScaffoldMessenger.of(Get.context!).showSnackBar(
-          SnackBar(content: Text("${(e.response?.data as Map)["message"]}")));
+      ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
     } catch (e) {
       Get.back();
     }
