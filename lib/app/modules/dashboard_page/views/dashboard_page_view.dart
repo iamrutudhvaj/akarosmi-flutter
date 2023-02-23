@@ -12,7 +12,7 @@ class DashboardPageView extends GetView<DashboardPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 5,
         backgroundColor: AppColors.white,
         centerTitle: true,
         title: Text(

@@ -15,7 +15,7 @@ class BooksPageView extends GetView<BooksPageController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
-        elevation: 0,
+        elevation: 5,
         title: Text(
           "Books",
           style: Styles.normal(
