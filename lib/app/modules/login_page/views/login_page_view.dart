@@ -89,7 +89,9 @@ class LoginPageView extends GetView<LoginPageController> {
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                     onPressed: () {
-                      Get.toNamed(Routes.FORGET_PASSWORD_PAGE);
+                      Get.toNamed(
+                        Routes.FORGET_PASSWORD_PAGE,
+                      );
                     },
                     child: const Text('Forget Password?'),
                   ),
@@ -113,7 +115,9 @@ class LoginPageView extends GetView<LoginPageController> {
                       TextSpan(
                         text: "Register",
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(Routes.REGISTER_PAGE),
+                          ..onTap = () => Get.toNamed(
+                                Routes.REGISTER_PAGE,
+                              ),
                         style: TextStyle(
                           color: AppColors.blue,
                           fontWeight: FontWeight.bold,

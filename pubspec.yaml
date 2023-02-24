@@ -58,9 +58,6 @@ flutter:
         - asset: assets\fonts\Karla\Karla-LightItalic.ttf
           weight: 300
           style: italic
-        - asset: assets\fonts\Karla\Karla-Italic-VariableFont_wght.ttf
-          weight: 600
-          style: italic
         - asset: assets\fonts\Karla\Karla-BoldItalic.ttf
           weight: 700
           style: italic

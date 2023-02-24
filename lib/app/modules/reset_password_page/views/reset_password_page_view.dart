@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
-
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
 import '../../../widgets/custom_text_field.dart';
@@ -54,8 +52,8 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
             ),
             Obx(
               () => CustomTextFormField(
-                controller: controller.oldPasswordCotroller,
-                obscureText: controller.obsecureText,
+                controller: controller.oldPasswordController,
+                obscureText: controller.obscureText,
                 icon: Icon(
                   Icons.lock,
                   color: AppColors.black,
@@ -63,14 +61,14 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
                 hintText: "Old password",
                 suffixIcon: InkWell(
                   child: Icon(
-                    controller.obsecureText
+                    controller.obscureText
                         ? Icons.visibility_off
                         : Icons.visibility,
                     color: AppColors.black,
                     size: 20.sp,
                   ),
                   onTap: () {
-                    controller.obsecureText = !controller.obsecureText;
+                    controller.obscureText = !controller.obscureText;
                   },
                 ),
               ),
@@ -80,8 +78,8 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
             ),
             Obx(
               () => CustomTextFormField(
-                controller: controller.newPasswordCotroller,
-                obscureText: controller.obsecureTextNewPass,
+                controller: controller.newPasswordController,
+                obscureText: controller.obscureTextNewPass,
                 icon: Icon(
                   Icons.lock,
                   color: AppColors.black,
@@ -89,15 +87,15 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
                 hintText: "New password",
                 suffixIcon: InkWell(
                   child: Icon(
-                    controller.obsecureTextNewPass
+                    controller.obscureTextNewPass
                         ? Icons.visibility_off
                         : Icons.visibility,
                     color: AppColors.black,
                     size: 20.sp,
                   ),
                   onTap: () {
-                    controller.obsecureTextNewPass =
-                        !controller.obsecureTextNewPass;
+                    controller.obscureTextNewPass =
+                        !controller.obscureTextNewPass;
                   },
                 ),
               ),
@@ -107,8 +105,8 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
             ),
             Obx(
               () => CustomTextFormField(
-                controller: controller.confirmPasswordCotroller,
-                obscureText: controller.obsecureTextConfirmPass,
+                controller: controller.confirmPasswordController,
+                obscureText: controller.obscureTextConfirmPass,
                 icon: Icon(
                   Icons.lock,
                   color: AppColors.black,
@@ -116,15 +114,15 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
                 hintText: "Confirm password",
                 suffixIcon: InkWell(
                   child: Icon(
-                    controller.obsecureTextConfirmPass
+                    controller.obscureTextConfirmPass
                         ? Icons.visibility_off
                         : Icons.visibility,
                     color: AppColors.black,
                     size: 20.sp,
                   ),
                   onTap: () {
-                    controller.obsecureTextConfirmPass =
-                        !controller.obsecureTextConfirmPass;
+                    controller.obscureTextConfirmPass =
+                        !controller.obscureTextConfirmPass;
                   },
                 ),
               ),
@@ -134,7 +132,7 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
             ),
             PrimaryButton(
               width: 150.w,
-              onPressed: () {},
+              onPressed: controller.userChangePassword,
               child: const Text("Reset Password"),
             ),
           ],
