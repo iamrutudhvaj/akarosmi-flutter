@@ -21,7 +21,6 @@ class LoginPageController extends GetxController {
   @override
   void onInit() {
     emailController.text = (Get.arguments as String?) ?? '';
-
     super.onInit();
   }
 
@@ -38,7 +37,7 @@ class LoginPageController extends GetxController {
         "password": passwordController.text,
       });
       appController.userData = response.data;
-      StorageService.setToken(response.data?.token ?? '');
+      await StorageService.setToken(response.data?.token ?? '');
       Get.back();
       Get.offAllNamed(Routes.HOME_PAGE);
     } on DioError catch (e) {

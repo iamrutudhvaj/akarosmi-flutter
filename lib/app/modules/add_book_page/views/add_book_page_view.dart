@@ -23,7 +23,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
         iconTheme: IconThemeData(color: AppColors.black),
         title: Text(
           'Add Book',
-          style: Styles.normal(
+          style: Styles.regular(
             20,
             color: AppColors.black,
           ),
@@ -35,7 +35,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
           children: [
             Text(
               controller.name == "Edit Page" ? "Edit Book" : "",
-              style: Styles.normal(16, fontWeight: FontWeight.w600),
+              style: Styles.regular(16, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 20.h,
@@ -90,7 +90,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
                         ),
                         Text(
                           "Add a photo to your book",
-                          style: Styles.normal(18,
+                          style: Styles.regular(18,
                               fontWeight: FontWeight.w600,
                               color: AppColors.grey),
                         ),
@@ -111,7 +111,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
                                   ),
                                   Text(
                                     "Camera",
-                                    style: Styles.normal(16,
+                                    style: Styles.regular(16,
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.black),
                                   ),
@@ -129,7 +129,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
                                   ),
                                   Text(
                                     "File",
-                                    style: Styles.normal(16,
+                                    style: Styles.regular(16,
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.black),
                                   ),

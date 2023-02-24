@@ -1,11 +1,12 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
-import 'package:akarosmi/app/core/service/storage_service.dart';
+import 'package:akarosmi/app/core/theme/theme_enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'app/core/theme/color.dart';
 import 'app/data/network/api_controller.dart';
@@ -13,7 +14,7 @@ import 'app/routes/app_pages.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-  StorageService.init();
+  await GetStorage.init();
   ApiController.init();
   runApp(const MyApp());
 }
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
           },
           theme: ThemeData(
               scaffoldBackgroundColor: AppColors.white,
-              colorScheme: ColorScheme.fromSwatch()),
+              colorScheme: ColorScheme.fromSwatch(),
+              fontFamily: FontFamily.karla.name),
           debugShowCheckedModeBanner: false,
         );
       },

@@ -13,7 +13,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
         title: const Text('SplashScreenView'),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Text(
           'SplashScreenView is working',
           style: TextStyle(fontSize: 20),
