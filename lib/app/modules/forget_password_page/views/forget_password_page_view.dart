@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
-import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
 import '../controllers/forget_password_page_controller.dart';
@@ -54,6 +53,7 @@ class ForgetPasswordPageView extends GetView<ForgetPasswordPageController> {
               height: 20.h,
             ),
             CustomTextFormField(
+              controller: controller.emailController,
               icon: Icon(
                 Icons.email,
                 color: AppColors.black,
@@ -69,10 +69,8 @@ class ForgetPasswordPageView extends GetView<ForgetPasswordPageController> {
             ),
             PrimaryButton(
               width: 150.w,
-              onPressed: () {
-                Get.toNamed(Routes.RESET_PASSWORD_PAGE);
-              },
-              child: const Text("Reset Password"),
+              onPressed: controller.userForgetPassword,
+              child: const Text("Sent Email"),
             ),
           ],
         ),

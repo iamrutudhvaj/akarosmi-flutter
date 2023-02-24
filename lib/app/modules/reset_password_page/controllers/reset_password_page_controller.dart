@@ -1,21 +1,54 @@
-import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import '../../../controller/app_controller.dart';
+import '../../../core/utils/toast.dart';
+import '../../../data/repository/auth_repository.dart';
+import '../../../routes/app_pages.dart';
 
 class ResetPasswordPageController extends GetxController {
-  TextEditingController newPasswordCotroller = TextEditingController();
-  TextEditingController oldPasswordCotroller = TextEditingController();
-  TextEditingController confirmPasswordCotroller = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController oldPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
-  final _obsecureText = true.obs;
-  bool get obsecureText => _obsecureText.value;
-  set obsecureText(bool value) => _obsecureText.value = value;
+  final _obscureText = true.obs;
+  bool get obscureText => _obscureText.value;
+  set obscureText(bool value) => _obscureText.value = value;
 
-  final _obsecureTextNewPass = true.obs;
-  bool get obsecureTextNewPass => _obsecureTextNewPass.value;
-  set obsecureTextNewPass(bool value) => _obsecureTextNewPass.value = value;
+  final _obscureTextNewPass = true.obs;
+  bool get obscureTextNewPass => _obscureTextNewPass.value;
+  set obscureTextNewPass(bool value) => _obscureTextNewPass.value = value;
 
-  final _obsecureTextConfirmPass = true.obs;
-  bool get obsecureTextConfirmPass => _obsecureTextConfirmPass.value;
-  set obsecureTextConfirmPass(bool value) =>
-      _obsecureTextConfirmPass.value = value;
+  final _obscureTextConfirmPass = true.obs;
+  bool get obscureTextConfirmPass => _obscureTextConfirmPass.value;
+  set obscureTextConfirmPass(bool value) =>
+      _obscureTextConfirmPass.value = value;
+
+  final appController = Get.find<AppController>();
+  Future<void> userChangePassword() async {
+    try {
+      Get.dialog(
+        const Center(
+          child: CupertinoActivityIndicator(),
+        ),
+        barrierDismissible: false,
+      );
+      final response = await AuthRepository.changePassword(requestData: {
+        "oldPass": oldPasswordController.text,
+        "newPass": newPasswordController.text,
+        "confPass": confirmPasswordController.text,
+      });
+      appController.userData = response.data;
+      //TODO: we need to update local storage token by latest token
+      Get.offAllNamed(
+        Routes.LOGIN_PAGE,
+      );
+      Get.back();
+    } on DioError catch (e) {
+      Get.back();
+      ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
+    } catch (e) {
+      Get.back();
+    }
+  }
 }

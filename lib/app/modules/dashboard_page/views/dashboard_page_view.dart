@@ -1,10 +1,8 @@
+import 'package:akarosmi/app/modules/dashboard_page/controllers/dashboard_page_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
-import '../controllers/dashboard_page_controller.dart';
 
 class DashboardPageView extends GetView<DashboardPageController> {
   const DashboardPageView({Key? key}) : super(key: key);
@@ -21,12 +19,6 @@ class DashboardPageView extends GetView<DashboardPageController> {
             20,
             color: AppColors.black,
           ),
-        ),
-      ),
-      body: const Center(
-        child: Text(
-          'DashboardPageView is working',
-          style: TextStyle(fontSize: 20),
         ),
       ),
     );
