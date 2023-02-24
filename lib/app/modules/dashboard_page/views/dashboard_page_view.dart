@@ -1,3 +1,5 @@
+import 'package:akarosmi/app/core/service/storage_service.dart';
+import 'package:akarosmi/app/modules/dashboard_page/views/drawer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,22 +13,24 @@ class DashboardPageView extends GetView<DashboardPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerView(),
       appBar: AppBar(
         elevation: 5,
         backgroundColor: AppColors.white,
         centerTitle: true,
+        iconTheme: IconThemeData(color: AppColors.black),
         title: Text(
           'DashboardPageView',
-          style: Styles.normal(
+          style: Styles.regular(
             20,
             color: AppColors.black,
           ),
         ),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
-          'DashboardPageView is working',
-          style: TextStyle(fontSize: 20),
+          "${StorageService.getToken()}",
+          style: const TextStyle(fontSize: 20),
         ),
       ),
     );

@@ -41,14 +41,14 @@ class ForgetPasswordPageView extends GetView<ForgetPasswordPageController> {
             Text(
               "No worries, we'll send you reset instructions.",
               textAlign: TextAlign.center,
-              style: Styles.normal(16, fontWeight: FontWeight.w400),
+              style: Styles.regular(16, fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: 10.h,
             ),
             Text(
               "Forget Password",
-              style: Styles.normal(25, fontWeight: FontWeight.w600),
+              style: Styles.regular(25, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 20.h,
@@ -70,7 +70,7 @@ class ForgetPasswordPageView extends GetView<ForgetPasswordPageController> {
             PrimaryButton(
               width: 150.w,
               onPressed: () {
-                Get.toNamed(Routes.RESET_PASSWORD_PAGE);
+                Get.toNamed(Routes.LOGIN_PAGE);
               },
               child: const Text("Reset Password"),
             ),

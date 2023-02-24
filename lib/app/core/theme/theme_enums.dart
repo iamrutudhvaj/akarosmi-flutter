@@ -1,1 +1,1 @@
-
+enum FontFamily { karla, fjallaOne }

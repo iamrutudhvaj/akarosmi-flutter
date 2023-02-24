@@ -20,6 +20,8 @@ import '../modules/register_page/bindings/register_page_binding.dart';
 import '../modules/register_page/views/register_page_view.dart';
 import '../modules/reset_password_page/bindings/reset_password_page_binding.dart';
 import '../modules/reset_password_page/views/reset_password_page_view.dart';
+import '../modules/splash_screen/bindings/splash_screen_binding.dart';
+import '../modules/splash_screen/views/splash_screen_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -28,7 +30,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.LOGIN_PAGE;
+  static const INITIAL = Routes.SPLASH_SCREEN;
 
   static final routes = [
     GetPage(
@@ -80,6 +82,11 @@ class AppPages {
       name: _Paths.ADD_PERSON_DETAILS_PAGE,
       page: () => const AddPersonDetailsPageView(),
       binding: AddPersonDetailsPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH_SCREEN,
+      page: () => const SplashScreenView(),
+      binding: SplashScreenBinding(),
     ),
   ];
 }

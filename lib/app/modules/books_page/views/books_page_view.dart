@@ -18,7 +18,7 @@ class BooksPageView extends GetView<BooksPageController> {
         elevation: 5,
         title: Text(
           "Books",
-          style: Styles.normal(
+          style: Styles.regular(
             20,
             color: AppColors.black,
           ),

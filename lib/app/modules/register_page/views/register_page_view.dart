@@ -39,7 +39,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
             Center(
               child: Text(
                 "Register at Akarosmi",
-                style: Styles.normal(25, fontWeight: FontWeight.w600),
+                style: Styles.regular(25, fontWeight: FontWeight.w600),
               ),
             ),
             SizedBox(
@@ -115,7 +115,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   "Gender",
-                  style: Styles.normal(20, fontWeight: FontWeight.w600),
+                  style: Styles.regular(20, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
