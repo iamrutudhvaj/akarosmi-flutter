@@ -1,3 +1,4 @@
+import 'package:akarosmi/app/core/service/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -33,18 +34,26 @@ class ResetPasswordPageController extends GetxController {
         ),
         barrierDismissible: false,
       );
-      final response = await AuthRepository.changePassword(requestData: {
-        "oldPass": oldPasswordController.text,
-        "newPass": newPasswordController.text,
-        "confPass": confirmPasswordController.text,
-      });
+      final response = await AuthRepository.changePassword(
+        requestData: {
+          "oldPass": oldPasswordController.text,
+          "newPass": newPasswordController.text,
+          "confPass": confirmPasswordController.text,
+        },
+      );
       appController.userData = response.data;
-      //TODO: we need to update local storage token by latest token
+      // ignore: todo
+      ///TODO: we need to update local storage token by latest token
+      StorageService.clearToken();
       Get.offAllNamed(
         Routes.LOGIN_PAGE,
       );
       Get.back();
     } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        StorageService.clearToken();
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
     } catch (e) {

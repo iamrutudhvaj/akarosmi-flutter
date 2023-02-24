@@ -14,10 +14,13 @@ class AuthRepository {
   }
 
   // Here we are using Login data response for returning data at the place of change password data because both model are same.
-  static Future<LoginResponse> changePassword(
-      {required Map<String, dynamic> requestData}) async {
+  static Future<LoginResponse> changePassword({
+    required Map<String, dynamic> requestData,
+  }) async {
     final response = await ApiController.post(
-        path: UriPath.changePassword, data: requestData);
+      path: UriPath.changePassword,
+      data: requestData,
+    );
     return LoginResponse.fromJson(response);
   }
 
