@@ -16,6 +16,8 @@ dependencies:
   flutter_slidable: ^2.0.0
   dio: ^5.0.0
   flutter_dotenv: ^5.0.2
+  get_storage: ^2.0.3
+
 dev_dependencies: 
   flutter_lints: ^2.0.0
   flutter_test: 
@@ -27,6 +29,48 @@ flutter:
     - assets/
     - assets/images/
     - .env
-   
+  fonts:
+    - family: karla
+      fonts:
+        - asset: assets\fonts\Karla\Karla-Bold.ttf
+          weight: 700
+        - asset: assets\fonts\Karla\Karla-Medium.ttf
+          weight: 500
+        - asset: assets\fonts\Karla\Karla-Regular.ttf
+          weight: 400
+        - asset: assets\fonts\Karla\Karla-SemiBold.ttf
+          weight: 600
+        - asset: assets\fonts\Karla\Karla-ExtraBold.ttf
+          weight: 800
+        - asset: assets\fonts\Karla\Karla-ExtraLight.ttf
+          weight: 200
+        - asset: assets\fonts\Karla\Karla-Light.ttf
+          weight: 300
+        - asset: assets\fonts\Karla\Karla-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets\fonts\Karla\Karla-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets\fonts\Karla\Karla-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets\fonts\Karla\Karla-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets\fonts\Karla\Karla-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets\fonts\Karla\Karla-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets\fonts\Karla\Karla-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+
+    - family: fjallaOne
+      fonts:
+        - asset: assets/fonts/Fjalla_One/FjallaOne-Regular.ttf
+          weight: 400 
     
 

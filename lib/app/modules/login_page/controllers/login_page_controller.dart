@@ -1,4 +1,5 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
+import 'package:akarosmi/app/core/service/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -36,8 +37,9 @@ class LoginPageController extends GetxController {
         "password": passwordController.text,
       });
       appController.userData = response.data;
-      Get.offAllNamed(Routes.HOME_PAGE);
+      await StorageService.setToken(response.data?.token ?? '');
       Get.back();
+      Get.offAllNamed(Routes.HOME_PAGE);
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");

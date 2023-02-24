@@ -18,7 +18,7 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
         centerTitle: true,
         title: Text(
           'Add Person Details',
-          style: Styles.normal(20, color: AppColors.black),
+          style: Styles.regular(20, color: AppColors.black),
         ),
         backgroundColor: AppColors.white,
         elevation: 5,

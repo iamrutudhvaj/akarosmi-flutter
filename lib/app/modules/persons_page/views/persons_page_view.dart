@@ -17,7 +17,7 @@ class PersonsPageView extends GetView<PersonsPageController> {
           backgroundColor: AppColors.white,
           title: Text(
             'Add Person',
-            style: Styles.normal(22, color: AppColors.black),
+            style: Styles.regular(22, color: AppColors.black),
           ),
           actions: [
             IconButton(

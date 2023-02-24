@@ -44,7 +44,7 @@ class LoginPageView extends GetView<LoginPageController> {
                 ),
                 Text(
                   "Login Page",
-                  style: Styles.normal(25, fontWeight: FontWeight.w600),
+                  style: Styles.regular(25, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   height: 20.h,

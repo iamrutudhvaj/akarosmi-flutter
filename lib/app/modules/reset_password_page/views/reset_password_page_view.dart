@@ -37,7 +37,7 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
             ),
             Text(
               "Set New Password",
-              style: Styles.normal(25, fontWeight: FontWeight.w600),
+              style: Styles.regular(25, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 10.h,
@@ -45,7 +45,7 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
             Text(
               "Your new password must be different to previously used passwords.",
               textAlign: TextAlign.center,
-              style: Styles.normal(16, fontWeight: FontWeight.w400),
+              style: Styles.regular(16, fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: 20.h,

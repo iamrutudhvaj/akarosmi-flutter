@@ -40,14 +40,14 @@ class ForgetPasswordPageView extends GetView<ForgetPasswordPageController> {
             Text(
               "No worries, we'll send you reset instructions.",
               textAlign: TextAlign.center,
-              style: Styles.normal(16, fontWeight: FontWeight.w400),
+              style: Styles.regular(16, fontWeight: FontWeight.w400),
             ),
             SizedBox(
               height: 10.h,
             ),
             Text(
               "Forget Password",
-              style: Styles.normal(25, fontWeight: FontWeight.w600),
+              style: Styles.regular(25, fontWeight: FontWeight.w600),
             ),
             SizedBox(
               height: 20.h,
