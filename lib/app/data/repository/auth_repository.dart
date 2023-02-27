@@ -75,9 +75,12 @@ class AuthRepository {
   }
 
   static Future<PersonListResponse> deletePerson(
-      {required String personID}) async {
-    final response =
-        await ApiController.delete(path: '${UriPath.deletePerson}$personID');
+      {required Map<String, dynamic> requestData,
+      required String personID}) async {
+    final response = await ApiController.delete(
+      path: '${UriPath.deletePerson}$personID',
+      data: requestData,
+    );
     return PersonListResponse.fromJson(response!);
   }
 

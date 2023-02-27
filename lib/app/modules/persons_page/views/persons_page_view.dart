@@ -8,6 +8,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:get/get.dart';
 
+import '../../../widgets/custom_text_field.dart';
+import '../../../widgets/primary_button.dart';
 import '../controllers/persons_page_controller.dart';
 
 class PersonsPageView extends GetView<PersonsPageController> {
@@ -65,36 +67,9 @@ class PersonsPageView extends GetView<PersonsPageController> {
                     SlidableAction(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       onPressed: (context) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              content: Text(
-                                  "Are you sure you want to delete ${(controller.listOfPersonData.data?[index].firstName)} ${(controller.listOfPersonData.data?[index].lastName)}?"),
-                              actions: <Widget>[
-                                MaterialButton(
-                                  child: const Text(
-                                    "Cancel",
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                ),
-                                MaterialButton(
-                                  child: const Text(
-                                    "Delete",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                  onPressed: () {
-                                    controller.deletePerson(
-                                        id: "${controller.listOfPersonData.data?[index].personId}");
-                                    Get.back();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                        Get.bottomSheet(
+                          barrierColor: AppColors.black.withOpacity(0.3),
+                          _BottomSheetView(index),
                         );
                       },
                       backgroundColor: AppColors.red,
@@ -118,6 +93,132 @@ class PersonsPageView extends GetView<PersonsPageController> {
           );
         }
       }),
+    );
+  }
+}
+
+class _BottomSheetView extends StatelessWidget {
+  const _BottomSheetView(this.index);
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    var controller = Get.find<PersonsPageController>();
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      height: 287.h,
+      decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(23.sp),
+            topRight: Radius.circular(23.sp),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.black.withOpacity(0.1),
+              blurRadius: 20.sp,
+            )
+          ]),
+      child: Form(
+        key: controller.formGlobalKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 30.h,
+            ),
+            Text(
+              "Delete Your Own's Book",
+              style: Styles.regular(18,
+                  fontWeight: FontWeight.w600, color: AppColors.black),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            CustomTextFormField(
+              controller: controller.passwordController,
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return "Password must be required.";
+                }
+              },
+              hintText: "Enter Password",
+              label: 'Enter Your Account Password',
+              textInputType: TextInputType.visiblePassword,
+            ),
+            SizedBox(
+              height: 45.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                PrimaryButton(
+                  borderAll: true,
+                  color: AppColors.white,
+                  borderColor: AppColors.darkGrey,
+                  width: 150.w,
+                  child: Text(
+                    "Cancel",
+                    style: Styles.regular(16,
+                        fontWeight: FontWeight.w600, color: AppColors.black),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+                PrimaryButton(
+                  borderAll: true,
+                  width: 150.w,
+                  child: Text(
+                    "Delete",
+                    style: Styles.regular(
+                      16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onPressed: () {
+                    if (controller.formGlobalKey.currentState!.validate()) {
+                      Get.dialog(
+                        AlertDialog(
+                          content: Text(
+                            textAlign: TextAlign.center,
+                            "Are you sure you want to delete ${controller.listOfPersonData.data?[index].firstName}?",
+                            style: Styles.bold(18),
+                          ),
+                          actions: <Widget>[
+                            const SizedBox(
+                              width: 50,
+                            ),
+                            MaterialButton(
+                              child: const Text(
+                                "Cancel",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              onPressed: () {
+                                Get.back();
+                              },
+                            ),
+                            MaterialButton(
+                              child: const Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: () {
+                                controller.deletePerson(
+                                    id: "${controller.listOfPersonData.data?[index].personId}");
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
