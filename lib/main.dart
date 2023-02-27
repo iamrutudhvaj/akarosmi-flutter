@@ -17,6 +17,9 @@ Future<void> main() async {
   await GetStorage.init();
   ApiController.init();
   runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 }
 
 class MyApp extends StatelessWidget {

@@ -22,7 +22,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
         backgroundColor: AppColors.white,
         iconTheme: IconThemeData(color: AppColors.black),
         title: Text(
-          'Add Book',
+          controller.name == "Edit Page" ? "Edit Book" : "Add Book",
           style: Styles.regular(
             20,
             color: AppColors.black,
@@ -33,10 +33,6 @@ class AddBookPageView extends GetView<AddBookPageController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              controller.name == "Edit Page" ? "Edit Book" : "",
-              style: Styles.regular(16, fontWeight: FontWeight.w600),
-            ),
             SizedBox(
               height: 20.h,
             ),
@@ -173,10 +169,9 @@ class AddBookPageView extends GetView<AddBookPageController> {
             ),
             PrimaryButton(
               width: 150.w,
-              onPressed: () {
-                Get.back();
-              },
-              child: const Text("Add Book"),
+              onPressed: controller.addBook,
+              child: Text(
+                  controller.name == "Edit Page" ? "Update Book" : "Add Book"),
             ),
           ],
         ),

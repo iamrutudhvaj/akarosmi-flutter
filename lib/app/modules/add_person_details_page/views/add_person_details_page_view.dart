@@ -31,7 +31,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 20,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.firstNameController,
                 hintText: "First name",
                 textInputType: TextInputType.name,
                 label: "First name",
@@ -39,7 +40,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.lastNameController,
                 hintText: "Last name",
                 textInputType: TextInputType.name,
                 label: "Last name",
@@ -47,7 +49,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.mobileNumberController,
                 hintText: "Mobile Number",
                 textInputType: TextInputType.number,
                 maxLength: 10,
@@ -56,7 +59,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.emailController,
                 hintText: "Email",
                 textInputType: TextInputType.emailAddress,
                 label: "Email",
@@ -64,7 +68,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.referenceController,
                 hintText: "Reference",
                 textInputType: TextInputType.name,
                 label: "Reference",
@@ -75,7 +80,7 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               Center(
                 child: PrimaryButton(
                   width: 150,
-                  onPressed: () {},
+                  onPressed:controller.addPersonData,
                   child: const Text("Add Person"),
                 ),
               ),
