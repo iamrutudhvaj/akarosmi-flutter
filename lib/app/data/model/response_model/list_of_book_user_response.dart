@@ -1,5 +1,5 @@
-class ListOfBookUserResponseModel {
-  ListOfBookUserResponseModel({
+class BookListResponse {
+  BookListResponse({
     this.message,
     this.status,
     this.data,
@@ -7,15 +7,16 @@ class ListOfBookUserResponseModel {
 
   String? message;
   int? status;
-  List<ListOfBookData>? data;
+  List<BookData>? data;
 
-  factory ListOfBookUserResponseModel.fromJson(Map<String, dynamic> json) =>
-      ListOfBookUserResponseModel(
+  factory BookListResponse.fromJson(Map<String, dynamic> json) =>
+      BookListResponse(
         message: json["message"],
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<ListOfBookData>.from(json["data"]!.map((x) => ListOfBookData.fromJson(x))),
+            : List<BookData>.from(
+                json["data"]!.map((x) => BookData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -27,8 +28,8 @@ class ListOfBookUserResponseModel {
       };
 }
 
-class ListOfBookData {
-  ListOfBookData({
+class BookData {
+  BookData({
     this.id,
     this.bookId,
     this.userId,
@@ -54,7 +55,7 @@ class ListOfBookData {
   int? v;
   String? thumbnail;
 
-  factory ListOfBookData.fromJson(Map<String, dynamic> json) => ListOfBookData(
+  factory BookData.fromJson(Map<String, dynamic> json) => BookData(
         id: json["_id"],
         bookId: json["bookId"],
         userId: json["userId"],

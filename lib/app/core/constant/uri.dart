@@ -7,6 +7,7 @@ abstract class UriPath {
   static const String editBook = '/book/edit/';
   static const String listUserBook = '/book/list-by-user';
   static const String addPerson = '/person/add';
+  static const String editPerson = '/person/edit/';
   static const String listOfPerson = '/person/list-userid';
   static const String deletePerson = '/person/delete/';
   static const String deleteBook = '/book/delete/';

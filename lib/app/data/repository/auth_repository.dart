@@ -55,9 +55,9 @@ class AuthRepository {
     return response;
   }
 
-  static Future<ListOfBookUserResponseModel> userListOfBook() async {
+  static Future<BookListResponse> getBookList() async {
     final response = await ApiController.get(path: UriPath.listUserBook);
-    return ListOfBookUserResponseModel.fromJson(response);
+    return BookListResponse.fromJson(response);
   }
 
   static Future<Map<String, dynamic>> addPerson(
@@ -69,33 +69,43 @@ class AuthRepository {
     return response;
   }
 
-  static Future<ListOfPersonResponseModel> listOfPersonData() async {
+  static Future<PersonListResponse> getPersonList() async {
     final response = await ApiController.get(path: UriPath.listOfPerson);
-    return ListOfPersonResponseModel.fromJson(response);
+    return PersonListResponse.fromJson(response);
   }
 
-  static Future<ListOfPersonResponseModel> deletePersonData(
+  static Future<PersonListResponse> deletePerson(
       {required String personID}) async {
     final response =
         await ApiController.delete(path: '${UriPath.deletePerson}$personID');
-    return ListOfPersonResponseModel.fromJson(response!);
+    return PersonListResponse.fromJson(response!);
   }
 
-  static Future<ListOfBookUserResponseModel> deleteBookData(
+  static Future<BookListResponse> deleteBook(
       {required Map<String, dynamic> requestData,
       required String bookID}) async {
     final response = await ApiController.delete(
       path: '${UriPath.deleteBook}$bookID',
       data: requestData,
     );
-    return ListOfBookUserResponseModel.fromJson(response!);
+    return BookListResponse.fromJson(response!);
   }
 
-  static Future<Map<String, dynamic>> editBookData(
+  static Future<Map<String, dynamic>> editBook(
       {required AddBookRequestModel requestData,
       required String bookID}) async {
     final response = await ApiController.put(
       path: '${UriPath.editBook}$bookID',
+      data: requestData.toJson(),
+    );
+    return response;
+  }
+
+  static Future<Map<String, dynamic>> editPerson(
+      {required AddPersonRequestModel requestData,
+      required String personID}) async {
+    final response = await ApiController.put(
+      path: '${UriPath.editPerson}$personID',
       data: requestData.toJson(),
     );
     return response;

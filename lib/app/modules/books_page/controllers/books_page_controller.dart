@@ -9,26 +9,23 @@ import '../../../data/repository/auth_repository.dart';
 
 class BooksPageController extends GetxController {
   TextEditingController passwordController = TextEditingController();
-  RxList<String> bookList = RxList<String>.empty(growable: true);
 
-  final _listOfUserBookData = ListOfBookUserResponseModel().obs;
-  ListOfBookUserResponseModel get listOfUserBookData =>
-      _listOfUserBookData.value;
-  set listOfUserBookData(ListOfBookUserResponseModel value) =>
-      _listOfUserBookData.value = value;
+  final _listOfBooks = BookListResponse().obs;
+  BookListResponse get listOfBooks => _listOfBooks.value;
+  set listOfBooks(BookListResponse value) => _listOfBooks.value = value;
 
   @override
   void onInit() {
-    userListOfBookData();
+    getBookList();
     super.onInit();
   }
 
   final formGlobalKey = GlobalKey<FormState>();
 
-  Future<void> userListOfBookData() async {
+  Future<void> getBookList() async {
     try {
-      final response = await AuthRepository.userListOfBook();
-      listOfUserBookData = response;
+      final response = await AuthRepository.getBookList();
+      listOfBooks = response;
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
@@ -37,7 +34,7 @@ class BooksPageController extends GetxController {
     }
   }
 
-  Future<void> deleteBookData({required String id}) async {
+  Future<void> deleteBook({required String id}) async {
     try {
       Get.dialog(
         Center(
@@ -46,16 +43,16 @@ class BooksPageController extends GetxController {
           ),
         ),
       );
-      final response = await AuthRepository.deleteBookData(
+      final response = await AuthRepository.deleteBook(
         requestData: {
           "password": passwordController.text,
         },
         bookID: id,
       );
       passwordController.clear();
-      Get.back();
-      listOfUserBookData = response;
-      userListOfBookData();
+      listOfBooks = response;
+      Get.back(closeOverlays: true);
+      getBookList();
       ToastUtils.showBottomSnackbar("${response.message}");
     } on DioError catch (e) {
       Get.back();

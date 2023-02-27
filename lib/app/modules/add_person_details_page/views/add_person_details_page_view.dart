@@ -15,9 +15,10 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
-        centerTitle: true,
         title: Text(
-          'Add Person Details',
+          controller.index != null
+              ? 'Edit Person Details'
+              : 'Add Person Details',
           style: Styles.regular(20, color: AppColors.black),
         ),
         backgroundColor: AppColors.white,
@@ -80,8 +81,15 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               Center(
                 child: PrimaryButton(
                   width: 150,
-                  onPressed:controller.addPersonData,
-                  child: const Text("Add Person"),
+                  onPressed: () {
+                    if (controller.index != null) {
+                      controller.editPerson();
+                    } else {
+                      controller.addPerson();
+                    }
+                  },
+                  child: Text(
+                      controller.index != null ? 'Edit Person' : "Add Person"),
                 ),
               ),
               const SizedBox(

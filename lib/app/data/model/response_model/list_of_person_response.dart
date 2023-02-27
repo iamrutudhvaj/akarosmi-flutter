@@ -1,5 +1,5 @@
-class ListOfPersonResponseModel {
-  ListOfPersonResponseModel({
+class PersonListResponse {
+  PersonListResponse({
     this.message,
     this.status,
     this.data,
@@ -7,16 +7,16 @@ class ListOfPersonResponseModel {
 
   String? message;
   int? status;
-  List<ListOfPersonData>? data;
+  List<PersonData>? data;
 
-  factory ListOfPersonResponseModel.fromJson(Map<String, dynamic> json) =>
-      ListOfPersonResponseModel(
+  factory PersonListResponse.fromJson(Map<String, dynamic> json) =>
+      PersonListResponse(
         message: json["message"],
         status: json["status"],
         data: json["data"] == null
             ? []
-            : List<ListOfPersonData>.from(
-                json["data"]!.map((x) => ListOfPersonData.fromJson(x))),
+            : List<PersonData>.from(
+                json["data"]!.map((x) => PersonData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -28,8 +28,8 @@ class ListOfPersonResponseModel {
       };
 }
 
-class ListOfPersonData {
-  ListOfPersonData({
+class PersonData {
+  PersonData({
     this.id,
     this.personId,
     this.userId,
@@ -55,8 +55,7 @@ class ListOfPersonData {
   DateTime? updatedAt;
   int? v;
 
-  factory ListOfPersonData.fromJson(Map<String, dynamic> json) =>
-      ListOfPersonData(
+  factory PersonData.fromJson(Map<String, dynamic> json) => PersonData(
         id: json["_id"],
         personId: json["personId"],
         userId: json["userId"],

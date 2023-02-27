@@ -14,6 +14,8 @@ class AddBookPageController extends GetxController {
   TextEditingController publisherNameController = TextEditingController();
   final bookPageController = Get.find<BooksPageController>();
 
+  //ListOfBookData
+
   final _imagePath = Rx<XFile?>(null);
   XFile? get imagePath => _imagePath.value;
   set imagePath(XFile? value) => _imagePath.value = value;
@@ -27,11 +29,22 @@ class AddBookPageController extends GetxController {
     Get.back();
   }
 
-  String? name;
+  String? bookId;
+  late int? index;
 
   @override
   void onInit() {
-    name = Get.arguments;
+    index = Get.arguments;
+    if (index != null) {
+      authoreNameController.text =
+          bookPageController.listOfBooks.data?[index!].author ?? '';
+      nameController.text =
+          bookPageController.listOfBooks.data?[index!].name ?? '';
+      publisherNameController.text =
+          bookPageController.listOfBooks.data?[index!].publisher ?? '';
+      bookId = bookPageController.listOfBooks.data?[index!].bookId ?? '';
+    }
+
     super.onInit();
   }
 
@@ -50,9 +63,8 @@ class AddBookPageController extends GetxController {
         publisher: publisherNameController.text,
       ));
       ToastUtils.showBottomSnackbar("${response["message"]}");
-      bookPageController.userListOfBookData();
-      Get.back();
-      Get.back();
+      bookPageController.getBookList();
+      Get.back(closeOverlays: true);
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
@@ -61,7 +73,7 @@ class AddBookPageController extends GetxController {
     }
   }
 
-   Future<void> editBook({required String id}) async {
+  Future<void> editBook() async {
     try {
       Get.dialog(
         const Center(
@@ -69,16 +81,17 @@ class AddBookPageController extends GetxController {
         ),
         barrierDismissible: false,
       );
-      final response = await AuthRepository.editBookData(
+      final response = await AuthRepository.editBook(
           requestData: AddBookRequestModel(
-        author: authoreNameController.text,
-        name: nameController.text,
-        publisher: publisherNameController.text,
-      ),bookID: id);
+            author: authoreNameController.text,
+            name: nameController.text,
+            publisher: publisherNameController.text,
+          ),
+          bookID: bookId!);
       ToastUtils.showBottomSnackbar("${response["message"]}");
-      bookPageController.userListOfBookData();
-      Get.back();
-      Get.back();
+      bookPageController.getBookList();
+      index = null;
+      Get.back(closeOverlays: true);
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");

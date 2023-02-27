@@ -22,7 +22,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
         backgroundColor: AppColors.white,
         iconTheme: IconThemeData(color: AppColors.black),
         title: Text(
-          controller.name == "Edit Page" ? "Edit Book" : "Add Book",
+          controller.index != null ? "Edit Book" : "Add Book",
           style: Styles.regular(
             20,
             color: AppColors.black,
@@ -169,9 +169,15 @@ class AddBookPageView extends GetView<AddBookPageController> {
             ),
             PrimaryButton(
               width: 150.w,
-              onPressed: controller.addBook,
-              child: Text(
-                  controller.name == "Edit Page" ? "Update Book" : "Add Book"),
+              onPressed: () {
+                if (controller.index != null) {
+                  controller.editBook();
+                } else {
+                  controller.addBook();
+                }
+              },
+              child:
+                  Text(controller.index != null ? "Update Book" : "Add Book"),
             ),
           ],
         ),
