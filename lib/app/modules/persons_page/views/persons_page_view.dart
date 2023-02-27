@@ -14,7 +14,6 @@ class PersonsPageView extends GetView<PersonsPageController> {
   const PersonsPageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    controller.getPersonList();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
