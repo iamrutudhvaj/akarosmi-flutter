@@ -9,6 +9,7 @@ class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool? enabled;
   final Color? color;
+  final Color? borderColor;
   final bool? hasPadding;
   final double? height;
   final double? verticlePadding;
@@ -26,7 +27,8 @@ class PrimaryButton extends StatelessWidget {
       this.elevation = false,
       this.height,
       this.verticlePadding,
-      this.width})
+      this.width,
+      this.borderColor})
       : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class PrimaryButton extends StatelessWidget {
                 : RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
             side: borderAll == true
-                ? BorderSide(color: AppColors.greyWhite)
+                ? BorderSide(color: borderColor ?? AppColors.greyWhite)
                 : null,
             backgroundColor:
                 (enabled == true) ? color : color?.withOpacity(0.6),

@@ -1,11 +1,8 @@
 import 'dart:io';
 
-import 'package:akarosmi/app/core/service/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart' hide FormData;
 
-import '../../routes/app_pages.dart';
 import 'auth_interceptor.dart';
 
 class ApiController {
@@ -87,11 +84,6 @@ class ApiController {
       );
       return response.data;
     } on DioError catch (e) {
-      print("---${e.response?.statusCode}");
-      if (e.response?.statusCode == 401) {
-        StorageService.clearToken();
-        Get.offAllNamed(Routes.LOGIN_PAGE);
-      }
       return Future.error(e);
     }
   }

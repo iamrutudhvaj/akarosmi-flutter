@@ -15,9 +15,10 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
-        centerTitle: true,
         title: Text(
-          'Add Person Details',
+          controller.index != null
+              ? 'Edit Person Details'
+              : 'Add Person Details',
           style: Styles.regular(20, color: AppColors.black),
         ),
         backgroundColor: AppColors.white,
@@ -31,7 +32,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 20,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.firstNameController,
                 hintText: "First name",
                 textInputType: TextInputType.name,
                 label: "First name",
@@ -39,7 +41,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.lastNameController,
                 hintText: "Last name",
                 textInputType: TextInputType.name,
                 label: "Last name",
@@ -47,7 +50,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.mobileNumberController,
                 hintText: "Mobile Number",
                 textInputType: TextInputType.number,
                 maxLength: 10,
@@ -56,7 +60,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.emailController,
                 hintText: "Email",
                 textInputType: TextInputType.emailAddress,
                 label: "Email",
@@ -64,7 +69,8 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               const SizedBox(
                 height: 16,
               ),
-              const CustomTextFormField(
+              CustomTextFormField(
+                controller: controller.referenceController,
                 hintText: "Reference",
                 textInputType: TextInputType.name,
                 label: "Reference",
@@ -75,8 +81,15 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
               Center(
                 child: PrimaryButton(
                   width: 150,
-                  onPressed: () {},
-                  child: const Text("Add Person"),
+                  onPressed: () {
+                    if (controller.index != null) {
+                      controller.editPerson();
+                    } else {
+                      controller.addPerson();
+                    }
+                  },
+                  child: Text(
+                      controller.index != null ? 'Edit Person' : "Add Person"),
                 ),
               ),
               const SizedBox(
