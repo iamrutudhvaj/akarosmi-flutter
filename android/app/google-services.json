@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "888933544920",
+    "project_id": "akarosmi-248e0",
+    "storage_bucket": "akarosmi-248e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888933544920:android:8f44726d0dc8921bac78ad",
+        "android_client_info": {
+          "package_name": "com.kurm.akarosmi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888933544920-bbdvvnq2q2jc34vprcjutob8qaclioko.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB-pgEGcAkIA96aEId5_0zRIgxeHfz2XE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888933544920-bbdvvnq2q2jc34vprcjutob8qaclioko.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
