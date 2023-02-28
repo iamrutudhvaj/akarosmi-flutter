@@ -45,7 +45,6 @@ class DrawerView extends GetView<DashboardPageController> {
           ),
           const Spacer(),
           PrimaryButton(
-            borderAll: true,
             onPressed: () {
               StorageService.clearToken()
                   .then((value) => Get.offAllNamed(Routes.LOGIN_PAGE));

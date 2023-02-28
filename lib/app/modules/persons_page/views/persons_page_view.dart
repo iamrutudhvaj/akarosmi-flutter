@@ -17,28 +17,7 @@ class PersonsPageView extends GetView<PersonsPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        title: Text(
-          'Add Person',
-          style: Styles.regular(22, color: AppColors.black),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE);
-            },
-            icon: Icon(
-              Icons.person_add,
-              color: AppColors.black,
-            ),
-          ),
-          SizedBox(
-            width: 10.w,
-          )
-        ],
-        elevation: 5,
-      ),
+     
       body: Obx(() {
         if (controller.listOfPersonData.data == null) {
           return const Center(

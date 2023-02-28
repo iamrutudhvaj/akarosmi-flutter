@@ -17,29 +17,6 @@ class BooksPageView extends GetView<BooksPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 5,
-        title: Text(
-          "Books",
-          style: Styles.regular(
-            20,
-            color: AppColors.black,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.toNamed(Routes.ADD_BOOK_PAGE);
-            },
-            icon: Icon(
-              Icons.add_box,
-              color: AppColors.black,
-              size: 30,
-            ),
-          )
-        ],
-      ),
       body: Obx(() {
         if (controller.listOfBooks.data == null) {
           return Center(

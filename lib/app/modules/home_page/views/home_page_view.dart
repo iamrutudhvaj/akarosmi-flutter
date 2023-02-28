@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../core/theme/style.dart';
+import '../../dashboard_page/views/drawer.dart';
 import '../controllers/home_page_controller.dart';
 
 class HomePageView extends GetView<HomePageController> {
@@ -11,6 +13,24 @@ class HomePageView extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const DashboardBottomNavigationBar(),
+      drawer: const DrawerView(),
+      appBar: AppBar(
+        elevation: 5,
+        backgroundColor: AppColors.white,
+        iconTheme: IconThemeData(color: AppColors.black),
+        title: Obx(
+          () => Text(
+            controller.titleList[controller.selectedTab],
+            style: Styles.regular(
+              20,
+              color: AppColors.black,
+            ),
+          ),
+        ),
+        actions: [
+          Obx(() => controller.actionIconList[controller.selectedTab]),
+        ],
+      ),
       body: Obx(() => controller.bodyPageViewList[controller.selectedTab]),
     );
   }
