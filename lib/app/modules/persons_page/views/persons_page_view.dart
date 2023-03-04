@@ -1,10 +1,8 @@
 import 'package:akarosmi/app/core/theme/color.dart';
 import 'package:akarosmi/app/core/theme/style.dart';
 import 'package:akarosmi/app/routes/app_pages.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:get/get.dart';
 
@@ -17,61 +15,86 @@ class PersonsPageView extends GetView<PersonsPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
-      body: Obx(() {
-        if (controller.listOfPersonData.data == null) {
-          return const Center(
-            child: CupertinoActivityIndicator(),
-          );
-        } else {
-          return ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.listOfPersonData.data?.length,
-            itemBuilder: (context, index) {
-              return Slidable(
-                key: const ValueKey(0),
-                endActionPane: ActionPane(
-                  extentRatio: 0.27,
-                  motion: const ScrollMotion(),
-                  children: [
-                    SlidableAction(
-                      onPressed: (context) {
-                        Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
-                            arguments: index);
-                      },
-                      backgroundColor: AppColors.black,
-                      foregroundColor: AppColors.white,
-                      icon: Icons.edit_document,
+      body: RefreshIndicator(
+        displacement: 2,
+        color: AppColors.black,
+        onRefresh: () async {
+          await controller.homePageController.getPersonList();
+        },
+        child: Obx(() {
+          if (controller.appController.listOfPersonData.isEmpty) {
+            return controller.appController.dataLoadingProcess();
+          } else {
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.appController.listOfPersonData.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.PERSON_DETAIL_PAGE,
+                        arguments:
+                            "${controller.appController.listOfPersonData[index].personId}");
+                  },
+                  child: ListTile(
+                    title: Text(
+                      "${(controller.appController.listOfPersonData[index].firstName)} ${(controller.appController.listOfPersonData[index].lastName)}",
+                      style: Styles.bold(18),
                     ),
-                    SlidableAction(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      onPressed: (context) {
-                        Get.bottomSheet(
-                          barrierColor: AppColors.black.withOpacity(0.3),
-                          _BottomSheetView(index),
-                        );
-                      },
-                      backgroundColor: AppColors.red,
-                      foregroundColor: AppColors.white,
-                      icon: Icons.delete,
+                    subtitle: Text(
+                      "${controller.appController.listOfPersonData[index].email}",
+                      style: Styles.regular(18),
                     ),
-                  ],
-                ),
-                child: ListTile(
-                  title: Text(
-                    "${(controller.listOfPersonData.data?[index].firstName)} ${(controller.listOfPersonData.data?[index].lastName)}",
-                    style: Styles.bold(18),
+                    trailing: PopupMenuButton<int>(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: 1,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.edit_document,
+                                color: AppColors.blue,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Text("Edit")
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 2,
+                          child: Row(
+                            children: [
+                              Icon(Icons.delete, color: AppColors.red),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Text("Delete")
+                            ],
+                          ),
+                        ),
+                      ],
+                      offset: const Offset(0, 40),
+                      elevation: 2,
+                      onSelected: (value) {
+                        if (value == 1) {
+                          Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
+                              arguments: index);
+                        } else if (value == 2) {
+                          Get.bottomSheet(
+                            barrierColor: AppColors.black.withOpacity(0.3),
+                            _BottomSheetView(index),
+                          );
+                        }
+                      },
+                    ),
                   ),
-                  subtitle: Text(
-                    "${controller.listOfPersonData.data?[index].email}",
-                    style: Styles.regular(18),
-                  ),
-                ),
-              );
-            },
-          );
-        }
-      }),
+                );
+              },
+            );
+          }
+        }),
+      ),
     );
   }
 }
@@ -161,7 +184,7 @@ class _BottomSheetView extends StatelessWidget {
                         AlertDialog(
                           content: Text(
                             textAlign: TextAlign.center,
-                            "Are you sure you want to delete ${controller.listOfPersonData.data?[index].firstName}?",
+                            "Are you sure you want to delete ${controller.appController.listOfPersonData[index].firstName}?",
                             style: Styles.bold(18),
                           ),
                           actions: <Widget>[
@@ -184,7 +207,7 @@ class _BottomSheetView extends StatelessWidget {
                               ),
                               onPressed: () {
                                 controller.deletePerson(
-                                    id: "${controller.listOfPersonData.data?[index].personId}");
+                                    id: "${controller.appController.listOfPersonData[index].personId}");
                               },
                             ),
                           ],

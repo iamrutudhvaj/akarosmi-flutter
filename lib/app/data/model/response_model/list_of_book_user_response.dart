@@ -49,7 +49,7 @@ class BookData {
   String? name;
   String? author;
   String? publisher;
-  List<String>? images;
+  List<dynamic>? images;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
@@ -64,7 +64,7 @@ class BookData {
         publisher: json["publisher"],
         images: json["images"] == null
             ? []
-            : List<String>.from(json["images"]!.map((x) => x)),
+            : List<dynamic>.from(json["images"]!.map((x) => x)),
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -88,5 +88,21 @@ class BookData {
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
         "thumbnail": thumbnail,
+      };
+}
+
+class ImageClass {
+  ImageClass({
+    this.res,
+  });
+
+  String? res;
+
+  factory ImageClass.fromJson(Map<String, dynamic> json) => ImageClass(
+        res: json["res"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "res": res,
       };
 }

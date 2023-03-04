@@ -12,7 +12,7 @@ class PrimaryButton extends StatelessWidget {
   final Color? borderColor;
   final bool? hasPadding;
   final double? height;
-  final double? verticlePadding;
+  final double? verticalPadding;
   final bool? borderAll;
   final double? width;
   final bool? elevation;
@@ -26,7 +26,7 @@ class PrimaryButton extends StatelessWidget {
       this.borderAll = false,
       this.elevation = false,
       this.height,
-      this.verticlePadding,
+      this.verticalPadding,
       this.width,
       this.borderColor})
       : super(key: key);
@@ -54,7 +54,7 @@ class PrimaryButton extends StatelessWidget {
                 ? AppColors.blue
                 : AppColors.transparent,
             padding: EdgeInsets.symmetric(
-              vertical: verticlePadding ?? 16.sp,
+              vertical: verticalPadding ?? 16.sp,
             )),
         child: child,
       ),

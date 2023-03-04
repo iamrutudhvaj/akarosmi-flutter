@@ -45,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
           : EdgeInsets.zero,
       child: TextFormField(
         controller: controller,
-        textInputAction: TextInputAction.next,
+        textInputAction: TextInputAction.done,
         readOnly: readonly!,
         obscureText: obscureText!,
         focusNode: focusNode,

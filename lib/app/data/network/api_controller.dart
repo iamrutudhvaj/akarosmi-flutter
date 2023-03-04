@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:akarosmi/app/data/model/response_model/upload_asset_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:image_picker/image_picker.dart';
 
+import '../../core/constant/uri.dart';
 import 'auth_interceptor.dart';
 
 class ApiController {
@@ -142,19 +145,21 @@ class ApiController {
     }
   }
 
-  // Upload File
-  static Future<void> uploadFile(String path, File file) async {
+  //UPLOAD IMAGE
+  static Future<List<String>?> uploadFile(List<XFile?> files) async {
     try {
-      var len = await file.length();
-      await Dio().put(
-        path,
-        data: file.openRead(),
-        options: Options(
-          headers: {
-            Headers.contentLengthHeader: len, // set content-length
-          },
-        ),
+      var imgList = [];
+
+      for (var element in files) {
+        imgList.add(await MultipartFile.fromFile(element!.path));
+      }
+
+      FormData formData = FormData.fromMap({"images": imgList});
+      final response = await _dio.post(
+        "${UriPath.uploadAsset}${dotenv.env['UPLOAD_ASSET']}",
+        data: formData,
       );
+      return UploadAssetResponse.fromJson(response.data).data?.values.toList();
     } on DioError catch (e) {
       return Future.error(e);
     }
