@@ -13,13 +13,13 @@ class PersonDetailPageView extends GetView<PersonDetailPageController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        backgroundColor: AppColors.white,
-        iconTheme: IconThemeData(color: AppColors.black),
+        backgroundColor: AppColors.primary,
+        iconTheme: IconThemeData(color: AppColors.white),
         title: Text(
           "Person Transaction Detail",
           style: Styles.regular(
             20,
-            color: AppColors.black,
+            color: AppColors.white,
           ),
         ),
       ),

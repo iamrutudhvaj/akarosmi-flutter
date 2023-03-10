@@ -15,6 +15,26 @@ class BooksPageController extends GetxController {
 
   final formGlobalKey = GlobalKey<FormState>();
 
+  String getStatus(index) {
+    if (appController.listOfBooks[index].status == "1") {
+      return 'Available';
+    } else if (appController.listOfBooks[index].status == "2") {
+      return 'Allocated';
+    } else {
+      return 'Away';
+    }
+  }
+
+  Color getStatusColor(index) {
+    if (appController.listOfBooks[index].status == "1") {
+      return const Color(0xff147F7F);
+    } else if (appController.listOfBooks[index].status == "2") {
+      return const Color(0xffED9D2F);
+    } else {
+      return const Color(0xffEA5958);
+    }
+  }
+
   Future<void> deleteBook({required String id}) async {
     try {
       Get.dialog(

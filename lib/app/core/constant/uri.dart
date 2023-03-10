@@ -3,6 +3,7 @@ abstract class UriPath {
   static const String login = '/user/login';
   static const String forgetPassword = '/user/forget';
   static const String changePassword = '/user/change-password';
+  static const String userDelete = '/user/delete';
   static const String addBook = '/book/add';
   static const String uploadAsset = '/asset/upload?key=';
   static const String editBook = '/book/edit/';
@@ -18,4 +19,5 @@ abstract class UriPath {
   static const String listByBookId = '/transaction/list-user-book/';
   static const String deleteTransaction = '/transaction/remove/';
   static const String editProfile = '/user/edit';
+  static const String updateTransaction = '/transaction/update/';
 }

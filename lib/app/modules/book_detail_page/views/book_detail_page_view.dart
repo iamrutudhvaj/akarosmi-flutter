@@ -13,13 +13,12 @@ class BookDetailPageView extends GetView<BookDetailPageController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        backgroundColor: AppColors.white,
-        iconTheme: IconThemeData(color: AppColors.black),
+        backgroundColor: AppColors.primary,
+        iconTheme: IconThemeData(color: AppColors.white),
         title: Text(
           "Book Transaction Detail",
-          style: Styles.regular(
+          style: Styles.semiBold(
             20,
-            color: AppColors.black,
           ),
         ),
       ),
@@ -43,49 +42,6 @@ class BookDetailPageView extends GetView<BookDetailPageController> {
                   subtitle: Text(
                     "${controller.listByBookId[index].returnDate}",
                     style: Styles.regular(18),
-                  ),
-                  trailing: PopupMenuButton<int>(
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 1,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.edit_document,
-                              color: AppColors.blue,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text("Edit")
-                          ],
-                        ),
-                      ),
-                      PopupMenuItem(
-                        value: 2,
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete, color: AppColors.red),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text("Delete")
-                          ],
-                        ),
-                      ),
-                    ],
-                    offset: const Offset(0, 40),
-                    elevation: 2,
-                    onSelected: (value) {
-                      if (value == 1) {
-                        // Get.toNamed(Routes.ADD_BOOK_PAGE, arguments: index);
-                      } else if (value == 2) {
-                        // Get.bottomSheet(
-                        //   barrierColor: AppColors.black.withOpacity(0.3),
-                        //   _BottomSheetView(index),
-                        // );
-                      }
-                    },
                   ),
                 );
               },

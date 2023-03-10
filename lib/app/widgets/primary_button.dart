@@ -20,7 +20,7 @@ class PrimaryButton extends StatelessWidget {
       {Key? key,
       required this.child,
       required this.onPressed,
-      this.color = Colors.black,
+      this.color = const Color(0xff253C58),
       this.enabled = true,
       this.hasPadding = true,
       this.borderAll = false,

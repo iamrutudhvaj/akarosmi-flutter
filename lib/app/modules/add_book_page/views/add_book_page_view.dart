@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:akarosmi/app/core/theme/color.dart';
 import 'package:akarosmi/app/core/theme/style.dart';
 import 'package:akarosmi/app/widgets/custom_text_field.dart';
@@ -20,13 +18,13 @@ class AddBookPageView extends GetView<AddBookPageController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        backgroundColor: AppColors.white,
-        iconTheme: IconThemeData(color: AppColors.black),
+        backgroundColor: AppColors.primary,
+        iconTheme: IconThemeData(color: AppColors.white),
         title: Text(
           controller.index != null ? "Edit Book" : "Add Book",
           style: Styles.regular(
             20,
-            color: AppColors.black,
+            color: AppColors.white,
           ),
         ),
       ),
@@ -83,7 +81,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
               ),
               Obx(
                 () => Visibility(
-                  visible: controller.imagePathList.isNotEmpty,
+                  visible: controller.imageUploadList.isNotEmpty,
                   replacement: GestureDetector(
                     onTap: () {
                       Get.bottomSheet(
@@ -97,7 +95,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
                         height: 200.h,
                         width: Get.width,
                         decoration: BoxDecoration(
-                          color: AppColors.fillColor,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(15.sp),
                         ),
                         child: const Icon(
@@ -114,10 +112,10 @@ class AddBookPageView extends GetView<AddBookPageController> {
                         crossAxisSpacing: 7.sp,
                         mainAxisSpacing: 7.sp,
                         childAspectRatio: 1.1.sp),
-                    itemCount: controller.imagePathList.length + 1,
+                    itemCount: (controller.imageUploadList.length) + 1,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      if (controller.imagePathList.length == index) {
+                      if (controller.imageUploadList.length == index) {
                         return Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.sp),
@@ -146,8 +144,8 @@ class AddBookPageView extends GetView<AddBookPageController> {
                           borderRadius: BorderRadius.circular(14.sp),
                           border: Border.all(color: AppColors.black),
                           image: DecorationImage(
-                            image: FileImage(
-                              File(controller.imagePathList[index]?.path ?? ''),
+                            image: NetworkImage(
+                              controller.imageUploadList[index],
                             ),
                             fit: BoxFit.cover,
                           ),
@@ -158,7 +156,7 @@ class AddBookPageView extends GetView<AddBookPageController> {
                             alignment: Alignment.topRight,
                             child: GestureDetector(
                               onTap: () {
-                                controller.imagePathList.removeAt(index);
+                                controller.imageUploadList.removeAt(index);
                               },
                               child: Icon(
                                 CupertinoIcons.clear_circled,
@@ -170,6 +168,63 @@ class AddBookPageView extends GetView<AddBookPageController> {
                       );
                     },
                   ),
+                ),
+              ),
+              Visibility(
+                visible: controller.index != null,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: DropdownButtonFormField<String>(
+                        isExpanded: true,
+                        items: ["Available", "Allocated", "Away"]
+                            .map<DropdownMenuItem<String>>((value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          controller.selectedStatus = newValue;
+                        },
+                        value: controller.selectedStatus,
+                        validator: (value) =>
+                            value == null ? "Field Can't be empty" : null,
+                        decoration: InputDecoration(
+                          labelText: 'Select Book Status',
+                          hintText: 'Select Book Status',
+                          labelStyle: TextStyle(color: AppColors.black),
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1, color: AppColors.transparent),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          filled: true,
+                          fillColor: AppColors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(

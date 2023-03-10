@@ -25,9 +25,13 @@ class PersonsPageView extends GetView<PersonsPageController> {
           if (controller.appController.listOfPersonData.isEmpty) {
             return controller.appController.dataLoadingProcess();
           } else {
-            return ListView.builder(
+            return ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               shrinkWrap: true,
               itemCount: controller.appController.listOfPersonData.length,
+              separatorBuilder: (context, index) => SizedBox(
+                height: 16.h,
+              ),
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
@@ -35,58 +39,86 @@ class PersonsPageView extends GetView<PersonsPageController> {
                         arguments:
                             "${controller.appController.listOfPersonData[index].personId}");
                   },
-                  child: ListTile(
-                    title: Text(
-                      "${(controller.appController.listOfPersonData[index].firstName)} ${(controller.appController.listOfPersonData[index].lastName)}",
-                      style: Styles.bold(18),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0xffC0C5C8).withOpacity(0.5),
                     ),
-                    subtitle: Text(
-                      "${controller.appController.listOfPersonData[index].email}",
-                      style: Styles.regular(18),
-                    ),
-                    trailing: PopupMenuButton<int>(
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 1,
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.edit_document,
-                                color: AppColors.blue,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Text("Edit")
-                            ],
-                          ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${(controller.appController.listOfPersonData[index].firstName)} ${(controller.appController.listOfPersonData[index].lastName)}",
+                              style: Styles.bold(18),
+                            ),
+                            Text(
+                              "${controller.appController.listOfPersonData[index].email}",
+                              style: Styles.regular(18),
+                            ),
+                          ],
                         ),
-                        PopupMenuItem(
-                          value: 2,
-                          child: Row(
-                            children: [
-                              Icon(Icons.delete, color: AppColors.red),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Text("Delete")
-                            ],
+                        PopupMenuButton<int>(
+                          color: AppColors.white,
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: AppColors.primary,
                           ),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(16.0),
+                            ),
+                          ),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: 1,
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.edit,
+                                    color: AppColors.primary,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text("Edit")
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 2,
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    Icons.delete,
+                                    color: Color(0xffEA5958),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text("Delete")
+                                ],
+                              ),
+                            ),
+                          ],
+                          offset: const Offset(0, 5),
+                          elevation: 2,
+                          onSelected: (value) {
+                            if (value == 1) {
+                              Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
+                                  arguments: index);
+                            } else if (value == 2) {
+                              Get.bottomSheet(
+                                barrierColor: AppColors.black.withOpacity(0.3),
+                                _BottomSheetView(index),
+                              );
+                            }
+                          },
                         ),
                       ],
-                      offset: const Offset(0, 40),
-                      elevation: 2,
-                      onSelected: (value) {
-                        if (value == 1) {
-                          Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
-                              arguments: index);
-                        } else if (value == 2) {
-                          Get.bottomSheet(
-                            barrierColor: AppColors.black.withOpacity(0.3),
-                            _BottomSheetView(index),
-                          );
-                        }
-                      },
                     ),
                   ),
                 );
@@ -107,10 +139,10 @@ class _BottomSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<PersonsPageController>();
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       height: 287.h,
       decoration: BoxDecoration(
-          color: AppColors.white,
+          color: const Color(0xffEAE9E7),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(23.sp),
             topRight: Radius.circular(23.sp),
@@ -130,7 +162,7 @@ class _BottomSheetView extends StatelessWidget {
               height: 30.h,
             ),
             Text(
-              "Delete Your Own's Book",
+              "Delete Your Own's Person",
               style: Styles.regular(18,
                   fontWeight: FontWeight.w600, color: AppColors.black),
             ),

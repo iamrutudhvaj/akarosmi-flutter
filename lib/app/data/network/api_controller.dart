@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:akarosmi/app/data/model/response_model/upload_asset_response.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/constant/uri.dart';
+import '../../routes/app_pages.dart';
 import 'auth_interceptor.dart';
 
 class ApiController {
@@ -51,6 +53,9 @@ class ApiController {
       );
       return response.data;
     } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
       return Future.error(e);
     }
   }
@@ -69,6 +74,9 @@ class ApiController {
       );
       return response.data;
     } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
       return Future.error(e);
     }
   }
@@ -87,6 +95,9 @@ class ApiController {
       );
       return response.data;
     } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
       return Future.error(e);
     }
   }
@@ -105,6 +116,9 @@ class ApiController {
       );
       return response.data;
     } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
       return Future.error(e);
     }
   }
@@ -123,11 +137,14 @@ class ApiController {
       );
       return response.data;
     } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        Get.offAllNamed(Routes.LOGIN_PAGE);
+      }
       return Future.error(e);
     }
   }
 
-  // PATCH
+  // DELETE
   static Future<Map<String, dynamic>?> delete({
     required String path,
     Map<String, dynamic>? data,
@@ -149,7 +166,6 @@ class ApiController {
   static Future<List<String>?> uploadFile(List<XFile?> files) async {
     try {
       var imgList = [];
-
       for (var element in files) {
         imgList.add(await MultipartFile.fromFile(element!.path));
       }
@@ -159,7 +175,7 @@ class ApiController {
         "${UriPath.uploadAsset}${dotenv.env['UPLOAD_ASSET']}",
         data: formData,
       );
-      return UploadAssetResponse.fromJson(response.data).data?.values.toList();
+      return UploadAssetResponse.fromJson(response.data).data;
     } on DioError catch (e) {
       return Future.error(e);
     }

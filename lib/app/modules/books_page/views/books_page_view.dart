@@ -26,8 +26,8 @@ class BooksPageView extends GetView<BooksPageController> {
             return controller.appController.dataLoadingProcess();
           } else {
             return ListView.separated(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: kToolbarHeight),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -39,18 +39,8 @@ class BooksPageView extends GetView<BooksPageController> {
                       width: Get.width,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: const Color(0xffD7D4CD).withOpacity(0.8),
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
-                              blurRadius: 6.0,
-                              spreadRadius: 2),
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10.0,
-                              spreadRadius: 2),
-                        ],
                       ),
                       child: Row(
                         children: [
@@ -123,9 +113,9 @@ class BooksPageView extends GetView<BooksPageController> {
                                         verticalPadding: 0,
                                         hasPadding: false,
                                         height: 40,
-                                        child: Icon(
+                                        child: const Icon(
                                           Icons.delete_outline,
-                                          color: AppColors.red,
+                                          color: Color(0xffEA5958),
                                         ),
                                         onPressed: () {
                                           Get.bottomSheet(
@@ -148,7 +138,7 @@ class BooksPageView extends GetView<BooksPageController> {
                                         height: 40,
                                         child: Icon(
                                           Icons.edit,
-                                          color: AppColors.black,
+                                          color: AppColors.primary,
                                         ),
                                         onPressed: () {
                                           Get.toNamed(Routes.ADD_BOOK_PAGE,
@@ -167,14 +157,17 @@ class BooksPageView extends GetView<BooksPageController> {
                                     borderRadius: BorderRadius.circular(
                                       20,
                                     ),
-                                    color: AppColors.green.withOpacity(.1),
-                                    border: Border.all(color: AppColors.green),
+                                    color: controller
+                                        .getStatusColor(index)
+                                        .withOpacity(.3),
                                   ),
                                   child: Center(
                                       child: Text(
-                                    "Available",
-                                    style:
-                                        Styles.bold(12, color: AppColors.green),
+                                    controller.getStatus(index),
+                                    style: Styles.semiBold(
+                                      18,
+                                      color: controller.getStatusColor(index),
+                                    ),
                                   )),
                                 ),
                               ],
@@ -204,10 +197,10 @@ class _BottomSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<BooksPageController>();
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       height: 287.h,
       decoration: BoxDecoration(
-          color: AppColors.white,
+          color: const Color(0xffEAE9E7),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(23.sp),
             topRight: Radius.circular(23.sp),

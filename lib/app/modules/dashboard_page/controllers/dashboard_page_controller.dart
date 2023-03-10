@@ -15,9 +15,25 @@ class DashboardPageController extends GetxController {
 
   final formGlobalKey = GlobalKey<FormState>();
 
-  final _status = ''.obs;
-  String get status => _status.value;
-  set status(String value) => _status.value = value;
+  String getStatus(index) {
+    if (appController.listOfTransaction[index].status == "1") {
+      return 'Available';
+    } else if (appController.listOfTransaction[index].status == "2") {
+      return 'Allocated';
+    } else {
+      return 'Away';
+    }
+  }
+
+  Color getStatusColor(index) {
+    if (appController.listOfTransaction[index].status == "1") {
+      return const Color(0xff147F7F);
+    } else if (appController.listOfTransaction[index].status == "2") {
+      return const Color(0xffED9D2F);
+    } else {
+      return const Color(0xffEA5958);
+    }
+  }
 
   Future<void> deleteTransaction({required String id}) async {
     try {
@@ -39,7 +55,7 @@ class DashboardPageController extends GetxController {
       homePageController.getTransactionList();
       ToastUtils.showBottomSnackbar("${response.message}");
     } on DioError catch (e) {
-      Get.back();
+      Get.back(closeOverlays: true);
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
     } catch (e) {
       Get.back();

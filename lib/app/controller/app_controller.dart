@@ -13,8 +13,17 @@ import '../routes/app_pages.dart';
 
 class AppController extends GetxController {
   final _userData = Rx<UserData?>(null);
-  UserData? get userData => _userData.value;
-  set userData(UserData? value) => _userData.value = value;
+  UserData? get userData {
+    _userData.value ??= StorageService.getUserData();
+    return _userData.value;
+  }
+
+  set userData(UserData? value) {
+    _userData.value = value;
+    if (value != null) {
+      StorageService.setUserData(value);
+    }
+  }
 
   final _listOfBooks = <BookData>[].obs;
   List<BookData> get listOfBooks => _listOfBooks;
@@ -46,9 +55,9 @@ class AppController extends GetxController {
   }
 
   dataLoadingProcess() {
-    Future.delayed(const Duration(seconds: 1))
-        .then((value) => isLoading = false);
     if (isLoading == true) {
+      Future.delayed(const Duration(seconds: 1))
+          .then((value) => isLoading = false);
       return Center(
         child: CupertinoActivityIndicator(
           color: AppColors.darkGrey,
@@ -71,4 +80,6 @@ class AppController extends GetxController {
       ));
     }
   }
+
+  
 }

@@ -1,4 +1,3 @@
-
 class UploadAssetResponse {
     UploadAssetResponse({
         this.status,
@@ -8,17 +7,17 @@ class UploadAssetResponse {
 
     bool? status;
     String? message;
-    Map<String, String>? data;
+    List<String>? data;
 
     factory UploadAssetResponse.fromJson(Map<String, dynamic> json) => UploadAssetResponse(
         status: json["status"],
         message: json["message"],
-        data: Map.from(json["data"]!).map((k, v) => MapEntry<String, String>(k, v)),
+        data: json["data"] == null ? [] : List<String>.from(json["data"]!.map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": Map.from(data!).map((k, v) => MapEntry<String, dynamic>(k, v)),
+        "data": data == null ? [] : List<String>.from(data!.map((x) => x)),
     };
 }

@@ -40,51 +40,43 @@ class TransactionData {
   TransactionData({
     this.id,
     this.bookId,
+    this.bookName,
     this.personId,
+    this.personName,
     this.borrowedDate,
     this.returnDate,
     this.status,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
   });
 
   String? id;
   String? bookId;
+  String? bookName;
   String? personId;
+  String? personName;
   String? borrowedDate;
   String? returnDate;
-  int? status;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? v;
+  String? status;
 
   factory TransactionData.fromJson(Map<String, dynamic> json) =>
       TransactionData(
         id: json["_id"],
         bookId: json["bookId"],
+        bookName: json["bookName"],
         personId: json["personId"],
+        personName: json["personName"],
         borrowedDate: json["borrowedDate"],
         returnDate: json["returnDate"],
         status: json["status"],
-        createdAt: json["createdAt"] == null
-            ? null
-            : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null
-            ? null
-            : DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
       );
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "bookId": bookId,
+        "bookName": bookName,
         "personId": personId,
+        "personName": personName,
         "borrowedDate": borrowedDate,
         "returnDate": returnDate,
         "status": status,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
       };
 }

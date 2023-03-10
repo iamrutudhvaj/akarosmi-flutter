@@ -53,7 +53,7 @@ class LoginPageView extends GetView<LoginPageController> {
                   controller: controller.emailController,
                   icon: Icon(
                     Icons.email,
-                    color: AppColors.black,
+                    color: AppColors.primary,
                   ),
                   hintText: "Email",
                   textInputType: TextInputType.emailAddress,
@@ -67,7 +67,7 @@ class LoginPageView extends GetView<LoginPageController> {
                     obscureText: controller.obscureText,
                     icon: Icon(
                       Icons.lock,
-                      color: AppColors.black,
+                      color: AppColors.primary,
                     ),
                     hintText: "Password",
                     suffixIcon: InkWell(

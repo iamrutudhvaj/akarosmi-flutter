@@ -12,16 +12,18 @@ class AddPersonDetailsPageView extends GetView<AddPersonDetailsPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black,
+        iconTheme: IconThemeData(
+          color: AppColors.white,
         ),
         title: Text(
           controller.index != null
               ? 'Edit Person Details'
               : 'Add Person Details',
-          style: Styles.regular(20, color: AppColors.black),
+          style: Styles.semiBold(
+            20,
+          ),
         ),
-        backgroundColor: AppColors.white,
+        backgroundColor: AppColors.primary,
         elevation: 5,
       ),
       body: SafeArea(

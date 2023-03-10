@@ -1,4 +1,5 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
+import 'package:akarosmi/app/core/theme/color.dart';
 import 'package:akarosmi/app/data/model/request_model/add_book_request_model.dart';
 import 'package:akarosmi/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:dio/dio.dart';
@@ -18,16 +19,27 @@ class AddBookPageController extends GetxController {
   TextEditingController publisherNameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  String? selectedStatus;
+
   final _imagePathList = List<XFile?>.empty().obs;
   List<XFile?> get imagePathList => _imagePathList;
   set imagePathList(List<XFile?> value) => _imagePathList.value = value;
 
+  final _imageUploadList = <String>[].obs;
+  List<String> get imageUploadList => _imageUploadList;
+  set imageUploadList(List<String> value) => _imageUploadList.value = value;
+
   dynamic image;
+  String? status;
 
   Future<void> getImage({required ImageSource source}) async {
     image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
     imagePathList.add(image);
+    var data = await uploadAsset();
+    if (data != null) {
+      imageUploadList.add(data);
+    }
     Get.back();
   }
 
@@ -37,34 +49,43 @@ class AddBookPageController extends GetxController {
   @override
   void onInit() {
     index = Get.arguments;
+
     if (index != null) {
-      authoreNameController.text =
-          appController.listOfBooks[index!].author ?? '';
-      nameController.text = appController.listOfBooks[index!].name ?? '';
-      publisherNameController.text =
-          appController.listOfBooks[index!].publisher ?? '';
-      bookId = appController.listOfBooks[index!].bookId ?? '';
+      var book = appController.listOfBooks[index!];
+      authoreNameController.text = book.author ?? '';
+      nameController.text = book.name ?? '';
+      publisherNameController.text = book.publisher ?? '';
+      bookId = book.bookId ?? '';
+      imageUploadList = book.images ?? [];
+      if (book.status == '1') {
+        selectedStatus = 'Available';
+      } else if (book.status == '2') {
+        selectedStatus = 'Allocated';
+      } else {
+        selectedStatus = 'Away';
+      }
     }
     super.onInit();
   }
 
   Future<void> addBook() async {
-    List<String>? list = <String>[];
     try {
       Get.dialog(
-        const Center(
-          child: CupertinoActivityIndicator(),
+        Center(
+          child: CupertinoActivityIndicator(
+            color: AppColors.white,
+          ),
         ),
         barrierDismissible: false,
       );
-      list = await uploadAsset();
 
       final response = await AuthRepository.addBook(
           requestData: AddBookRequestModel(
         author: authoreNameController.text,
         name: nameController.text,
         publisher: publisherNameController.text,
-        image: list,
+        image: imageUploadList,
+        status: "1",
       ));
       ToastUtils.showBottomSnackbar("${response["message"]}");
       await homePageController.getBookList();
@@ -77,17 +98,19 @@ class AddBookPageController extends GetxController {
     }
   }
 
-  Future<List<String>?> uploadAsset() async {
+  Future<String?> uploadAsset() async {
     try {
       Get.dialog(
-        const Center(
-          child: CupertinoActivityIndicator(),
+        Center(
+          child: CupertinoActivityIndicator(
+            color: AppColors.white,
+          ),
         ),
         barrierDismissible: false,
       );
-      final response = await ApiController.uploadFile(imagePathList);
-      Get.back(closeOverlays: true);
-      return response;
+      final response = await ApiController.uploadFile([imagePathList.last]);
+      Get.back();
+      return response?.first;
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
@@ -105,11 +128,20 @@ class AddBookPageController extends GetxController {
         ),
         barrierDismissible: false,
       );
+      if (selectedStatus == 'Available') {
+        status = "1";
+      } else if (selectedStatus == 'Allocated') {
+        status = "2";
+      } else {
+        status = "3";
+      }
       final response = await AuthRepository.editBook(
           requestData: AddBookRequestModel(
             author: authoreNameController.text,
             name: nameController.text,
             publisher: publisherNameController.text,
+            image: imageUploadList,
+            status: status,
           ),
           bookID: bookId!);
       ToastUtils.showBottomSnackbar("${response["message"]}");

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
+import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
 
@@ -17,78 +18,131 @@ class DashboardPageView extends GetView<DashboardPageController> {
         displacement: 2,
         color: AppColors.black,
         onRefresh: () async {
-          await controller.homePageController.getBookList();
+          await controller.homePageController.getTransactionList();
         },
         child: Obx(() {
           if (controller.appController.listOfTransaction.isEmpty) {
             return controller.appController.dataLoadingProcess();
           } else {
-            return ListView.builder(
+            return ListView.separated(
               shrinkWrap: true,
               itemCount: controller.appController.listOfTransaction.length,
+              padding: const EdgeInsets.all(16),
+              separatorBuilder: (context, index) => const SizedBox(
+                height: 16,
+              ),
               itemBuilder: (context, index) {
-                if (controller.appController.listOfTransaction[index].status ==
-                    1) {
-                  controller.status = 'Available';
-                } else if (controller
-                        .appController.listOfTransaction[index].status ==
-                    2) {
-                  controller.status = 'Allocated';
-                } else {
-                  controller.status = 'Away';
-                }
-                return ListTile(
-                  title: Text(
-                    controller.status,
-                    style: Styles.bold(18),
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: controller.getStatusColor(index).withOpacity(.3),
+                    
                   ),
-                  subtitle: Text(
-                    "${controller.appController.listOfTransaction[index].returnDate}",
-                    style: Styles.regular(18),
-                  ),
-                  trailing: PopupMenuButton<int>(
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 1,
-                        child: Row(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                     
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.book),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "${controller.appController.listOfTransaction[index].bookName}",
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(Icons.person),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    "${controller.appController.listOfTransaction[index].personName}",
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.circle,
+                                      color: controller.getStatusColor(index)),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    controller.getStatus(index),
+                                    style: Styles.medium(16,
+                                        color:
+                                            controller.getStatusColor(index)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
                           children: [
-                            Icon(
-                              Icons.edit_document,
-                              color: AppColors.blue,
+                            OutlinedButton(
+                              onPressed: () {
+                                Get.bottomSheet(
+                                  barrierColor:
+                                      AppColors.black.withOpacity(0.3),
+                                  _BottomSheetView(index),
+                                );
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: const StadiumBorder(),
+                                backgroundColor: AppColors.white,
+                                side: BorderSide(
+                                  color: AppColors.transparent,
+                                ),
+                              ),
+                              child: const Icon(
+                                Icons.delete_outline,
+                                color: Color(0xffEA5958),
+                              ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              height: 4,
                             ),
-                            const Text("Edit")
+                            OutlinedButton(
+                              onPressed: () {
+                                Get.toNamed(Routes.ADD_TRANSACTION_PAGE,
+                                    arguments: index);
+                              },
+                              style: OutlinedButton.styleFrom(
+                                shape: const StadiumBorder(),
+                                backgroundColor: AppColors.white,
+                                side: BorderSide(
+                                  color: AppColors.transparent,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.edit,
+                                color: AppColors.primary,
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      PopupMenuItem(
-                        value: 2,
-                        child: Row(
-                          children: [
-                            Icon(Icons.delete, color: AppColors.red),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text("Delete")
-                          ],
-                        ),
-                      ),
-                    ],
-                    offset: const Offset(0, 40),
-                    elevation: 2,
-                    onSelected: (value) {
-                      if (value == 1) {
-                        // Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
-                        //     arguments: index);
-                      } else if (value == 2) {
-                        Get.bottomSheet(
-                          barrierColor: AppColors.black.withOpacity(0.3),
-                          _BottomSheetView(index),
-                        );
-                      }
-                    },
+                      ],
+                    ),
                   ),
                 );
               },
@@ -108,10 +162,10 @@ class _BottomSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<DashboardPageController>();
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       height: 287.h,
       decoration: BoxDecoration(
-          color: AppColors.white,
+          color: const Color(0xffEAE9E7),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(23.sp),
             topRight: Radius.circular(23.sp),
@@ -131,7 +185,7 @@ class _BottomSheetView extends StatelessWidget {
               height: 30.h,
             ),
             Text(
-              "Delete Your Own's Book",
+              "Delete Your Own's Transaction",
               style: Styles.regular(18,
                   fontWeight: FontWeight.w600, color: AppColors.black),
             ),
@@ -185,7 +239,7 @@ class _BottomSheetView extends StatelessWidget {
                         AlertDialog(
                           content: Text(
                             textAlign: TextAlign.center,
-                            "Are you sure you want to delete ${controller.appController.listOfTransaction[index].returnDate}?",
+                            "Are you sure you want to delete ${controller.appController.listOfTransaction[index].bookName}?",
                             style: Styles.bold(18),
                           ),
                           actions: <Widget>[

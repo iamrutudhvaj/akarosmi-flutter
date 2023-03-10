@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/app_controller.dart';
-import '../../../core/theme/color.dart';
 import '../../../core/utils/toast.dart';
 import '../../../data/repository/auth_repository.dart';
 import '../../../routes/app_pages.dart';
@@ -28,18 +27,17 @@ class HomePageController extends GetxController {
     const PersonsPageView(),
   ];
   List<String> titleList = [
-    'DashboardPageView',
-    'Books',
-    'Add Person',
+    'Book Transaction',
+    'Books Details',
+    'Person Details',
   ];
   List actionIconList = [
     IconButton(
       onPressed: () {
         Get.toNamed(Routes.ADD_TRANSACTION_PAGE);
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.add_box,
-        color: AppColors.black,
         size: 30,
       ),
     ),
@@ -47,9 +45,8 @@ class HomePageController extends GetxController {
       onPressed: () {
         Get.toNamed(Routes.ADD_BOOK_PAGE);
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.add_box,
-        color: AppColors.black,
         size: 30,
       ),
     ),
@@ -57,9 +54,8 @@ class HomePageController extends GetxController {
       onPressed: () {
         Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE);
       },
-      icon: Icon(
+      icon: const Icon(
         Icons.person_add,
-        color: AppColors.black,
       ),
     ),
   ];

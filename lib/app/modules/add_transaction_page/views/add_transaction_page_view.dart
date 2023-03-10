@@ -20,13 +20,13 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        backgroundColor: AppColors.white,
-        iconTheme: IconThemeData(color: AppColors.black),
+        backgroundColor: AppColors.primary,
+        iconTheme: IconThemeData(color: AppColors.white),
         title: Text(
-          "Add Transaction",
+          controller.index != null ? "Update Transaction" : "Add Transaction",
           style: Styles.regular(
             20,
-            color: AppColors.black,
+            color: AppColors.white,
           ),
         ),
       ),
@@ -62,6 +62,7 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                             : 'Select Book',
                         hintText: 'Select Book',
                         labelStyle: TextStyle(color: AppColors.black),
+                        border: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: 1, color: AppColors.transparent),
@@ -69,12 +70,21 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(width: 1, color: AppColors.black),
+                              BorderSide(width: 1, color: AppColors.primary),
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        border: InputBorder.none,
+                        errorBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: AppColors.primary),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: AppColors.primary),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                         filled: true,
-                        fillColor: AppColors.fillColor,
+                        fillColor: AppColors.white,
                       ),
                     )),
               ),
@@ -105,6 +115,7 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                                 : 'Select Person',
                         hintText: 'Select Person',
                         labelStyle: TextStyle(color: AppColors.black),
+                        border: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: 1, color: AppColors.transparent),
@@ -112,12 +123,21 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(width: 1, color: AppColors.black),
+                              BorderSide(width: 1, color: AppColors.primary),
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        border: InputBorder.none,
+                        errorBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: AppColors.primary),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: AppColors.primary),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                         filled: true,
-                        fillColor: AppColors.fillColor,
+                        fillColor: AppColors.white,
                       ),
                     )),
               ),
@@ -126,10 +146,13 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
               ),
               CustomTextFormField(
                 readonly: true,
-                label: "Date of birth",
+                label: "Return Date",
                 controller: controller.returnDateController,
-                hintText: "Date of birth",
-                suffixIcon: const Icon(Icons.calendar_today_outlined),
+                hintText: "Return Date",
+                suffixIcon: Icon(
+                  Icons.calendar_today_outlined,
+                  color: AppColors.primary,
+                ),
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Field Can't be empty";
@@ -151,13 +174,13 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16)))),
                           colorScheme: ColorScheme.light(
-                            primary: AppColors.black,
+                            primary: AppColors.primary,
                             onPrimary: AppColors.white,
-                            onSurface: AppColors.black,
+                            onSurface: AppColors.primary,
                           ),
                           textButtonTheme: TextButtonThemeData(
                             style: TextButton.styleFrom(
-                              foregroundColor: AppColors.black,
+                              foregroundColor: AppColors.primary,
                             ),
                           ),
                         ),
@@ -173,23 +196,72 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                 },
               ),
               SizedBox(
+                height: 16.h,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  items: ["Available", "Allocated", "Away"]
+                      .map<DropdownMenuItem<String>>((value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    controller.selectedStatus = newValue;
+                  },
+                  value: controller.selectedStatus,
+                  validator: (value) =>
+                      value == null ? "Field Can't be empty" : null,
+                  decoration: InputDecoration(
+                    labelText: 'Select Book Status',
+                    hintText: 'Select Book Status',
+                    labelStyle: TextStyle(color: AppColors.black),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: AppColors.transparent),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: AppColors.primary),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: AppColors.primary),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: AppColors.primary),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    filled: true,
+                    fillColor: AppColors.white,
+                  ),
+                ),
+              ),
+              SizedBox(
                 height: 30.h,
               ),
               PrimaryButton(
-                width: 150.w,
+                width: 170.w,
                 onPressed: () {
                   if (controller.formKey.currentState!.validate()) {
-                    controller.insertTransaction();
+                    if (controller.index != null) {
+                      controller.updateTransaction();
+                    } else {
+                      controller.insertTransaction();
+                    }
                   }
-
-                  // if (controller.index != null) {
-                  //   // controller.editBook();
-                  // } else {
-                  //   controller.addBook();
-                  // }
                 },
-                child: const Text("Add Transaction"),
-                // Text(controller.index != null ? "Update Book" : "Add Book"),
+                child: Text(controller.index != null
+                    ? "Update Transaction"
+                    : "Add Transaction"),
               ),
             ],
           ),
