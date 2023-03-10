@@ -74,11 +74,11 @@ class CustomTextFormField extends StatelessWidget {
           ),
           errorBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: AppColors.primary),
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(15),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 1, color: AppColors.primary),
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(15),
           ),
           hintText: hintText,
           hintStyle: TextStyle(color: AppColors.black),

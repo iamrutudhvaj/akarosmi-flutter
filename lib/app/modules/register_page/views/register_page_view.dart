@@ -19,7 +19,6 @@ class RegisterPageView extends GetView<RegisterPageController> {
         child: SingleChildScrollView(
           child: Form(
             key: controller.formGlobalKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -42,7 +41,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                 Center(
                   child: Text(
                     "Register at Akarosmi",
-                    style: Styles.regular(25, fontWeight: FontWeight.w600),
+                    style: Styles.semiBold(25, fontWeight: FontWeight.w600),
                   ),
                 ),
                 SizedBox(
@@ -50,7 +49,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                 ),
                 CustomTextFormField(
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return "First must be required.";
                     }
                   },
@@ -64,7 +63,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                 ),
                 CustomTextFormField(
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return "Last must be required.";
                     }
                   },
@@ -78,7 +77,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                 ),
                 CustomTextFormField(
                   validator: (String? value) {
-                    if (value == null || value.isEmpty) {
+                    if (value!.isEmpty) {
                       return "Date of birth must be required.";
                     }
                   },
@@ -153,19 +152,14 @@ class RegisterPageView extends GetView<RegisterPageController> {
                                     onChanged: (value) {
                                       controller.selectedGender.value = value;
                                     },
-                                    activeColor: Colors.black,
+                                    activeColor: AppColors.primary,
                                     fillColor: MaterialStateProperty.all(
-                                        AppColors.black),
+                                        AppColors.primary),
                                   ),
                                 ),
-                                Text(
-                                  e,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.black,
-                                  ),
-                                ),
+                                Text(e,
+                                    style: Styles.semiBold(18,
+                                        color: AppColors.black)),
                               ],
                             ))
                         .toList(),
@@ -235,10 +229,10 @@ class RegisterPageView extends GetView<RegisterPageController> {
                           text: "Login",
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => Get.toNamed(Routes.LOGIN_PAGE),
-                          style: TextStyle(
+                          style: Styles.semiBold(
+                            15,
                             color: AppColors.blue,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
+                            textDecoration: TextDecoration.underline,
                           ),
                         )
                       ],

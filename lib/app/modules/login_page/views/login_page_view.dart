@@ -22,7 +22,6 @@ class LoginPageView extends GetView<LoginPageController> {
           child: SingleChildScrollView(
             child: Form(
               key: controller.formGlobalKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -46,8 +45,8 @@ class LoginPageView extends GetView<LoginPageController> {
                     height: 5.h,
                   ),
                   Text(
-                    "Login Page",
-                    style: Styles.regular(25, fontWeight: FontWeight.w600),
+                    "Login",
+                    style: Styles.semiBold(25, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
                     height: 20.h,
@@ -64,7 +63,7 @@ class LoginPageView extends GetView<LoginPageController> {
                     },
                     controller: controller.emailController,
                     icon: Icon(
-                      Icons.lock,
+                      Icons.email,
                       color: AppColors.primary,
                     ),
                     hintText: "Email",
@@ -84,7 +83,7 @@ class LoginPageView extends GetView<LoginPageController> {
                       obscureText: controller.obscureText,
                       icon: Icon(
                         Icons.lock,
-                        color: AppColors.black,
+                        color: AppColors.primary,
                       ),
                       hintText: "Password",
                       suffixIcon: InkWell(
@@ -92,7 +91,7 @@ class LoginPageView extends GetView<LoginPageController> {
                           controller.obscureText
                               ? Icons.visibility_off
                               : Icons.visibility,
-                          color: AppColors.black,
+                          color: AppColors.primary,
                           size: 20.sp,
                         ),
                         onTap: () {
@@ -139,12 +138,12 @@ class LoginPageView extends GetView<LoginPageController> {
                             ..onTap = () => Get.toNamed(
                                   Routes.REGISTER_PAGE,
                                 ),
-                          style: TextStyle(
+                          style: Styles.semiBold(
+                            15,
                             color: AppColors.blue,
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
+                            textDecoration: TextDecoration.underline,
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
