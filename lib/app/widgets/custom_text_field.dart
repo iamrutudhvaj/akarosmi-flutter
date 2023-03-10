@@ -45,7 +45,7 @@ class CustomTextFormField extends StatelessWidget {
           : EdgeInsets.zero,
       child: TextFormField(
         controller: controller,
-        textInputAction: TextInputAction.next,
+        textInputAction: TextInputAction.done,
         readOnly: readonly!,
         obscureText: obscureText!,
         focusNode: focusNode,
@@ -55,7 +55,7 @@ class CustomTextFormField extends StatelessWidget {
         cursorColor: AppColors.black,
         decoration: InputDecoration(
           counterText: "",
-          fillColor: AppColors.fillColor,
+          fillColor: AppColors.white,
           labelText: label,
           labelStyle: TextStyle(color: AppColors.black),
           filled: true,
@@ -69,15 +69,15 @@ class CustomTextFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.black),
+            borderSide: BorderSide(width: 1, color: AppColors.primary),
             borderRadius: BorderRadius.circular(15),
           ),
           errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.black),
+            borderSide: BorderSide(width: 1, color: AppColors.primary),
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.black),
+            borderSide: BorderSide(width: 1, color: AppColors.primary),
             borderRadius: BorderRadius.circular(8.0),
           ),
           hintText: hintText,

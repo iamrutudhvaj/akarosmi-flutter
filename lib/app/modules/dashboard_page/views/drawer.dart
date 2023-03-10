@@ -19,19 +19,51 @@ class DrawerView extends GetView<DashboardPageController> {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
-              color: AppColors.black,
+              color: AppColors.primary,
             ),
             child: SizedBox(
               width: Get.width,
-              child: Text(
-                'AKAROSMI',
-                style: Styles.regularFjallaOne(30, color: AppColors.white),
+              child: Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'AKAROSMI',
+                          style: Styles.regularFjallaOne(30,
+                              color: AppColors.white),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Get.toNamed(Routes.PROFILE_PAGE);
+                          },
+                          icon: Icon(Icons.edit_square, color: AppColors.white),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '${controller.appController.userData?.firstName} ${controller.appController.userData?.lastName}',
+                      style: Styles.regular(24, color: AppColors.white),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${controller.appController.userData?.email}',
+                      style: Styles.regular(16, color: AppColors.white),
+                    ),
+                    Text(
+                      '${controller.appController.userData?.phoneNumber}',
+                      style: Styles.regular(16, color: AppColors.white),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
           ListTile(
             leading: const Icon(
-              Icons.security,
+              Icons.lock_reset_rounded,
             ),
             title: Text(
               'Change Password',
@@ -42,6 +74,17 @@ class DrawerView extends GetView<DashboardPageController> {
             onTap: () {
               Get.toNamed(Routes.RESET_PASSWORD_PAGE);
             },
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.star,
+            ),
+            title: Text(
+              'Rate US',
+              style: Styles.regular(
+                20,
+              ),
+            ),
           ),
           const Spacer(),
           PrimaryButton(

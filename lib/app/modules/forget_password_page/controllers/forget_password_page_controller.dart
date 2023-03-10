@@ -8,6 +8,8 @@ import '../../../routes/app_pages.dart';
 class ForgetPasswordPageController extends GetxController {
   TextEditingController emailController = TextEditingController();
 
+  final formGlobalKey = GlobalKey<FormState>();
+
   Future<void> userForgetPassword() async {
     try {
       Get.dialog(

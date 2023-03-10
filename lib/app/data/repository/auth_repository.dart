@@ -7,7 +7,11 @@ import 'package:akarosmi/app/data/network/api_controller.dart';
 import 'package:akarosmi/app/data/model/response_model/login_response.dart';
 
 import '../model/request_model/add_person_request_model.dart';
+import '../model/request_model/edit_profile_request_model.dart';
+import '../model/request_model/insert_transaction_request_model.dart';
 import '../model/response_model/forget_password_response.dart';
+import '../model/response_model/list_of_transaction_response.dart';
+import '../model/response_model/transaction_update_response.dart';
 
 class AuthRepository {
   static Future<RegistrationResponse> registration(
@@ -112,5 +116,76 @@ class AuthRepository {
       data: requestData.toJson(),
     );
     return response;
+  }
+
+  static Future<Map<String, dynamic>> insertTransaction(
+      {required InsertTransactionRequestModel requestData}) async {
+    final response = await ApiController.post(
+      path: UriPath.insertTransaction,
+      data: requestData.toJson(),
+    );
+    return response;
+  }
+
+  static Future<TransactionListResponse> getTransactionList(
+      {required int page, required int limit}) async {
+    final response = await ApiController.get(
+      path: '${UriPath.listOfTransaction}?page=$page&limit=$limit',
+    );
+    return TransactionListResponse.fromJson(response);
+  }
+
+  static Future<TransactionListResponse> getListByPersonId(
+      {required int page, required int limit, required String personId}) async {
+    final response = await ApiController.get(
+      path: '${UriPath.listByPersonId}$personId?page=$page&limit=$limit',
+    );
+    return TransactionListResponse.fromJson(response);
+  }
+
+  static Future<TransactionListResponse> getListByBookId(
+      {required int page, required int limit, required String bookId}) async {
+    final response = await ApiController.get(
+      path: '${UriPath.listByBookId}$bookId?page=$page&limit=$limit',
+    );
+    return TransactionListResponse.fromJson(response);
+  }
+
+  static Future<TransactionListResponse> deleteTransaction(
+      {required Map<String, dynamic> requestData,
+      required String transactionId}) async {
+    final response = await ApiController.delete(
+      path: '${UriPath.deleteTransaction}$transactionId',
+      data: requestData,
+    );
+    return TransactionListResponse.fromJson(response!);
+  }
+
+  static Future<LoginResponse> editUser(
+      {required EditProfileRequestModel requestData}) async {
+    final response = await ApiController.put(
+      path: UriPath.editProfile,
+      data: requestData.toJson(),
+    );
+    return LoginResponse.fromJson(response);
+  }
+
+  static Future<RegistrationResponse> deleteUser(
+      {required Map<String, dynamic> requestData}) async {
+    final response = await ApiController.delete(
+      path: UriPath.userDelete,
+      data: requestData,
+    );
+    return RegistrationResponse.fromJson(response!);
+  }
+
+  static Future<TransactionUpdateResponse> updateTransaction(
+      {required InsertTransactionRequestModel requestData,
+      required String transactionId}) async {
+    final response = await ApiController.put(
+      path: '${UriPath.updateTransaction}$transactionId',
+      data: requestData.toJson(),
+    );
+    return TransactionUpdateResponse.fromJson(response);
   }
 }
