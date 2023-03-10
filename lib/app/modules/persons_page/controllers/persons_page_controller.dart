@@ -1,52 +1,39 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/app_controller.dart';
+import '../../../core/theme/color.dart';
 import '../../../core/utils/toast.dart';
-import '../../../data/model/response_model/list_of_person_response.dart';
 import '../../../data/repository/auth_repository.dart';
+import '../../home_page/controllers/home_page_controller.dart';
 
 class PersonsPageController extends GetxController {
+  AppController appController = Get.find();
+  HomePageController homePageController = Get.find();
   TextEditingController passwordController = TextEditingController();
 
-  final _listOfPersonData = PersonListResponse().obs;
-  PersonListResponse get listOfPersonData => _listOfPersonData.value;
-  set listOfPersonData(PersonListResponse value) =>
-      _listOfPersonData.value = value;
-
   final formGlobalKey = GlobalKey<FormState>();
-
-  @override
-  void onInit() {
-    getPersonList();
-    super.onInit();
-  }
-
-  Future<void> getPersonList() async {
-    try {
-      final response = await AuthRepository.getPersonList();
-      listOfPersonData = response;
-    } on DioError catch (e) {
-      Get.back();
-      ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
-    } catch (e) {
-      Get.back();
-    }
-  }
-
   Future<void> deletePerson({required String id}) async {
     try {
+      Get.dialog(
+        Center(
+          child: CupertinoActivityIndicator(
+            color: AppColors.darkGrey,
+          ),
+        ),
+      );
       final response = await AuthRepository.deletePerson(
         requestData: {
           "password": passwordController.text,
         },
         personID: id,
       );
-      ToastUtils.showBottomSnackbar("${response.message}");
       passwordController.clear();
-      listOfPersonData = response;
+      appController.listOfPersonData.assignAll(response.data ?? []);
       Get.back(closeOverlays: true);
-      getPersonList();
+      homePageController.getPersonList();
+      ToastUtils.showBottomSnackbar("${response.message}");
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");

@@ -64,8 +64,8 @@ class LoginPageView extends GetView<LoginPageController> {
                     },
                     controller: controller.emailController,
                     icon: Icon(
-                      Icons.email,
-                      color: AppColors.black,
+                      Icons.lock,
+                      color: AppColors.primary,
                     ),
                     hintText: "Email",
                     textInputType: TextInputType.emailAddress,

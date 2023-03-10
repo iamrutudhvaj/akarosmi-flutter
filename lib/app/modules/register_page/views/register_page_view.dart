@@ -86,7 +86,8 @@ class RegisterPageView extends GetView<RegisterPageController> {
                   label: "Date of birth",
                   controller: controller.dobController,
                   hintText: "Date of birth",
-                  suffixIcon: const Icon(Icons.calendar_today_outlined),
+                  suffixIcon: Icon(Icons.calendar_today_outlined,
+                      color: AppColors.primary),
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
@@ -103,9 +104,9 @@ class RegisterPageView extends GetView<RegisterPageController> {
                                         BorderRadius.all(Radius.circular(16)))),
                             colorScheme: ColorScheme.light(
                               primary:
-                                  AppColors.black, // header background color
+                                  AppColors.primary, // header background color
                               onPrimary: AppColors.white, // header text color
-                              onSurface: AppColors.black, // body text color
+                              onSurface: AppColors.primary, // body text color
                             ),
                             textButtonTheme: TextButtonThemeData(
                               style: TextButton.styleFrom(
@@ -173,17 +174,6 @@ class RegisterPageView extends GetView<RegisterPageController> {
                 SizedBox(
                   height: 15.h,
                 ),
-                // Obx(() => Visibility(
-                //       visible: controller.selectedGender.value.isEmpty,
-                //       child: Text(
-                //         "Gender must be required",
-                //         style: TextStyle(
-                //           fontSize: 15,
-                //           fontWeight: FontWeight.bold,
-                //           color: AppColors.black,
-                //         ),
-                //       ),
-                //     )),
                 CustomTextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
