@@ -4,12 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:searchfield/searchfield.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
-import '../../../data/model/response_model/list_of_book_user_response.dart';
-import '../../../data/model/response_model/list_of_person_response.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
 import '../controllers/add_transaction_page_controller.dart';
@@ -43,117 +40,9 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Obx(() => DropdownButtonFormField<BookData>(
-                      isExpanded: true,
-                      borderRadius: BorderRadius.circular(15),
-                      items: controller.appController.listOfBooks
-                          .map<DropdownMenuItem<BookData>>((value) {
-                        return DropdownMenuItem<BookData>(
-                          value: value,
-                          child: Text("${value.name}"),
-                        );
-                      }).toList(),
-                      onChanged: (BookData? newValue) {
-                        controller.selectedBook = newValue;
-                      },
-                      value: controller.selectedBook,
-                      validator: (value) =>
-                          value == null ? "Field Can't be empty" : null,
-                      decoration: InputDecoration(
-                        labelText: controller.appController.listOfBooks.isEmpty
-                            ? 'No Book Available'
-                            : 'Select Book',
-                        hintText: 'Select Book',
-                        labelStyle: TextStyle(color: AppColors.black),
-                        border: InputBorder.none,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.red),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.red),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.white,
-                      ),
-                    )),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: SearchField(
-                  suggestions: controller.bookListForAddTransaction
-                      .map((e) => SearchFieldListItem(e.name ?? ''))
-                      .toList(),
-                  suggestionState: Suggestion.expand,
-                  textInputAction: TextInputAction.next,
-                  hint: 'Select Book',
-                  hasOverlay: false,
-                  searchStyle: Styles.regular(19, color: AppColors.black),
-                  validator: (value) =>
-                      value!.isEmpty ? "Field Can't be empty" : null,
-                  searchInputDecoration: InputDecoration(
-                    labelText: controller.bookListForAddTransaction
-                            .map((e) => SearchFieldListItem(e.name ?? ''))
-                            .toList()
-                            .isEmpty
-                        ? 'No Book Available'
-                        : 'Select Book',
-                    labelStyle: TextStyle(color: AppColors.black),
-                    hintStyle: TextStyle(color: AppColors.black),
-                    filled: true,
-                    fillColor: AppColors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: AppColors.red),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: AppColors.red),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    border: InputBorder.none,
-                  ),
-                  suggestionDirection: SuggestionDirection.down,
-                  maxSuggestionsInViewPort: 6,
-                  itemHeight: 50,
-                  autoCorrect: true,
-                ),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: CustomDropdown.search(
                   errorText: "Field Can't be empty",
-                  
-                  errorBorderSide:
-                      BorderSide(width: 1, color: AppColors.primary),
+                  errorBorderSide: BorderSide(width: 1, color: AppColors.red),
                   borderSide: BorderSide(width: 1, color: AppColors.primary),
                   borderRadius: BorderRadius.circular(15),
                   hintText: controller.bookListForAddTransaction
@@ -168,7 +57,6 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                       .toList(),
                   controller: controller.bookListController,
                   hideSelectedFieldWhenOpen: true,
-                
                 ),
               ),
               SizedBox(
@@ -176,53 +64,28 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Obx(() => DropdownButtonFormField<PersonData>(
-                      isExpanded: true,
-                      items: controller.appController.listOfPersonData
-                          .map<DropdownMenuItem<PersonData>>((value) {
-                        return DropdownMenuItem<PersonData>(
-                          value: value,
-                          child: Text("${value.firstName} ${value.lastName}"),
-                        );
-                      }).toList(),
-                      onChanged: (PersonData? newValue) {
-                        controller.selectedPerson = newValue;
-                      },
-                      value: controller.selectedPerson,
-                      validator: (value) =>
-                          value == null ? "Field Can't be empty" : null,
-                      decoration: InputDecoration(
-                        labelText:
-                            controller.appController.listOfPersonData.isEmpty
-                                ? 'No Person Available'
-                                : 'Select Person',
-                        hintText: 'Select Person',
-                        labelStyle: TextStyle(color: AppColors.black),
-                        border: InputBorder.none,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        filled: true,
-                        fillColor: AppColors.white,
-                      ),
-                    )),
+                child: CustomDropdown.search(
+                  errorText: "Field Can't be empty",
+                  errorBorderSide: BorderSide(width: 1, color: AppColors.red),
+                  borderSide: BorderSide(width: 1, color: AppColors.primary),
+                  borderRadius: BorderRadius.circular(15),
+                  hintText: controller.appController.listOfPersonData
+                          .map(
+                            (e) {
+                              return Text("${e.firstName} ${e.lastName}");
+                            },
+                          )
+                          .toList()
+                          .isEmpty
+                      ? 'No Person Available'
+                      : 'Select Person',
+                  hintStyle: TextStyle(color: AppColors.black),
+                  items: controller.appController.listOfPersonData
+                      .map((e) => '${e.firstName} ${e.lastName}')
+                      .toList(),
+                  controller: controller.personListController,
+                  hideSelectedFieldWhenOpen: true,
+                ),
               ),
               SizedBox(
                 height: 16.h,

@@ -56,6 +56,7 @@ class CustomTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           counterText: "",
           fillColor: AppColors.white,
+          contentPadding: const EdgeInsets.only(top: 16, left: 18),
           labelText: label,
           labelStyle: TextStyle(color: AppColors.black),
           filled: true,
@@ -73,11 +74,11 @@ class CustomTextFormField extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.primary),
+            borderSide: BorderSide(width: 1, color: AppColors.red),
             borderRadius: BorderRadius.circular(15),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: AppColors.primary),
+            borderSide: BorderSide(width: 1, color: AppColors.red),
             borderRadius: BorderRadius.circular(15),
           ),
           hintText: hintText,

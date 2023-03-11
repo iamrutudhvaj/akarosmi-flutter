@@ -15,18 +15,11 @@ import '../../../data/repository/auth_repository.dart';
 class AddTransactionPageController extends GetxController {
   TextEditingController returnDateController = TextEditingController();
   TextEditingController bookListController = TextEditingController();
+  TextEditingController personListController = TextEditingController();
 
   final _status = ''.obs;
   String get status => _status.value;
   set status(String value) => _status.value = value;
-  final List<String> list = [
-    "Follow",
-    "lakshydeep-14",
-    "on",
-    "Github",
-    "Medium",
-    "LinkedIn"
-  ];
 
   AppController appController = Get.find();
   HomePageController homePageController = Get.find();
@@ -37,6 +30,7 @@ class AddTransactionPageController extends GetxController {
       _bookListForAddTransaction.value = value;
 
   String currentDate = DateFormat("dd-MM-yyyy").format(DateTime.now());
+  String? borrowedDate;
   final formKey = GlobalKey<FormState>();
 
   String? selectedStatus;
@@ -63,6 +57,7 @@ class AddTransactionPageController extends GetxController {
           .where((e) => e.personId == transaction.personId)
           .first;
       returnDateController.text = transaction.returnDate ?? "";
+      borrowedDate = transaction.borrowedDate ?? "";
       if (transaction.status == '1') {
         selectedStatus = 'Available';
       } else if (transaction.status == '2') {
@@ -95,13 +90,20 @@ class AddTransactionPageController extends GetxController {
       getStatus();
       final response = await AuthRepository.insertTransaction(
           requestData: InsertTransactionRequestModel(
-        bookId: selectedBook?.bookId,
-        personId: selectedPerson?.personId,
+        bookId: bookListForAddTransaction
+            .where((element) => element.name == bookListController.text)
+            .first
+            .bookId,
+        personId: appController.listOfPersonData
+            .where((e) =>
+                '${e.firstName} ${e.lastName}' == personListController.text)
+            .first
+            .personId,
         borrowedDate: currentDate,
         returnDate: returnDateController.text,
         status: status,
       ));
-      homePageController.getTransactionList();
+      await homePageController.getTransactionList();
       ToastUtils.showBottomSnackbar("${response["message"]}");
       homePageController.getBookList();
       Get.back(closeOverlays: true);
@@ -127,7 +129,7 @@ class AddTransactionPageController extends GetxController {
         requestData: InsertTransactionRequestModel(
           bookId: selectedBook?.bookId,
           personId: selectedPerson?.personId,
-          borrowedDate: currentDate,
+          borrowedDate: borrowedDate,
           returnDate: returnDateController.text,
           status: status,
         ),
