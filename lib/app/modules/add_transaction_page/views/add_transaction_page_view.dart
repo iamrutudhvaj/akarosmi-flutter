@@ -1,8 +1,10 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:searchfield/searchfield.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
@@ -43,6 +45,7 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Obx(() => DropdownButtonFormField<BookData>(
                       isExpanded: true,
+                      borderRadius: BorderRadius.circular(15),
                       items: controller.appController.listOfBooks
                           .map<DropdownMenuItem<BookData>>((value) {
                         return DropdownMenuItem<BookData>(
@@ -64,8 +67,8 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                         labelStyle: TextStyle(color: AppColors.black),
                         border: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 1, color: AppColors.transparent),
+                          borderSide:
+                              BorderSide(width: 1, color: AppColors.primary),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -75,18 +78,98 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(8.0),
+                              BorderSide(width: 1, color: AppColors.red),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide:
-                              BorderSide(width: 1, color: AppColors.primary),
-                          borderRadius: BorderRadius.circular(8.0),
+                              BorderSide(width: 1, color: AppColors.red),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         filled: true,
                         fillColor: AppColors.white,
                       ),
                     )),
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: SearchField(
+                  suggestions: controller.bookListForAddTransaction
+                      .map((e) => SearchFieldListItem(e.name ?? ''))
+                      .toList(),
+                  suggestionState: Suggestion.expand,
+                  textInputAction: TextInputAction.next,
+                  hint: 'Select Book',
+                  hasOverlay: false,
+                  searchStyle: Styles.regular(19, color: AppColors.black),
+                  validator: (value) =>
+                      value!.isEmpty ? "Field Can't be empty" : null,
+                  searchInputDecoration: InputDecoration(
+                    labelText: controller.bookListForAddTransaction
+                            .map((e) => SearchFieldListItem(e.name ?? ''))
+                            .toList()
+                            .isEmpty
+                        ? 'No Book Available'
+                        : 'Select Book',
+                    labelStyle: TextStyle(color: AppColors.black),
+                    hintStyle: TextStyle(color: AppColors.black),
+                    filled: true,
+                    fillColor: AppColors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: AppColors.primary),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: AppColors.primary),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: AppColors.red),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: AppColors.red),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    border: InputBorder.none,
+                  ),
+                  suggestionDirection: SuggestionDirection.down,
+                  maxSuggestionsInViewPort: 6,
+                  itemHeight: 50,
+                  autoCorrect: true,
+                ),
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: CustomDropdown.search(
+                  errorText: "Field Can't be empty",
+                  
+                  errorBorderSide:
+                      BorderSide(width: 1, color: AppColors.primary),
+                  borderSide: BorderSide(width: 1, color: AppColors.primary),
+                  borderRadius: BorderRadius.circular(15),
+                  hintText: controller.bookListForAddTransaction
+                          .map((e) => e.name ?? '')
+                          .toList()
+                          .isEmpty
+                      ? 'No Book Available'
+                      : 'Select Book',
+                  hintStyle: TextStyle(color: AppColors.black),
+                  items: controller.bookListForAddTransaction
+                      .map((e) => e.name ?? '')
+                      .toList(),
+                  controller: controller.bookListController,
+                  hideSelectedFieldWhenOpen: true,
+                
+                ),
               ),
               SizedBox(
                 height: 16.h,
@@ -117,8 +200,8 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                         labelStyle: TextStyle(color: AppColors.black),
                         border: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 1, color: AppColors.transparent),
+                          borderSide:
+                              BorderSide(width: 1, color: AppColors.primary),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -195,56 +278,58 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                   } else {}
                 },
               ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: DropdownButtonFormField<String>(
-                  isExpanded: true,
-                  items: ["Available", "Allocated", "Away"]
-                      .map<DropdownMenuItem<String>>((value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    controller.selectedStatus = newValue;
-                  },
-                  value: controller.selectedStatus,
-                  validator: (value) =>
-                      value == null ? "Field Can't be empty" : null,
-                  decoration: InputDecoration(
-                    labelText: 'Select Book Status',
-                    hintText: 'Select Book Status',
-                    labelStyle: TextStyle(color: AppColors.black),
-                    border: InputBorder.none,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: AppColors.transparent),
-                      borderRadius: BorderRadius.circular(15),
+              if (controller.selectedStatus == 'Away') ...[
+                SizedBox(
+                  height: 16.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: DropdownButtonFormField<String>(
+                    isExpanded: true,
+                    items: ["Available", "Allocated", "Away"]
+                        .map<DropdownMenuItem<String>>((value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      controller.selectedStatus = newValue;
+                    },
+                    value: controller.selectedStatus,
+                    validator: (value) =>
+                        value == null ? "Field Can't be empty" : null,
+                    decoration: InputDecoration(
+                      labelText: 'Select Book Status',
+                      hintText: 'Select Book Status',
+                      labelStyle: TextStyle(color: AppColors.black),
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 1, color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 1, color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 1, color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(width: 1, color: AppColors.primary),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      filled: true,
+                      fillColor: AppColors.white,
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: AppColors.primary),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    filled: true,
-                    fillColor: AppColors.white,
                   ),
                 ),
-              ),
+              ],
               SizedBox(
                 height: 30.h,
               ),

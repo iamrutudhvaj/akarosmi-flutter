@@ -14,13 +14,27 @@ import '../../../data/repository/auth_repository.dart';
 
 class AddTransactionPageController extends GetxController {
   TextEditingController returnDateController = TextEditingController();
+  TextEditingController bookListController = TextEditingController();
 
   final _status = ''.obs;
   String get status => _status.value;
   set status(String value) => _status.value = value;
+  final List<String> list = [
+    "Follow",
+    "lakshydeep-14",
+    "on",
+    "Github",
+    "Medium",
+    "LinkedIn"
+  ];
 
   AppController appController = Get.find();
   HomePageController homePageController = Get.find();
+
+  final _bookListForAddTransaction = <BookData>[].obs;
+  List<BookData> get bookListForAddTransaction => _bookListForAddTransaction;
+  set bookListForAddTransaction(List<BookData> value) =>
+      _bookListForAddTransaction.value = value;
 
   String currentDate = DateFormat("dd-MM-yyyy").format(DateTime.now());
   final formKey = GlobalKey<FormState>();
@@ -34,6 +48,9 @@ class AddTransactionPageController extends GetxController {
 
   @override
   void onInit() {
+    bookListForAddTransaction.assignAll(appController.listOfBooks
+        .where((element) => element.status == '1')
+        .toList());
     index = Get.arguments;
 
     if (index != null) {
@@ -84,8 +101,9 @@ class AddTransactionPageController extends GetxController {
         returnDate: returnDateController.text,
         status: status,
       ));
-      ToastUtils.showBottomSnackbar("${response["message"]}");
       homePageController.getTransactionList();
+      ToastUtils.showBottomSnackbar("${response["message"]}");
+      homePageController.getBookList();
       Get.back(closeOverlays: true);
     } on DioError catch (e) {
       Get.back();

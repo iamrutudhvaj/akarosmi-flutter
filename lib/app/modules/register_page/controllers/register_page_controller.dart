@@ -12,7 +12,7 @@ class RegisterPageController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
-  var selectedGender = "".obs;
+  var selectedGender = "Male".obs;
 
   final List genderItem = [
     'Male',

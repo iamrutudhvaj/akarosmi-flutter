@@ -36,7 +36,7 @@ class ProfilePageController extends GetxController {
     super.onInit();
   }
 
-  var selectedGender = "".obs;
+  var selectedGender = "Male".obs;
 
   final List genderItem = [
     'Male',
