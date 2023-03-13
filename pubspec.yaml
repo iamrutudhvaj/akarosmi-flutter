@@ -17,6 +17,8 @@ dependencies:
   flutter_dotenv: ^5.0.2
   get_storage: ^2.0.3
   firebase_core: ^2.7.0
+  animated_custom_dropdown: ^1.4.0
+  searchfield: ^0.7.5
 
 dev_dependencies: 
   flutter_launcher_icons: ^0.12.0

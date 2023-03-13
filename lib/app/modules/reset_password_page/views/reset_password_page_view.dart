@@ -19,156 +19,156 @@ class ResetPasswordPageView extends GetView<ResetPasswordPageController> {
       child: Scaffold(
           resizeToAvoidBottomInset: true,
           body: Center(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: SingleChildScrollView(
-              child: Form(
-                key: controller.formGlobalKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        height: 100.h,
-                        width: 100.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.greyWhite,
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                              image: AssetImage("assets/images/login.png"),
-                              fit: BoxFit.cover),
-                        ),
+              child: SingleChildScrollView(
+            child: Form(
+              key: controller.formGlobalKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      height: 100.h,
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.greyWhite,
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                            image: AssetImage("assets/images/login.png"),
+                            fit: BoxFit.cover),
                       ),
                     ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Text(
-                      "Set New Password",
-                      style: Styles.regular(25, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Text(
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Text(
+                    "Set New Password",
+                    style: Styles.regular(25, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Text(
                       "Your new password must be different to previously used passwords.",
                       textAlign: TextAlign.center,
                       style: Styles.regular(16, fontWeight: FontWeight.w400),
                     ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Obx(
-                      () => CustomTextFormField(
-                        controller: controller.oldPasswordController,
-                        obscureText: controller.obscureText,
-                        icon: Icon(
-                          Icons.lock,
-                          color: AppColors.primary,
-                        ),
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return "Password must be required.";
-                          }
-                        },
-                        hintText: "Old password",
-                        suffixIcon: InkWell(
-                          child: Icon(
-                            controller.obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppColors.primary,
-                            size: 20.sp,
-                          ),
-                          onTap: () {
-                            controller.obscureText = !controller.obscureText;
-                          },
-                        ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Obx(
+                    () => CustomTextFormField(
+                      controller: controller.oldPasswordController,
+                      obscureText: controller.obscureText,
+                      icon: Icon(
+                        Icons.lock,
+                        color: AppColors.primary,
                       ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Obx(
-                      () => CustomTextFormField(
-                        controller: controller.newPasswordController,
-                        obscureText: controller.obscureTextNewPass,
-                        icon: Icon(
-                          Icons.lock,
-                          color: AppColors.primary,
-                        ),
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return "Password must be required.";
-                          } else if (value.length < 6 || value.length > 12) {
-                            return "Password must contain between 6 and 12 \nletters or numbers.";
-                          }
-                        },
-                        hintText: "New password",
-                        suffixIcon: InkWell(
-                          child: Icon(
-                            controller.obscureTextNewPass
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppColors.primary,
-                            size: 20.sp,
-                          ),
-                          onTap: () {
-                            controller.obscureTextNewPass =
-                                !controller.obscureTextNewPass;
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Obx(
-                      () => CustomTextFormField(
-                        controller: controller.confirmPasswordController,
-                        obscureText: controller.obscureTextConfirmPass,
-                        icon: Icon(
-                          Icons.lock,
-                          color: AppColors.primary,
-                        ),
-                        hintText: "Confirm password",
-                        suffixIcon: InkWell(
-                          child: Icon(
-                            controller.obscureTextConfirmPass
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: AppColors.primary,
-                            size: 20.sp,
-                          ),
-                          onTap: () {
-                            controller.obscureTextConfirmPass =
-                                !controller.obscureTextConfirmPass;
-                          },
-                        ),
-                        validator: (String? value) {
-                          if (value!.isEmpty) {
-                            return "Password must be required.";
-                          } else if (value !=
-                              controller.newPasswordController.text) {
-                            return "Password not match";
-                          }
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    PrimaryButton(
-                      width: 150.w,
-                      onPressed: () {
-                        if (controller.formGlobalKey.currentState!.validate()) {
-                          controller.userChangePassword();
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return "Password must be required.";
                         }
                       },
-                      child: const Text("Reset Password"),
+                      hintText: "Old password",
+                      suffixIcon: InkWell(
+                        child: Icon(
+                          controller.obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AppColors.primary,
+                          size: 20.sp,
+                        ),
+                        onTap: () {
+                          controller.obscureText = !controller.obscureText;
+                        },
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Obx(
+                    () => CustomTextFormField(
+                      controller: controller.newPasswordController,
+                      obscureText: controller.obscureTextNewPass,
+                      icon: Icon(
+                        Icons.lock,
+                        color: AppColors.primary,
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return "Password must be required.";
+                        } else if (value.length < 6 || value.length > 12) {
+                          return "Password must contain between 6 and 12 \nletters or numbers.";
+                        }
+                      },
+                      hintText: "New password",
+                      suffixIcon: InkWell(
+                        child: Icon(
+                          controller.obscureTextNewPass
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AppColors.primary,
+                          size: 20.sp,
+                        ),
+                        onTap: () {
+                          controller.obscureTextNewPass =
+                              !controller.obscureTextNewPass;
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Obx(
+                    () => CustomTextFormField(
+                      controller: controller.confirmPasswordController,
+                      obscureText: controller.obscureTextConfirmPass,
+                      icon: Icon(
+                        Icons.lock,
+                        color: AppColors.primary,
+                      ),
+                      hintText: "Confirm password",
+                      suffixIcon: InkWell(
+                        child: Icon(
+                          controller.obscureTextConfirmPass
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AppColors.primary,
+                          size: 20.sp,
+                        ),
+                        onTap: () {
+                          controller.obscureTextConfirmPass =
+                              !controller.obscureTextConfirmPass;
+                        },
+                      ),
+                      validator: (String? value) {
+                        if (value!.isEmpty) {
+                          return "Password must be required.";
+                        } else if (value !=
+                            controller.newPasswordController.text) {
+                          return "Password not match";
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  PrimaryButton(
+                    width: 150.w,
+                    onPressed: () {
+                      if (controller.formGlobalKey.currentState!.validate()) {
+                        controller.userChangePassword();
+                      }
+                    },
+                    child: const Text("Reset Password"),
+                  ),
+                ],
               ),
             ),
           ))),

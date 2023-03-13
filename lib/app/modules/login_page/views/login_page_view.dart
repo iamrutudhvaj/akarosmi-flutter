@@ -18,7 +18,7 @@ class LoginPageView extends GetView<LoginPageController> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: SingleChildScrollView(
             child: Form(
               key: controller.formGlobalKey,

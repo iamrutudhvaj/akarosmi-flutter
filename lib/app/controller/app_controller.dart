@@ -80,6 +80,4 @@ class AppController extends GetxController {
       ));
     }
   }
-
-  
 }

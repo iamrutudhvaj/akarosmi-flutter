@@ -80,9 +80,9 @@ class DashboardPageController extends GetxController {
         },
         transactionId: id,
       );
+      await homePageController.getTransactionList();
       passwordController.clear();
       Get.back(closeOverlays: true);
-      homePageController.getTransactionList();
       ToastUtils.showBottomSnackbar("${response.message}");
     } on DioError catch (e) {
       Get.back(closeOverlays: true);

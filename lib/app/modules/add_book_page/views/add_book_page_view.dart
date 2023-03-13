@@ -200,8 +200,8 @@ class AddBookPageView extends GetView<AddBookPageController> {
                           labelStyle: TextStyle(color: AppColors.black),
                           border: InputBorder.none,
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: AppColors.transparent),
+                            borderSide:
+                                BorderSide(width: 1, color: AppColors.primary),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           focusedBorder: OutlineInputBorder(

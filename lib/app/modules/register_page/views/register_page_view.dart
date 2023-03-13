@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
-import '../../../routes/app_pages.dart';
 import '../../../widgets/custom_text_field.dart';
 import '../../../widgets/primary_button.dart';
 import '../controllers/register_page_controller.dart';
@@ -228,7 +227,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                         TextSpan(
                           text: "Login",
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => Get.toNamed(Routes.LOGIN_PAGE),
+                            ..onTap = () => Get.back(),
                           style: Styles.semiBold(
                             15,
                             color: AppColors.blue,
