@@ -18,119 +18,140 @@ class LoginPageView extends GetView<LoginPageController> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 150.h,
-                ),
-                Center(
-                  child: Container(
-                    height: 100.h,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                      color: AppColors.greyWhite,
-                      shape: BoxShape.circle,
-                      image: const DecorationImage(
-                          image: AssetImage("assets/images/login.png"),
-                          fit: BoxFit.cover),
-                    ),
+            child: Form(
+              key: controller.formGlobalKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 150.h,
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Text(
-                  "Login Page",
-                  style: Styles.regular(25, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                CustomTextFormField(
-                  controller: controller.emailController,
-                  icon: Icon(
-                    Icons.email,
-                    color: AppColors.black,
-                  ),
-                  hintText: "Email",
-                  textInputType: TextInputType.emailAddress,
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Obx(
-                  () => CustomTextFormField(
-                    controller: controller.passwordController,
-                    obscureText: controller.obscureText,
-                    icon: Icon(
-                      Icons.lock,
-                      color: AppColors.black,
-                    ),
-                    hintText: "Password",
-                    suffixIcon: InkWell(
-                      child: Icon(
-                        controller.obscureText
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: AppColors.black,
-                        size: 20.sp,
+                  Center(
+                    child: Container(
+                      height: 100.h,
+                      width: 100.w,
+                      decoration: BoxDecoration(
+                        color: AppColors.greyWhite,
+                        shape: BoxShape.circle,
+                        image: const DecorationImage(
+                            image: AssetImage("assets/images/login.png"),
+                            fit: BoxFit.cover),
                       ),
-                      onTap: () {
-                        controller.obscureText = !controller.obscureText;
-                      },
                     ),
-                    textInputType: TextInputType.visiblePassword,
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: () {
-                      Get.toNamed(
-                        Routes.FORGET_PASSWORD_PAGE,
-                      );
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  Text(
+                    "Login",
+                    style: Styles.semiBold(25, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomTextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter a email";
+                      } else if (!RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value)) {
+                        return "Please Enter a Valid email";
+                      }
                     },
-                    child: const Text('Forget Password?'),
+                    controller: controller.emailController,
+                    icon: Icon(
+                      Icons.email,
+                      color: AppColors.primary,
+                    ),
+                    hintText: "Email",
+                    textInputType: TextInputType.emailAddress,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                PrimaryButton(
-                  width: 150.w,
-                  onPressed: controller.userLogin,
-                  child: const Text("Login"),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: AppColors.grey),
-                    text: "Don't have an account? ",
-                    children: [
-                      TextSpan(
-                        text: "Register",
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.toNamed(
-                                Routes.REGISTER_PAGE,
-                              ),
-                        style: TextStyle(
-                          color: AppColors.blue,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Obx(
+                    () => CustomTextFormField(
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return "Password must be required.";
+                        }
+                      },
+                      controller: controller.passwordController,
+                      obscureText: controller.obscureText,
+                      icon: Icon(
+                        Icons.lock,
+                        color: AppColors.primary,
+                      ),
+                      hintText: "Password",
+                      suffixIcon: InkWell(
+                        child: Icon(
+                          controller.obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: AppColors.primary,
+                          size: 20.sp,
                         ),
-                      )
-                    ],
+                        onTap: () {
+                          controller.obscureText = !controller.obscureText;
+                        },
+                      ),
+                      textInputType: TextInputType.visiblePassword,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-              ],
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: () {
+                        Get.toNamed(
+                          Routes.FORGET_PASSWORD_PAGE,
+                        );
+                      },
+                      child: const Text('Forget Password?'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  PrimaryButton(
+                    width: 150.w,
+                    onPressed: () {
+                      if (controller.formGlobalKey.currentState!.validate()) {
+                        controller.userLogin();
+                      }
+                    },
+                    child: const Text("Login"),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      style: TextStyle(color: AppColors.grey),
+                      text: "Don't have an account? ",
+                      children: [
+                        TextSpan(
+                          text: "Register",
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Get.toNamed(
+                                  Routes.REGISTER_PAGE,
+                                ),
+                          style: Styles.semiBold(
+                            15,
+                            color: AppColors.blue,
+                            textDecoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                ],
+              ),
             ),
           ),
         ));
