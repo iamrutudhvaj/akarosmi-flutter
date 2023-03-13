@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../core/theme/color.dart';
 import '../../../core/utils/toast.dart';
+import '../../../data/model/response_model/list_of_transaction_response.dart';
 import '../../../data/repository/auth_repository.dart';
 import '../../home_page/controllers/home_page_controller.dart';
 
@@ -15,10 +16,38 @@ class DashboardPageController extends GetxController {
 
   final formGlobalKey = GlobalKey<FormState>();
 
+  final _transactionList = <TransactionData>[].obs;
+  List<TransactionData> get transactionList => _transactionList;
+  set transactionList(List<TransactionData> value) =>
+      _transactionList.value = value;
+
+  final _result = <TransactionData>[].obs;
+  List<TransactionData> get result => _result;
+  set result(List<TransactionData> value) => _result.value = value;
+
+  @override
+  void onInit() {
+    transactionList = appController.listOfTransaction;
+    super.onInit();
+  }
+
+  void searchFilter(String enteredKeyword) {
+    if (enteredKeyword.isEmpty) {
+      result = appController.listOfTransaction;
+    } else {
+      result = appController.listOfTransaction
+          .where((e) => "${e.bookName} ${e.personName}"
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    transactionList = result;
+  }
+
   String getStatus(index) {
-    if (appController.listOfTransaction[index].status == "1") {
+    if (transactionList[index].status == "1") {
       return 'Available';
-    } else if (appController.listOfTransaction[index].status == "2") {
+    } else if (transactionList[index].status == "2") {
       return 'Allocated';
     } else {
       return 'Away';
@@ -26,9 +55,9 @@ class DashboardPageController extends GetxController {
   }
 
   Color getStatusColor(index) {
-    if (appController.listOfTransaction[index].status == "1") {
+    if (transactionList[index].status == "1") {
       return const Color(0xff147F7F);
-    } else if (appController.listOfTransaction[index].status == "2") {
+    } else if (transactionList[index].status == "2") {
       return const Color(0xffED9D2F);
     } else {
       return const Color(0xffEA5958);

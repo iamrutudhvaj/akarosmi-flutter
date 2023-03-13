@@ -2,9 +2,7 @@ import 'package:akarosmi/app/widgets/custom_text_field.dart';
 import 'package:akarosmi/app/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
-
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
 import '../../../routes/app_pages.dart';
@@ -22,166 +20,194 @@ class BooksPageView extends GetView<BooksPageController> {
           await controller.homePageController.getBookList();
         },
         child: Obx(() {
-          if (controller.appController.listOfBooks.isEmpty) {
+          if (controller.bookList.isEmpty) {
             return controller.appController.dataLoadingProcess();
           } else {
-            return ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.BOOK_DETAIL_PAGE,
-                          arguments:
-                              "${controller.appController.listOfBooks[index].bookId}");
-                    },
-                    child: Container(
-                      width: Get.width,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffD7D4CD).withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 160,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: Colors.black12),
-                                  image: controller.appController
-                                          .listOfBooks[index].images!.isNotEmpty
-                                      ? DecorationImage(
-                                          image: NetworkImage(
-                                              "${controller.appController.listOfBooks[index].images?.first}"),
-                                          fit: BoxFit.fitHeight)
-                                      : null,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    onChanged: (value) => controller.searchFilter(value),
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: AppColors.white,
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none),
+                        hintText: "Search Book",
+                        prefixIcon: const Icon(Icons.search),
+                        prefixIconColor: AppColors.black),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.BOOK_DETAIL_PAGE,
+                                arguments:
+                                    "${controller.appController.listOfBooks[index].bookId}");
+                          },
+                          child: Container(
+                            key: ValueKey(controller.bookList[index].name),
+                            width: Get.width,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xffD7D4CD).withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Row(
                               children: [
-                                Text(
-                                  "${controller.appController.listOfBooks[index].name}",
-                                  style: Styles.bold(22,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${controller.appController.listOfBooks[index].author}",
-                                          style: Styles.regular(15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "${controller.appController.listOfBooks[index].publisher}",
-                                          style: Styles.regular(15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: PrimaryButton(
-                                        borderColor: AppColors.red,
-                                        color: AppColors.fillColor,
-                                        verticalPadding: 0,
-                                        hasPadding: false,
-                                        height: 40,
-                                        child: const Icon(
-                                          Icons.delete_outline,
-                                          color: Color(0xffEA5958),
-                                        ),
-                                        onPressed: () {
-                                          Get.bottomSheet(
-                                            barrierColor: AppColors.black
-                                                .withOpacity(0.3),
-                                            _BottomSheetView(index),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    Expanded(
-                                      child: PrimaryButton(
-                                        borderColor: AppColors.red,
-                                        color: AppColors.fillColor,
-                                        hasPadding: false,
-                                        verticalPadding: 0,
-                                        height: 40,
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: AppColors.primary,
-                                        ),
-                                        onPressed: () {
-                                          Get.toNamed(Routes.ADD_BOOK_PAGE,
-                                              arguments: index);
-                                        },
+                                    Container(
+                                      height: 160,
+                                      width: 130,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border:
+                                            Border.all(color: Colors.black12),
+                                        image: controller.bookList[index]
+                                                .images!.isNotEmpty
+                                            ? DecorationImage(
+                                                image: NetworkImage(
+                                                    "${controller.bookList[index].images?.first}"),
+                                                fit: BoxFit.fitHeight)
+                                            : null,
                                       ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
-                                  height: 10,
+                                  width: 8,
                                 ),
-                                Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      20,
-                                    ),
-                                    color: controller
-                                        .getStatusColor(index)
-                                        .withOpacity(.3),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${controller.bookList[index].name}",
+                                        style: Styles.bold(22,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(
+                                        height: 3,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${controller.bookList[index].author}",
+                                                style: Styles.regular(15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                "${controller.bookList[index].publisher}",
+                                                style: Styles.regular(15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: PrimaryButton(
+                                              borderColor: AppColors.red,
+                                              color: AppColors.fillColor,
+                                              verticalPadding: 0,
+                                              hasPadding: false,
+                                              height: 40,
+                                              child: const Icon(
+                                                Icons.delete_outline,
+                                                color: Color(0xffEA5958),
+                                              ),
+                                              onPressed: () {
+                                                Get.bottomSheet(
+                                                  barrierColor: AppColors.black
+                                                      .withOpacity(0.3),
+                                                  _BottomSheetView(index),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 4,
+                                          ),
+                                          Expanded(
+                                            child: PrimaryButton(
+                                              borderColor: AppColors.red,
+                                              color: AppColors.fillColor,
+                                              hasPadding: false,
+                                              verticalPadding: 0,
+                                              height: 40,
+                                              child: Icon(
+                                                Icons.edit,
+                                                color: AppColors.primary,
+                                              ),
+                                              onPressed: () {
+                                                Get.toNamed(
+                                                    Routes.ADD_BOOK_PAGE,
+                                                    arguments: index);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                          color: controller
+                                              .getStatusColor(index)
+                                              .withOpacity(.3),
+                                        ),
+                                        child: Center(
+                                            child: Text(
+                                          controller.getStatus(index),
+                                          style: Styles.semiBold(
+                                            18,
+                                            color: controller
+                                                .getStatusColor(index),
+                                          ),
+                                        )),
+                                      ),
+                                    ],
                                   ),
-                                  child: Center(
-                                      child: Text(
-                                    controller.getStatus(index),
-                                    style: Styles.semiBold(
-                                      18,
-                                      color: controller.getStatusColor(index),
-                                    ),
-                                  )),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                      height: 16,
-                    ),
-                itemCount: controller.appController.listOfBooks.length);
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(
+                            height: 16,
+                          ),
+                      itemCount: controller.bookList.length),
+                ),
+              ],
+            );
           }
         }),
       ),
@@ -274,7 +300,7 @@ class _BottomSheetView extends StatelessWidget {
                         AlertDialog(
                           content: Text(
                             textAlign: TextAlign.center,
-                            "Are you sure you want to delete ${controller.appController.listOfBooks[index].name}?",
+                            "Are you sure you want to delete ${controller.bookList[index].name}?",
                             style: Styles.bold(18),
                           ),
                           actions: <Widget>[
@@ -297,7 +323,7 @@ class _BottomSheetView extends StatelessWidget {
                               ),
                               onPressed: () {
                                 controller.deleteBook(
-                                    id: "${controller.appController.listOfBooks[index].bookId}");
+                                    id: "${controller.bookList[index].bookId}");
                               },
                             ),
                           ],
