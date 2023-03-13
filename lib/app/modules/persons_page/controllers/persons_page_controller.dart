@@ -13,6 +13,8 @@ class PersonsPageController extends GetxController {
   AppController appController = Get.find();
   HomePageController homePageController = Get.find();
   TextEditingController passwordController = TextEditingController();
+  
+  TextEditingController searchController = TextEditingController();
 
   final _personList = <PersonData>[].obs;
   List<PersonData> get personList => _personList;

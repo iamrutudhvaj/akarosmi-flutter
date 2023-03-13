@@ -13,6 +13,8 @@ class BooksPageController extends GetxController {
   HomePageController homePageController = Get.find();
   AppController appController = Get.find();
   TextEditingController passwordController = TextEditingController();
+  
+  TextEditingController searchController = TextEditingController();
 
   final formGlobalKey = GlobalKey<FormState>();
 

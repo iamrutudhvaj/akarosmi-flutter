@@ -20,156 +20,163 @@ class DashboardPageView extends GetView<DashboardPageController> {
         onRefresh: () async {
           await controller.homePageController.getTransactionList();
         },
-        child: Obx(() {
-          if (controller.transactionList.isEmpty) {
-            return controller.appController.dataLoadingProcess();
-          } else {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: TextField(
-                    onChanged: (value) => controller.searchFilter(value),
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: AppColors.white,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none),
-                        hintText: "Search Transaction",
-                        prefixIcon: const Icon(Icons.search),
-                        prefixIconColor: AppColors.black),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: controller.transactionList.length,
-                    padding: const EdgeInsets.all(16),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 16,
-                    ),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                controller: controller.searchController,
+                onChanged: (value) {
+                  controller.searchFilter(value);
+                },
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide.none),
+                    hintText: "Search Transaction",
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: AppColors.black),
+              ),
+            ),
+            Obx(() {
+              if (controller.appController.listOfTransaction.isEmpty) {
+                return controller.appController.dataLoadingProcess();
+              } else {
+                return Expanded(
+                  child: controller.transactionList.isNotEmpty
+                      ? ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: controller.transactionList.length,
+                          padding: const EdgeInsets.all(16),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 16,
+                          ),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
                           color:
                               controller.getStatusColor(index).withOpacity(.3),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                padding: const EdgeInsets.all(16),
+                                child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.book),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                "${controller.transactionList[index].bookName}",
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.person),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                "${controller.transactionList[index].personName}",
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(Icons.circle,
+                                                  color: controller
+                                                      .getStatusColor(index)),
+                                              const SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text(
+                                                controller.getStatus(index),
+                                                style: Styles.medium(16,
+                                                    color: controller
+                                                        .getStatusColor(index)),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Column(
                                       children: [
-                                        const Icon(Icons.book),
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            Get.bottomSheet(
+                                        barrierColor:
+                                            AppColors.black.withOpacity(0.3),
+                                              _BottomSheetView(index),
+                                            );
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            shape: const StadiumBorder(),
+                                            backgroundColor: AppColors.white,
+                                            side: BorderSide(
+                                              color: AppColors.transparent,
+                                            ),
+                                          ),
+                                          child: const Icon(
+                                            Icons.delete_outline,
+                                            color: Color(0xffEA5958),
+                                          ),
+                                        ),
                                         const SizedBox(
-                                          width: 8,
+                                          height: 4,
                                         ),
-                                        Text(
-                                          "${controller.transactionList[index].bookName}",
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(Icons.person),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          "${controller.transactionList[index].personName}",
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.circle,
-                                            color: controller
-                                                .getStatusColor(index)),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          controller.getStatus(index),
-                                          style: Styles.medium(16,
-                                              color: controller
-                                                  .getStatusColor(index)),
+                                        OutlinedButton(
+                                          onPressed: () {
+                                      Get.toNamed(Routes.ADD_TRANSACTION_PAGE,
+                                                arguments: index);
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            shape: const StadiumBorder(),
+                                            backgroundColor: AppColors.white,
+                                            side: BorderSide(
+                                              color: AppColors.transparent,
+                                            ),
+                                          ),
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: AppColors.primary,
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      Get.bottomSheet(
-                                        barrierColor:
-                                            AppColors.black.withOpacity(0.3),
-                                        _BottomSheetView(index),
-                                      );
-                                    },
-                                    style: OutlinedButton.styleFrom(
-                                      shape: const StadiumBorder(),
-                                      backgroundColor: AppColors.white,
-                                      side: BorderSide(
-                                        color: AppColors.transparent,
-                                      ),
-                                    ),
-                                    child: const Icon(
-                                      Icons.delete_outline,
-                                      color: Color(0xffEA5958),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      Get.toNamed(Routes.ADD_TRANSACTION_PAGE,
-                                          arguments: index);
-                                    },
-                                    style: OutlinedButton.styleFrom(
-                                      shape: const StadiumBorder(),
-                                      backgroundColor: AppColors.white,
-                                      side: BorderSide(
-                                        color: AppColors.transparent,
-                                      ),
-                                    ),
-                                    child: Icon(
-                                      Icons.edit,
-                                      color: AppColors.primary,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: controller.appController.dataLoadingProcess(),
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        }),
+                );
+              }
+            }),
+          ],
+        ),
       ),
     );
   }

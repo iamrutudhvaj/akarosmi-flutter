@@ -21,134 +21,139 @@ class PersonsPageView extends GetView<PersonsPageController> {
         onRefresh: () async {
           await controller.homePageController.getPersonList();
         },
-        child: Obx(() {
-          if (controller.personList.isEmpty) {
-            return controller.appController.dataLoadingProcess();
-          } else {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: TextField(
-                    onChanged: (value) => controller.searchFilter(value),
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: AppColors.white,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            borderSide: BorderSide.none),
-                        hintText: "Search Person",
-                        prefixIcon: const Icon(Icons.search),
-                        prefixIconColor: AppColors.black),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 20),
-                    shrinkWrap: true,
-                    itemCount: controller.personList.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 16.h,
-                    ),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(Routes.PERSON_DETAIL_PAGE,
-                              arguments:
-                                  "${controller.personList[index].personId}");
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: const Color(0xffC0C5C8).withOpacity(0.5),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                controller: controller.searchController,
+                onChanged: (value) => controller.searchFilter(value),
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide.none),
+                    hintText: "Search Person",
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: AppColors.black),
+              ),
+            ),
+            Obx(() {
+              if (controller.appController.listOfPersonData.isEmpty) {
+                return controller.appController.dataLoadingProcess();
+              } else {
+                return Expanded(
+                  child: controller.personList.isNotEmpty
+                      ? ListView.separated(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 20),
+                          shrinkWrap: true,
+                          itemCount: controller.personList.length,
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 16.h,
                           ),
-                          child: Row(
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.toNamed(Routes.PERSON_DETAIL_PAGE,
+                                    arguments:
+                                        "${controller.personList[index].personId}");
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                            color: const Color(0xffC0C5C8).withOpacity(0.5),
+                                ),
+                                child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
+                                  children: [
+                                    Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${(controller.personList[index].firstName)} ${(controller.personList[index].lastName)}",
-                                    style: Styles.bold(18),
-                                  ),
-                                  Text(
-                                    "${controller.personList[index].email}",
-                                    style: Styles.regular(18),
-                                  ),
-                                ],
-                              ),
-                              PopupMenuButton<int>(
-                                color: AppColors.white,
-                                icon: Icon(
-                                  Icons.more_vert,
-                                  color: AppColors.primary,
-                                ),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(16.0),
-                                  ),
-                                ),
-                                itemBuilder: (context) => [
-                                  PopupMenuItem(
-                                    value: 1,
-                                    child: Row(
                                       children: [
-                                        Icon(
-                                          Icons.edit,
-                                          color: AppColors.primary,
+                                        Text(
+                                          "${(controller.personList[index].firstName)} ${(controller.personList[index].lastName)}",
+                                          style: Styles.bold(18),
                                         ),
-                                        const SizedBox(
-                                          width: 10,
+                                        Text(
+                                          "${controller.personList[index].email}",
+                                          style: Styles.regular(18),
                                         ),
-                                        const Text("Edit")
                                       ],
                                     ),
-                                  ),
-                                  PopupMenuItem(
-                                    value: 2,
-                                    child: Row(
-                                      children: const [
-                                        Icon(
-                                          Icons.delete,
-                                          color: Color(0xffEA5958),
+                                    PopupMenuButton<int>(
+                                      color: AppColors.white,
+                                      icon: Icon(
+                                        Icons.more_vert,
+                                        color: AppColors.primary,
+                                      ),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(16.0),
                                         ),
-                                        SizedBox(
-                                          width: 10,
+                                      ),
+                                      itemBuilder: (context) => [
+                                        PopupMenuItem(
+                                          value: 1,
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.edit,
+                                                color: AppColors.primary,
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              const Text("Edit")
+                                            ],
+                                          ),
                                         ),
-                                        Text("Delete")
+                                        PopupMenuItem(
+                                          value: 2,
+                                          child: Row(
+                                            children: const [
+                                              Icon(
+                                                Icons.delete,
+                                                color: Color(0xffEA5958),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text("Delete")
+                                            ],
+                                          ),
+                                        ),
                                       ],
-                                    ),
-                                  ),
-                                ],
-                                offset: const Offset(0, 5),
-                                elevation: 2,
-                                onSelected: (value) {
-                                  if (value == 1) {
+                                      offset: const Offset(0, 5),
+                                      elevation: 2,
+                                      onSelected: (value) {
+                                        if (value == 1) {
                                     Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
-                                        arguments: index);
-                                  } else if (value == 2) {
-                                    Get.bottomSheet(
+                                              arguments: index);
+                                        } else if (value == 2) {
+                                          Get.bottomSheet(
                                       barrierColor:
                                           AppColors.black.withOpacity(0.3),
-                                      _BottomSheetView(index),
-                                    );
-                                  }
-                                },
+                                            _BottomSheetView(index),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
+                        )
+                      : Center(
+                          child: controller.appController.dataLoadingProcess(),
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        }),
+                );
+              }
+            }),
+          ],
+        ),
       ),
     );
   }
