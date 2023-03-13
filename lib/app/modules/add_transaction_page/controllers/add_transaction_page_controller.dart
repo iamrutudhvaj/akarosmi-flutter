@@ -42,9 +42,7 @@ class AddTransactionPageController extends GetxController {
 
   @override
   void onInit() {
-    bookListForAddTransaction.assignAll(appController.listOfBooks
-        .where((element) => element.status == '1')
-        .toList());
+    bookListForAddTransaction.assignAll(appController.listOfBooks);
     index = Get.arguments;
 
     if (index != null) {
@@ -56,6 +54,9 @@ class AddTransactionPageController extends GetxController {
       selectedPerson = appController.listOfPersonData
           .where((e) => e.personId == transaction.personId)
           .first;
+      bookListController.text = selectedBook?.name ?? "";
+      personListController.text =
+          "${selectedPerson?.firstName} ${selectedPerson?.lastName}";
       returnDateController.text = transaction.returnDate ?? "";
       borrowedDate = transaction.borrowedDate ?? "";
       if (transaction.status == '1') {
@@ -88,12 +89,18 @@ class AddTransactionPageController extends GetxController {
         barrierDismissible: false,
       );
       getStatus();
+      var book = bookListForAddTransaction
+          .where((element) => element.name == bookListController.text)
+          .first;
+
+      if (book.status != '1') {
+        ToastUtils.showBottomSnackbar("Book Is Not Available");
+        return;
+      }
+
       final response = await AuthRepository.insertTransaction(
           requestData: InsertTransactionRequestModel(
-        bookId: bookListForAddTransaction
-            .where((element) => element.name == bookListController.text)
-            .first
-            .bookId,
+        bookId: book.bookId,
         personId: appController.listOfPersonData
             .where((e) =>
                 '${e.firstName} ${e.lastName}' == personListController.text)
@@ -125,18 +132,32 @@ class AddTransactionPageController extends GetxController {
         ),
       );
       getStatus();
+      var book = bookListForAddTransaction
+          .where((element) => element.name == bookListController.text)
+          .first;
+
+      if (book.status != '1') {
+        Get.back(closeOverlays: true);
+        ToastUtils.showBottomSnackbar("Book Is Not Available");
+        return;
+      }
       final response = await AuthRepository.updateTransaction(
         requestData: InsertTransactionRequestModel(
-          bookId: selectedBook?.bookId,
-          personId: selectedPerson?.personId,
+          bookId: book.bookId,
+          personId: appController.listOfPersonData
+              .where((e) =>
+                  '${e.firstName} ${e.lastName}' == personListController.text)
+              .first
+              .personId,
           borrowedDate: borrowedDate,
           returnDate: returnDateController.text,
           status: status,
         ),
         transactionId: transactionId!,
       );
+      homePageController.getTransactionList();
+      homePageController.getBookList();
       ToastUtils.showBottomSnackbar("${response.message}");
-      await homePageController.getTransactionList();
       index = null;
       Get.back(closeOverlays: true);
     } on DioError catch (e) {

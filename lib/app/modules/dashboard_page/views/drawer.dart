@@ -43,14 +43,18 @@ class DrawerView extends GetView<DashboardPageController> {
                         ),
                       ],
                     ),
-                    Text(
-                      '${controller.appController.userData?.firstName} ${controller.appController.userData?.lastName}',
-                      style: Styles.regular(24, color: AppColors.white),
+                    FittedBox(
+                      child: Text(
+                        '${controller.appController.userData?.firstName} ${controller.appController.userData?.lastName}',
+                        style: Styles.regular(24, color: AppColors.white),
+                      ),
                     ),
                     const Spacer(),
-                    Text(
-                      '${controller.appController.userData?.email}',
-                      style: Styles.regular(16, color: AppColors.white),
+                    FittedBox(
+                      child: Text(
+                        '${controller.appController.userData?.email}',
+                        style: Styles.regular(16, color: AppColors.white),
+                      ),
                     ),
                     Text(
                       '${controller.appController.userData?.phoneNumber}',

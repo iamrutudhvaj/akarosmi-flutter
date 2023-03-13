@@ -52,9 +52,27 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                       ? 'No Book Available'
                       : 'Select Book',
                   hintStyle: TextStyle(color: AppColors.black),
-                  items: controller.bookListForAddTransaction
-                      .map((e) => e.name ?? '')
-                      .toList(),
+                  items: [
+                    if (controller.bookListForAddTransaction
+                        .map((e) => e.name ?? '')
+                        .toList()
+                        .isEmpty) ...["No Book Available"],
+                    ...controller.bookListForAddTransaction
+                        .where((element) {
+                          if (controller.index != null) {
+                            return controller
+                                        .appController
+                                        .listOfTransaction[controller.index!]
+                                        .bookId ==
+                                    element.bookId ||
+                                element.status == '1';
+                          } else {
+                            return element.status == '1';
+                          }
+                        })
+                        .map((e) => e.name ?? '')
+                        .toList()
+                  ],
                   controller: controller.bookListController,
                   hideSelectedFieldWhenOpen: true,
                 ),
@@ -80,9 +98,15 @@ class AddTransactionPageView extends GetView<AddTransactionPageController> {
                       ? 'No Person Available'
                       : 'Select Person',
                   hintStyle: TextStyle(color: AppColors.black),
-                  items: controller.appController.listOfPersonData
-                      .map((e) => '${e.firstName} ${e.lastName}')
-                      .toList(),
+                  items: [
+                    if (controller.appController.listOfPersonData
+                        .map((e) => '${e.firstName} ${e.lastName}')
+                        .toList()
+                        .isEmpty) ...['No Person Data Available'],
+                    ...controller.appController.listOfPersonData
+                        .map((e) => '${e.firstName} ${e.lastName}')
+                        .toList()
+                  ],
                   controller: controller.personListController,
                   hideSelectedFieldWhenOpen: true,
                 ),
