@@ -1,4 +1,5 @@
-import 'package:akarosmi/app/data/model/response_model/list_of_book_user_response.dart';
+import 'package:akarosmi/app/controller/app_controller.dart';
+import 'package:akarosmi/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -8,29 +9,29 @@ import '../../../core/utils/toast.dart';
 import '../../../data/repository/auth_repository.dart';
 
 class BooksPageController extends GetxController {
+  HomePageController homePageController = Get.find();
+  AppController appController = Get.find();
   TextEditingController passwordController = TextEditingController();
-
-  final _listOfBooks = BookListResponse().obs;
-  BookListResponse get listOfBooks => _listOfBooks.value;
-  set listOfBooks(BookListResponse value) => _listOfBooks.value = value;
-
-  @override
-  void onInit() {
-    getBookList();
-    super.onInit();
-  }
 
   final formGlobalKey = GlobalKey<FormState>();
 
-  Future<void> getBookList() async {
-    try {
-      final response = await AuthRepository.getBookList();
-      listOfBooks = response;
-    } on DioError catch (e) {
-      Get.back();
-      ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
-    } catch (e) {
-      Get.back();
+  String getStatus(index) {
+    if (appController.listOfBooks[index].status == "1") {
+      return 'Available';
+    } else if (appController.listOfBooks[index].status == "2") {
+      return 'Allocated';
+    } else {
+      return 'Away';
+    }
+  }
+
+  Color getStatusColor(index) {
+    if (appController.listOfBooks[index].status == "1") {
+      return const Color(0xff147F7F);
+    } else if (appController.listOfBooks[index].status == "2") {
+      return const Color(0xffED9D2F);
+    } else {
+      return const Color(0xffEA5958);
     }
   }
 
@@ -50,12 +51,12 @@ class BooksPageController extends GetxController {
         bookID: id,
       );
       passwordController.clear();
-      listOfBooks = response;
+      appController.listOfBooks.assignAll(response.data ?? []);
       Get.back(closeOverlays: true);
-      getBookList();
+      homePageController.getBookList();
       ToastUtils.showBottomSnackbar("${response.message}");
     } on DioError catch (e) {
-      Get.back();
+      Get.back(closeOverlays: true);
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
     } catch (e) {
       Get.back();

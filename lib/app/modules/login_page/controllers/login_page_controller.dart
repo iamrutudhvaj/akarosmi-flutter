@@ -12,6 +12,8 @@ class LoginPageController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
+  final formGlobalKey = GlobalKey<FormState>();
+
   final _obscureText = true.obs;
   bool get obscureText => _obscureText.value;
   set obscureText(bool value) => _obscureText.value = value;

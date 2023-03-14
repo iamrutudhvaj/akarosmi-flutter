@@ -8,6 +8,9 @@ import '../../../data/repository/auth_repository.dart';
 import '../../../routes/app_pages.dart';
 
 class ResetPasswordPageController extends GetxController {
+
+  final formGlobalKey = GlobalKey<FormState>();
+
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController oldPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();

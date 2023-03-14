@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
             );
           },
           theme: ThemeData(
-              scaffoldBackgroundColor: AppColors.white,
+              scaffoldBackgroundColor: AppColors.scaffoldColor,
               colorScheme: ColorScheme.fromSwatch(),
               fontFamily: FontFamily.karla.name),
           debugShowCheckedModeBanner: false,

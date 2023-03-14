@@ -4,6 +4,10 @@ import '../modules/add_book_page/bindings/add_book_page_binding.dart';
 import '../modules/add_book_page/views/add_book_page_view.dart';
 import '../modules/add_person_details_page/bindings/add_person_details_page_binding.dart';
 import '../modules/add_person_details_page/views/add_person_details_page_view.dart';
+import '../modules/add_transaction_page/bindings/add_transaction_page_binding.dart';
+import '../modules/add_transaction_page/views/add_transaction_page_view.dart';
+import '../modules/book_detail_page/bindings/book_detail_page_binding.dart';
+import '../modules/book_detail_page/views/book_detail_page_view.dart';
 import '../modules/books_page/bindings/books_page_binding.dart';
 import '../modules/books_page/views/books_page_view.dart';
 import '../modules/dashboard_page/bindings/dashboard_page_binding.dart';
@@ -14,8 +18,12 @@ import '../modules/home_page/bindings/home_page_binding.dart';
 import '../modules/home_page/views/home_page_view.dart';
 import '../modules/login_page/bindings/login_page_binding.dart';
 import '../modules/login_page/views/login_page_view.dart';
+import '../modules/person_detail_page/bindings/person_detail_page_binding.dart';
+import '../modules/person_detail_page/views/person_detail_page_view.dart';
 import '../modules/persons_page/bindings/persons_page_binding.dart';
 import '../modules/persons_page/views/persons_page_view.dart';
+import '../modules/profile_page/bindings/profile_page_binding.dart';
+import '../modules/profile_page/views/profile_page_view.dart';
 import '../modules/register_page/bindings/register_page_binding.dart';
 import '../modules/register_page/views/register_page_view.dart';
 import '../modules/reset_password_page/bindings/reset_password_page_binding.dart';
@@ -87,6 +95,26 @@ class AppPages {
       name: _Paths.SPLASH_SCREEN,
       page: () => const SplashScreenView(),
       binding: SplashScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_TRANSACTION_PAGE,
+      page: () => const AddTransactionPageView(),
+      binding: AddTransactionPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.BOOK_DETAIL_PAGE,
+      page: () => const BookDetailPageView(),
+      binding: BookDetailPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.PERSON_DETAIL_PAGE,
+      page: () => const PersonDetailPageView(),
+      binding: PersonDetailPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE_PAGE,
+      page: () => const ProfilePageView(),
+      binding: ProfilePageBinding(),
     ),
   ];
 }

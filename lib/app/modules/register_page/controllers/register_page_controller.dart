@@ -2,7 +2,6 @@ import 'package:akarosmi/app/data/repository/auth_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../../../core/utils/toast.dart';
 import '../../../routes/app_pages.dart';
 
@@ -13,13 +12,19 @@ class RegisterPageController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
-  var selectedGender = "".obs;
+  var selectedGender = "Male".obs;
 
   final List genderItem = [
     'Male',
     'Female',
     'Other',
   ];
+
+  final _genderValueCheck = false.obs;
+  bool get genderValueCheck => _genderValueCheck.value;
+  set genderValueCheck(bool value) => _genderValueCheck.value = value;
+
+  final formGlobalKey = GlobalKey<FormState>();
 
   Future<void> userRegistration() async {
     try {

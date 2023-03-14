@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:akarosmi/app/controller/app_controller.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +15,7 @@ class SplashScreenController extends GetxController {
 
   @override
   void onReady() {
-    initializeSettings();
+    Timer(const Duration(milliseconds: 300), () => initializeSettings());
     super.onReady();
   }
 }
