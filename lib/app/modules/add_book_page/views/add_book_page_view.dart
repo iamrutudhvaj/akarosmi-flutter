@@ -171,7 +171,8 @@ class AddBookPageView extends GetView<AddBookPageController> {
                 ),
               ),
               Visibility(
-                visible: controller.index != null,
+                // visible: controller.index != null,
+                visible: false,
                 child: Column(
                   children: [
                     SizedBox(

@@ -20,36 +20,19 @@ class DashboardPageView extends GetView<DashboardPageController> {
         onRefresh: () async {
           await controller.homePageController.getTransactionList();
         },
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                controller: controller.searchController,
-                onChanged: (value) {
-                  controller.searchFilter(value);
-                },
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: AppColors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none),
-                    hintText: "Search Transaction",
-                    prefixIcon: const Icon(Icons.search),
-                    prefixIconColor: AppColors.black),
-              ),
-            ),
             Obx(() {
               if (controller.appController.listOfTransaction.isEmpty) {
                 return controller.appController.dataLoadingProcess();
               } else {
-                return Expanded(
-                  child: controller.transactionList.isNotEmpty
-                      ? ListView.separated(
+                return controller.transactionList.isNotEmpty
+                    ? Scrollbar(
+                        child: ListView.separated(
                           shrinkWrap: true,
                           itemCount: controller.transactionList.length,
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16, top: 80),
                           separatorBuilder: (context, index) => const SizedBox(
                             height: 16,
                           ),
@@ -57,8 +40,9 @@ class DashboardPageView extends GetView<DashboardPageController> {
                             return Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                          color:
-                              controller.getStatusColor(index).withOpacity(.3),
+                                color: controller
+                                    .getStatusColor(index)
+                                    .withOpacity(.3),
                               ),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -66,7 +50,8 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                 ),
                                 padding: const EdgeInsets.all(16),
                                 child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Expanded(
@@ -74,7 +59,10 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                         children: [
                                           Row(
                                             children: [
-                                              const Icon(Icons.book),
+                                              Icon(
+                                                Icons.menu_book_rounded,
+                                                color: AppColors.primary,
+                                              ),
                                               const SizedBox(
                                                 width: 8,
                                               ),
@@ -88,7 +76,10 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                           ),
                                           Row(
                                             children: [
-                                              const Icon(Icons.person),
+                                              Icon(
+                                                Icons.person,
+                                                color: AppColors.primary,
+                                              ),
                                               const SizedBox(
                                                 width: 8,
                                               ),
@@ -124,8 +115,8 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                         OutlinedButton(
                                           onPressed: () {
                                             Get.bottomSheet(
-                                        barrierColor:
-                                            AppColors.black.withOpacity(0.3),
+                                              barrierColor: AppColors.black
+                                                  .withOpacity(0.3),
                                               _BottomSheetView(index),
                                             );
                                           },
@@ -146,7 +137,8 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                         ),
                                         OutlinedButton(
                                           onPressed: () {
-                                      Get.toNamed(Routes.ADD_TRANSACTION_PAGE,
+                                            Get.toNamed(
+                                                Routes.ADD_TRANSACTION_PAGE,
                                                 arguments: index);
                                           },
                                           style: OutlinedButton.styleFrom(
@@ -168,13 +160,33 @@ class DashboardPageView extends GetView<DashboardPageController> {
                               ),
                             );
                           },
-                        )
-                      : Center(
-                          child: controller.appController.dataLoadingProcess(),
                         ),
-                );
+                      )
+                    : Center(
+                        child: controller.appController.dataLoadingProcess(),
+                      );
               }
             }),
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              color: AppColors.scaffoldColor,
+              child: TextField(
+                controller: controller.searchController,
+                onChanged: (value) {
+                  controller.searchFilter(value);
+                },
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none),
+                    hintText: "Search Transaction",
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: AppColors.black),
+              ),
+            ),
           ],
         ),
       ),

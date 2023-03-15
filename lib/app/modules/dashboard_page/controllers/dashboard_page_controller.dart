@@ -81,6 +81,7 @@ class DashboardPageController extends GetxController {
         transactionId: id,
       );
       await homePageController.getTransactionList();
+      await homePageController.getBookList();
       passwordController.clear();
       Get.back(closeOverlays: true);
       ToastUtils.showBottomSnackbar("${response.message}");

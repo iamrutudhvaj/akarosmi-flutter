@@ -13,7 +13,7 @@ class BooksPageController extends GetxController {
   HomePageController homePageController = Get.find();
   AppController appController = Get.find();
   TextEditingController passwordController = TextEditingController();
-  
+
   TextEditingController searchController = TextEditingController();
 
   final formGlobalKey = GlobalKey<FormState>();
@@ -81,8 +81,8 @@ class BooksPageController extends GetxController {
       );
       passwordController.clear();
       appController.listOfBooks.assignAll(response.data ?? []);
+      await homePageController.getBookList();
       Get.back(closeOverlays: true);
-      homePageController.getBookList();
       ToastUtils.showBottomSnackbar("${response.message}");
     } on DioError catch (e) {
       Get.back(closeOverlays: true);

@@ -144,8 +144,9 @@ class AddBookPageController extends GetxController {
             status: status,
           ),
           bookID: bookId!);
-      ToastUtils.showBottomSnackbar("${response["message"]}");
       await homePageController.getBookList();
+      await homePageController.getTransactionList();
+      ToastUtils.showBottomSnackbar("${response["message"]}");
       index = null;
       Get.back(closeOverlays: true);
     } on DioError catch (e) {

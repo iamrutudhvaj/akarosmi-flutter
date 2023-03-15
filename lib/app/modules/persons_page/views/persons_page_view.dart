@@ -21,33 +21,17 @@ class PersonsPageView extends GetView<PersonsPageController> {
         onRefresh: () async {
           await controller.homePageController.getPersonList();
         },
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                controller: controller.searchController,
-                onChanged: (value) => controller.searchFilter(value),
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: AppColors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none),
-                    hintText: "Search Person",
-                    prefixIcon: const Icon(Icons.search),
-                    prefixIconColor: AppColors.black),
-              ),
-            ),
             Obx(() {
               if (controller.appController.listOfPersonData.isEmpty) {
                 return controller.appController.dataLoadingProcess();
               } else {
-                return Expanded(
-                  child: controller.personList.isNotEmpty
-                      ? ListView.separated(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 20),
+                return controller.personList.isNotEmpty
+                    ? Scrollbar(
+                        child: ListView.separated(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16, top: 80),
                           shrinkWrap: true,
                           itemCount: controller.personList.length,
                           separatorBuilder: (context, index) => SizedBox(
@@ -64,13 +48,16 @@ class PersonsPageView extends GetView<PersonsPageController> {
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                            color: const Color(0xffC0C5C8).withOpacity(0.5),
+                                  color:
+                                      const Color(0xffC0C5C8).withOpacity(0.5),
                                 ),
                                 child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "${(controller.personList[index].firstName)} ${(controller.personList[index].lastName)}",
@@ -129,12 +116,13 @@ class PersonsPageView extends GetView<PersonsPageController> {
                                       elevation: 2,
                                       onSelected: (value) {
                                         if (value == 1) {
-                                    Get.toNamed(Routes.ADD_PERSON_DETAILS_PAGE,
+                                          Get.toNamed(
+                                              Routes.ADD_PERSON_DETAILS_PAGE,
                                               arguments: index);
                                         } else if (value == 2) {
                                           Get.bottomSheet(
-                                      barrierColor:
-                                          AppColors.black.withOpacity(0.3),
+                                            barrierColor: AppColors.black
+                                                .withOpacity(0.3),
                                             _BottomSheetView(index),
                                           );
                                         }
@@ -145,13 +133,33 @@ class PersonsPageView extends GetView<PersonsPageController> {
                               ),
                             );
                           },
-                        )
-                      : Center(
-                          child: controller.appController.dataLoadingProcess(),
                         ),
-                );
+                      )
+                    : Center(
+                        child: controller.appController.dataLoadingProcess(),
+                      );
               }
             }),
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              color: AppColors.scaffoldColor,
+              child: TextField(
+                controller: controller.searchController,
+                onChanged: (value) {
+                  controller.searchFilter(value);
+                },
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none),
+                    hintText: "Search Person",
+                    prefixIcon: const Icon(Icons.search),
+                    prefixIconColor: AppColors.black),
+              ),
+            ),
           ],
         ),
       ),

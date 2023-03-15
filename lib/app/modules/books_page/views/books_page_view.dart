@@ -19,202 +19,215 @@ class BooksPageView extends GetView<BooksPageController> {
         onRefresh: () async {
           await controller.homePageController.getBookList();
         },
-        child: Column(
+        child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
+            Obx(() {
+              if (controller.appController.listOfBooks.isEmpty) {
+                return controller.appController.dataLoadingProcess();
+              } else {
+                return controller.bookList.isNotEmpty
+                    ? Scrollbar(
+                        child: ListView.separated(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, bottom: 16, top: 80),
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.BOOK_DETAIL_PAGE,
+                                      arguments:
+                                          "${controller.appController.listOfBooks[index].bookId}");
+                                },
+                                child: Container(
+                                  key:
+                                      ValueKey(controller.bookList[index].name),
+                                  width: Get.width,
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffD7D4CD)
+                                        .withOpacity(0.8),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 160,
+                                            width: 130,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                  color: Colors.black12),
+                                              image: controller.bookList[index]
+                                                      .images!.isNotEmpty
+                                                  ? DecorationImage(
+                                                      image: NetworkImage(
+                                                          "${controller.bookList[index].images?.first}"),
+                                                      fit: BoxFit.fitHeight)
+                                                  : null,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            FittedBox(
+                                              child: Text(
+                                                "${controller.bookList[index].name}",
+                                                style: Styles.bold(22,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 3,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${controller.bookList[index].author}",
+                                                      style: Styles.regular(15,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      "${controller.bookList[index].publisher}",
+                                                      style: Styles.regular(15,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: PrimaryButton(
+                                                    borderColor: AppColors.red,
+                                                    color: AppColors.fillColor,
+                                                    verticalPadding: 0,
+                                                    hasPadding: false,
+                                                    height: 40,
+                                                    child: const Icon(
+                                                      Icons.delete_outline,
+                                                      color: Color(0xffEA5958),
+                                                    ),
+                                                    onPressed: () {
+                                                      Get.bottomSheet(
+                                                        barrierColor: AppColors
+                                                            .black
+                                                            .withOpacity(0.3),
+                                                        _BottomSheetView(index),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Expanded(
+                                                  child: PrimaryButton(
+                                                    borderColor: AppColors.red,
+                                                    color: AppColors.fillColor,
+                                                    hasPadding: false,
+                                                    verticalPadding: 0,
+                                                    height: 40,
+                                                    child: Icon(
+                                                      Icons.edit,
+                                                      color: AppColors.primary,
+                                                    ),
+                                                    onPressed: () {
+                                                      Get.toNamed(
+                                                          Routes.ADD_BOOK_PAGE,
+                                                          arguments: index);
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Container(
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  20,
+                                                ),
+                                                color: controller
+                                                    .getStatusColor(index)
+                                                    .withOpacity(.3),
+                                              ),
+                                              child: Center(
+                                                  child: Text(
+                                                controller.getStatus(index),
+                                                style: Styles.semiBold(
+                                                  18,
+                                                  color: controller
+                                                      .getStatusColor(index),
+                                                ),
+                                              )),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                            itemCount: controller.bookList.length),
+                      )
+                    : Center(
+                        child: controller.appController.dataLoadingProcess(),
+                      );
+              }
+            }),
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+              color: AppColors.scaffoldColor,
               child: TextField(
                 controller: controller.searchController,
-                onChanged: (value) => controller.searchFilter(value),
+                onChanged: (value) {
+                  controller.searchFilter(value);
+                },
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: AppColors.white,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide.none),
                     hintText: "Search Book",
                     prefixIcon: const Icon(Icons.search),
                     prefixIconColor: AppColors.black),
               ),
             ),
-            Obx(() {
-              if (controller.appController.listOfBooks.isEmpty) {
-                return controller.appController.dataLoadingProcess();
-              } else {
-                return Expanded(
-                  child: controller.bookList.isNotEmpty
-                      ? ListView.separated(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 16),
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Get.toNamed(Routes.BOOK_DETAIL_PAGE,
-                                    arguments:
-                                        "${controller.appController.listOfBooks[index].bookId}");
-                              },
-                              child: Container(
-                                key: ValueKey(controller.bookList[index].name),
-                                width: Get.width,
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                              color: const Color(0xffD7D4CD).withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 160,
-                                          width: 130,
-                                          decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(12),
-                                        border:
-                                            Border.all(color: Colors.black12),
-                                            image: controller.bookList[index]
-                                                    .images!.isNotEmpty
-                                                ? DecorationImage(
-                                                    image: NetworkImage(
-                                                        "${controller.bookList[index].images?.first}"),
-                                                    fit: BoxFit.fitHeight)
-                                                : null,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          FittedBox(
-                                            child: Text(
-                                              "${controller.bookList[index].name}",
-                                              style: Styles.bold(22,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 3,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "${controller.bookList[index].author}",
-                                                    style: Styles.regular(15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Text(
-                                                    "${controller.bookList[index].publisher}",
-                                                    style: Styles.regular(15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 15,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: PrimaryButton(
-                                                  borderColor: AppColors.red,
-                                                  color: AppColors.fillColor,
-                                                  verticalPadding: 0,
-                                                  hasPadding: false,
-                                                  height: 40,
-                                                  child: const Icon(
-                                                    Icons.delete_outline,
-                                                    color: Color(0xffEA5958),
-                                                  ),
-                                                  onPressed: () {
-                                                    Get.bottomSheet(
-                                                  barrierColor: AppColors.black
-                                                          .withOpacity(0.3),
-                                                      _BottomSheetView(index),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 4,
-                                              ),
-                                              Expanded(
-                                                child: PrimaryButton(
-                                                  borderColor: AppColors.red,
-                                                  color: AppColors.fillColor,
-                                                  hasPadding: false,
-                                                  verticalPadding: 0,
-                                                  height: 40,
-                                                  child: Icon(
-                                                    Icons.edit,
-                                                    color: AppColors.primary,
-                                                  ),
-                                                  onPressed: () {
-                                                    Get.toNamed(
-                                                        Routes.ADD_BOOK_PAGE,
-                                                        arguments: index);
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Container(
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                                20,
-                                              ),
-                                              color: controller
-                                                  .getStatusColor(index)
-                                                  .withOpacity(.3),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              controller.getStatus(index),
-                                              style: Styles.semiBold(
-                                                18,
-                                                color: controller
-                                                    .getStatusColor(index),
-                                              ),
-                                            )),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) => const SizedBox(
-                                height: 16,
-                              ),
-                          itemCount: controller.bookList.length)
-                      : Center(
-                          child: controller.appController.dataLoadingProcess(),
-                        ),
-                );
-              }
-            }),
           ],
         ),
       ),

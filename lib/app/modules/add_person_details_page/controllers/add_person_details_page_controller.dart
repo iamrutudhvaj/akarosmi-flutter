@@ -55,9 +55,9 @@ class AddPersonDetailsPageController extends GetxController {
         email: emailController.text,
         reference: referenceController.text,
       ));
-      ToastUtils.showBottomSnackbar("${response["message"]}");
       await homePageController.getPersonList();
       Get.back(closeOverlays: true);
+      ToastUtils.showBottomSnackbar("${response["message"]}");
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
