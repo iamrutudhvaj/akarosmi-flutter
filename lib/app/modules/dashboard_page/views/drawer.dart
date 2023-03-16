@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:akarosmi/app/core/service/storage_service.dart';
 import 'package:akarosmi/app/widgets/primary_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../core/theme/color.dart';
 import '../../../core/theme/style.dart';
 import '../../../routes/app_pages.dart';
@@ -89,6 +88,18 @@ class DrawerView extends GetView<DashboardPageController> {
                 20,
               ),
             ),
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.info_outline,
+            ),
+            title: Text(
+              'Privacy Policy',
+              style: Styles.regular(
+                20,
+              ),
+            ),
+            onTap: controller.launchURLApp,
           ),
           const Spacer(),
           PrimaryButton(

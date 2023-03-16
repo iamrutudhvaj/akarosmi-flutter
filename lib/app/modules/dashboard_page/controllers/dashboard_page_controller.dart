@@ -1,8 +1,9 @@
 import 'package:akarosmi/app/controller/app_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/color.dart';
 import '../../../core/utils/toast.dart';
 import '../../../data/model/response_model/list_of_transaction_response.dart';
@@ -30,6 +31,16 @@ class DashboardPageController extends GetxController {
   void onInit() {
     transactionList = appController.listOfTransaction;
     super.onInit();
+  }
+
+  Future<void> launchURLApp() async {
+    final Uri uri = Uri.parse(dotenv.env['PRIVACY_POLICY']!);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.platformDefault,
+    )) {
+      throw "Can not launch url";
+    }
   }
 
   void searchFilter(String enteredKeyword) {
