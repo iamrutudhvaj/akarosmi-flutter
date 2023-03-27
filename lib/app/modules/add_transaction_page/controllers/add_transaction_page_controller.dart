@@ -29,7 +29,7 @@ class AddTransactionPageController extends GetxController {
   set bookListForAddTransaction(List<BookData> value) =>
       _bookListForAddTransaction.value = value;
 
-  String currentDate = DateFormat("dd-MM-yyyy").format(DateTime.now());
+  String currentDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
   String? borrowedDate;
   final formKey = GlobalKey<FormState>();
 

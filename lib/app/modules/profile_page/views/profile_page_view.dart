@@ -217,7 +217,7 @@ class ProfilePageView extends GetView<ProfilePageController> {
                       },
                       child: Text(
                         "Delete User",
-                        style: Styles.semiBold(18, color: AppColors.primary),
+                        style: Styles.semiBold(15, color: AppColors.primary),
                       ),
                     ),
                   ),

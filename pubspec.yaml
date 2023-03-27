@@ -1,5 +1,5 @@
 name: akarosmi
-version: 1.0.0+4
+version: 1.0.0+5
 publish_to: none
 description: Personal Library Management System.
 environment: 
@@ -17,8 +17,9 @@ dependencies:
   flutter_dotenv: ^5.0.2
   get_storage: ^2.0.3
   firebase_core: ^2.7.0
-  animated_custom_dropdown: ^1.4.0
   url_launcher: ^6.1.10
+  dropdown_search: ^5.0.6
+  connectivity_plus: ^3.0.3
 
 dev_dependencies: 
   flutter_launcher_icons: ^0.12.0

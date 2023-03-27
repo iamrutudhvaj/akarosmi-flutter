@@ -119,7 +119,7 @@ class RegisterPageView extends GetView<RegisterPageController> {
                     );
                     if (pickedDate != null) {
                       String formattedDate =
-                          DateFormat('dd-MM-yyyy').format(pickedDate);
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
                       controller.dobController.text = formattedDate;
                     } else {}
                   },

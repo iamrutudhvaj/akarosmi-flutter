@@ -80,17 +80,6 @@ class DrawerView extends GetView<DashboardPageController> {
           ),
           ListTile(
             leading: const Icon(
-              Icons.star,
-            ),
-            title: Text(
-              'Rate US',
-              style: Styles.regular(
-                20,
-              ),
-            ),
-          ),
-          ListTile(
-            leading: const Icon(
               Icons.info_outline,
             ),
             title: Text(
@@ -103,15 +92,20 @@ class DrawerView extends GetView<DashboardPageController> {
           ),
           const Spacer(),
           PrimaryButton(
+            textPadding: false,
+            height: 50.h,
             onPressed: () {
               StorageService.clearToken()
                   .then((value) => Get.offAllNamed(Routes.LOGIN_PAGE));
             },
-            child: Text(
-              'Log Out',
-              style: Styles.regular(
-                20,
-                color: AppColors.white,
+            child: Center(
+              child: Text(
+                'Log Out',
+                textAlign: TextAlign.center,
+                style: Styles.regular(
+                  20,
+                  color: AppColors.white,
+                ),
               ),
             ),
           ),

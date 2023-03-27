@@ -66,8 +66,13 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                               const SizedBox(
                                                 width: 8,
                                               ),
-                                              Text(
-                                                "${controller.transactionList[index].bookName}",
+                                              Expanded(
+                                                child: Text(
+                                                  "${controller.transactionList[index].bookName}",
+                                                  style: Styles.bold(20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -83,8 +88,10 @@ class DashboardPageView extends GetView<DashboardPageController> {
                                               const SizedBox(
                                                 width: 8,
                                               ),
-                                              Text(
-                                                "${controller.transactionList[index].personName}",
+                                              FittedBox(
+                                                child: Text(
+                                                  "${controller.transactionList[index].personName}",
+                                                ),
                                               ),
                                             ],
                                           ),
