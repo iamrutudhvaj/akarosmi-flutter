@@ -11,8 +11,9 @@ class PrimaryButton extends StatelessWidget {
   final Color? color;
   final Color? borderColor;
   final bool? hasPadding;
+  final bool? textPadding;
   final double? height;
-  final double? verticlePadding;
+  final double? verticalPadding;
   final bool? borderAll;
   final double? width;
   final bool? elevation;
@@ -20,15 +21,16 @@ class PrimaryButton extends StatelessWidget {
       {Key? key,
       required this.child,
       required this.onPressed,
-      this.color = Colors.black,
+      this.color = const Color(0xff253C58),
       this.enabled = true,
       this.hasPadding = true,
       this.borderAll = false,
       this.elevation = false,
       this.height,
-      this.verticlePadding,
+      this.verticalPadding,
       this.width,
-      this.borderColor})
+      this.borderColor,
+      this.textPadding = true})
       : super(key: key);
 
   @override
@@ -40,22 +42,23 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: (enabled == true) ? onPressed : () {},
         style: ElevatedButton.styleFrom(
-            elevation: (elevation == true) ? 5 : 0,
-            shape: borderAll == false
-                ? const StadiumBorder()
-                : RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-            side: borderAll == true
-                ? BorderSide(color: borderColor ?? AppColors.greyWhite)
-                : null,
-            backgroundColor:
-                (enabled == true) ? color : color?.withOpacity(0.6),
-            shadowColor: (enabled == true && elevation == true)
-                ? AppColors.blue
-                : AppColors.transparent,
-            padding: EdgeInsets.symmetric(
-              vertical: verticlePadding ?? 16.sp,
-            )),
+          elevation: (elevation == true) ? 5 : 0,
+          shape: borderAll == false
+              ? const StadiumBorder()
+              : RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+          side: borderAll == true
+              ? BorderSide(color: borderColor ?? AppColors.greyWhite)
+              : null,
+          backgroundColor: (enabled == true) ? color : color?.withOpacity(0.6),
+          shadowColor: (enabled == true && elevation == true)
+              ? AppColors.blue
+              : AppColors.transparent,
+          padding: textPadding!
+              ? EdgeInsets.symmetric(
+                  vertical: verticalPadding ?? 16.sp,
+                )
+              : null,
+        ),
         child: child,
       ),
     );

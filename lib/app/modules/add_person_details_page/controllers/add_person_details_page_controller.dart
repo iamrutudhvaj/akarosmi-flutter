@@ -1,20 +1,22 @@
+import 'package:akarosmi/app/controller/app_controller.dart';
 import 'package:akarosmi/app/data/model/request_model/add_person_request_model.dart';
-import 'package:akarosmi/app/modules/persons_page/controllers/persons_page_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/toast.dart';
 import '../../../data/repository/auth_repository.dart';
+import '../../home_page/controllers/home_page_controller.dart';
 
 class AddPersonDetailsPageController extends GetxController {
+  HomePageController homePageController = Get.find();
+  AppController appController = Get.find();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController referenceController = TextEditingController();
-
-  final personsPageController = Get.find<PersonsPageController>();
+  final formKey = GlobalKey<FormState>();
 
   String? id;
   late int? index;
@@ -24,16 +26,15 @@ class AddPersonDetailsPageController extends GetxController {
     index = Get.arguments;
     if (index != null) {
       firstNameController.text =
-          "${personsPageController.listOfPersonData.data?[index!].firstName}";
+          "${appController.listOfPersonData[index!].firstName}";
       lastNameController.text =
-          "${personsPageController.listOfPersonData.data?[index!].lastName}";
+          "${appController.listOfPersonData[index!].lastName}";
       mobileNumberController.text =
-          "${personsPageController.listOfPersonData.data?[index!].mobileNumber}";
-      emailController.text =
-          "${personsPageController.listOfPersonData.data?[index!].email}";
-      emailController.text =
-          "${personsPageController.listOfPersonData.data?[index!].reference}";
-      id = "${personsPageController.listOfPersonData.data?[index!].personId}";
+          "${appController.listOfPersonData[index!].mobileNumber}";
+      emailController.text = "${appController.listOfPersonData[index!].email}";
+      referenceController.text =
+          "${appController.listOfPersonData[index!].reference}";
+      id = "${appController.listOfPersonData[index!].personId}";
     }
     super.onInit();
   }
@@ -54,9 +55,9 @@ class AddPersonDetailsPageController extends GetxController {
         email: emailController.text,
         reference: referenceController.text,
       ));
-      ToastUtils.showBottomSnackbar("${response["message"]}");
-      personsPageController.getPersonList();
+      await homePageController.getPersonList();
       Get.back(closeOverlays: true);
+      ToastUtils.showBottomSnackbar("${response["message"]}");
     } on DioError catch (e) {
       Get.back();
       ToastUtils.showBottomSnackbar("${(e.response?.data as Map)["message"]}");
@@ -84,7 +85,8 @@ class AddPersonDetailsPageController extends GetxController {
         personID: id!,
       );
       ToastUtils.showBottomSnackbar("${response["message"]}");
-      personsPageController.getPersonList();
+      await homePageController.getPersonList();
+      index = null;
       Get.back(closeOverlays: true);
     } on DioError catch (e) {
       Get.back();

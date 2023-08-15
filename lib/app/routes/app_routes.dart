@@ -16,6 +16,10 @@ abstract class Routes {
   static const FORGET_PASSWORD_PAGE = _Paths.FORGET_PASSWORD_PAGE;
   static const ADD_PERSON_DETAILS_PAGE = _Paths.ADD_PERSON_DETAILS_PAGE;
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
+  static const ADD_TRANSACTION_PAGE = _Paths.ADD_TRANSACTION_PAGE;
+  static const BOOK_DETAIL_PAGE = _Paths.BOOK_DETAIL_PAGE;
+  static const PERSON_DETAIL_PAGE = _Paths.PERSON_DETAIL_PAGE;
+  static const PROFILE_PAGE = _Paths.PROFILE_PAGE;
 }
 
 abstract class _Paths {
@@ -31,4 +35,8 @@ abstract class _Paths {
   static const FORGET_PASSWORD_PAGE = '/forget-password-page';
   static const ADD_PERSON_DETAILS_PAGE = '/add-person-details-page';
   static const SPLASH_SCREEN = '/splash-screen';
+  static const ADD_TRANSACTION_PAGE = '/add-transaction-page';
+  static const BOOK_DETAIL_PAGE = '/book-detail-page';
+  static const PERSON_DETAIL_PAGE = '/person-detail-page';
+  static const PROFILE_PAGE = '/profile-page';
 }
